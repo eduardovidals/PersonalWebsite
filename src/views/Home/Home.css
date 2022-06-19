@@ -1,0 +1,21 @@
+[data-aos="fade-right-skill"] {
+    opacity: 0;
+    transform: translate3d(-100px, 0, 0);
+}
+
+[data-aos="fade-left-skill"] {
+    opacity: 0;
+    transform: translate3d(100px, 0, 0);
+}
+
+@media (min-width: 60rem) {
+    [data-aos="fade-right-skill"] {
+        opacity: 0;
+        transform: translate3d(0, 100px, 0);
+    }
+
+    [data-aos="fade-left-skill"] {
+        opacity: 0;
+        transform: translate3d(0, 100px, 0);
+    }
+}
