@@ -1,18 +1,22 @@
 import {ReactNode} from "react";
-import Images from "utils/images";
 import {
-  ProjectContainer, ProjectImage, ProjectBottomContainer, ProjectTitle, ProjectDescription, ProjectButtons
+  ProjectContainer,
+  ProjectImage,
+  ProjectBottomContainer,
+  ProjectTitle,
+  ProjectDescription,
+  ProjectReadMoreButton, ProjectReadMoreText, ProjectReadMoreArrowContainer
 } from "components/common/Project/Project.styles";
-import {ProjectJson} from "utils/constants/projects";
+import {IProject} from "utils/constants/projects";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 interface ProjectProps {
-  project: ProjectJson,
+  project: IProject,
   aos: string,
-  children?: ReactNode[] | ReactNode,
 }
 
 function Project(props: ProjectProps) {
-  const {project, aos, children} = props;
+  const {project, aos} = props;
 
   return (
     <ProjectContainer data-aos={aos}>
@@ -22,9 +26,12 @@ function Project(props: ProjectProps) {
         <ProjectDescription>
           {project.description}
         </ProjectDescription>
-        <ProjectButtons>
-          {children}
-        </ProjectButtons>
+        <ProjectReadMoreButton to={`projects/${project.path}`}>
+          <ProjectReadMoreText> READ MORE </ProjectReadMoreText>
+          <ProjectReadMoreArrowContainer>
+            <FontAwesomeIcon icon={'angle-right'}/>
+          </ProjectReadMoreArrowContainer>
+        </ProjectReadMoreButton>
       </ProjectBottomContainer>
     </ProjectContainer>
   )

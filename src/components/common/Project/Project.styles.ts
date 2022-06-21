@@ -1,14 +1,14 @@
 import styled from "styled-components";
+import {Link} from "react-router-dom";
 
 export const ProjectContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   max-width: 500px;
-  max-height: 500px;
   background-color: ${props => props.theme.colors.project};
-    border-radius: 20px;
-    height: 100%;
+  border-radius: 20px;
+  height: 100%;
 `
 
 export const ProjectImage = styled.img`
@@ -34,13 +34,36 @@ export const ProjectTitle = styled.p`
 `
 
 export const ProjectDescription = styled.p`
-  margin-top: 10px;
   font-size: 0.9rem;
+  margin: 15px 0 10px 0;
+  text-align: center;
 `
 
-export const ProjectButtons = styled.div`
+export const ProjectReadMoreButton = styled(Link)`
   display: flex;
-  width: 100%;
+  justify-content: space-between;
+  align-items: center;
   margin-top: auto;
-  justify-content: space-evenly;
+  color: ${props => props.theme.colors.text};
+  text-decoration: none;
+  font-size: 1rem;
+  background-color: ${props => props.theme.colors.main};
+  border-radius: 10px;
+  font-weight: bold;
+  overflow: hidden;
+`
+
+export const ProjectReadMoreText = styled.p`
+  padding: 10px 15px;
+  text-align: center;
+`
+
+export const ProjectReadMoreArrowContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background-color: #273448;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
 `

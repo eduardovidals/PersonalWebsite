@@ -9,9 +9,7 @@ html, body, #root {
     height: 100%;
     width: 100vw;
     max-width: 100%;
-    background-color: #1e3653;
     font-size: 100%;
-    color: white;
 }
 
 body {

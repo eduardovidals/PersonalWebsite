@@ -1,4 +1,12 @@
 import {DefaultTheme} from "styled-components";
+import { createGlobalStyle } from 'styled-components'
+
+export const GlobalStyle = createGlobalStyle`
+  body {
+    background-color: ${props => props.theme.colors.background};
+    color: ${props => props.theme.colors.text};
+  }
+`
 
 const theme:DefaultTheme = {
   borderRadius: "5px",
@@ -7,7 +15,7 @@ const theme:DefaultTheme = {
     secondary: "#1F292E",
     text: "#FFF",
     hover: "#98D6E8",
-    project: "#3b4d6b",
+    project: "#3e516b",
     background: "#1E3653",
     button: "#405475",
     buttonHover: "#435779",

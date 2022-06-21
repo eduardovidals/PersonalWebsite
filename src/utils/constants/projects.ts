@@ -1,27 +1,36 @@
 import Images from "utils/images";
+import {sortingVisualizerMarkdown} from "utils/constants/markdown";
 
-export interface ProjectJson {
+export interface IProject {
   img: string,
   title: string,
   description: string,
+  path: string,
+  markdown: string
 }
 
-interface Projects {
-  [name: string]: ProjectJson
+interface IProjects {
+  [name: string]: IProject
 }
 
-const projects: Projects = {
+export const Projects: IProjects = {
   sortingVisualizer: {
     img: Images.sortingProject,
     title: "Sorting Visualizer",
-    description: 'A Sorting Visualizer built using React & Typescript, which visualizes sorting algorithms such as Merge Sort, Quick Sort, and Heap Sort.'
+    description: `A Sorting Visualizer built using React & Typescript, which visualizes sorting algorithms 
+    such as Merge Sort, Quick Sort, and Heap Sort.`,
+    path: 'sorting-visualizer',
+    markdown: sortingVisualizerMarkdown
   },
   pathfindingVisualizer: {
     img: Images.pathfindingProject,
     title: 'Pathfinding Visualizer',
-    description: 'A Pathfinding Visualizer built using React & Typescript, which visualizes pathfinding algorithms such as DFS, BFS, Dijkstra, A*, and Best-First Search.'
+    description: `A Pathfinding Visualizer built using React & Typescript, which visualizes pathfinding 
+    algorithms such as DFS, BFS, Dijkstra, A*, and Best-First Search.`,
+    path: 'pathfinding-visualizer',
+    markdown: sortingVisualizerMarkdown
   }
 }
 
-export default projects;
+export default Projects;
 

@@ -1,5 +1,6 @@
 import styled, {keyframes} from 'styled-components'
 import {Link} from "react-router-dom";
+import { HashLink } from 'react-router-hash-link';
 
 export const HeaderContainer = styled.div`
   display: flex;
@@ -184,7 +185,7 @@ export const HeaderNavMobileOption = styled.li`
   }
 `
 
-export const HeaderNavMobileLink = styled.a`
+export const HeaderNavMobileLink = styled(HashLink)`
   text-decoration: none;
   color: ${props => props.theme.colors.text}
 `
@@ -207,7 +208,7 @@ export const HeaderNavOptions = styled.ul`
   font-size: 1.3rem;
 `
 
-export const HeaderNavLink = styled.a`
+export const HeaderNavLink = styled(HashLink)`
   text-decoration: none;
   color: ${props => props.theme.colors.text}
 `

@@ -94,7 +94,6 @@ export const HomeProjectsContainer = styled.div`
   column-gap: 20px;
   width: 90%;
   margin: 10px 0 30px 0;
-  grid-auto-columns: 1fr;
 
   @media (min-width: 60rem){
     grid-template-columns: auto auto;

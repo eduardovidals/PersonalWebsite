@@ -1,20 +1,7 @@
 import {
-  HeaderContainer,
-  HeaderLink,
-  HeaderTitleContainer,
-  HeaderMenu,
-  HeaderMenuBarOne,
-  HeaderMenuBarThree,
-  HeaderMenuBarTwo,
-  HeaderNavMobileContainer,
-  HeaderNavMobileOptions,
-  HeaderNavMobileOption,
-  HeaderNavMobileLink,
-  HeaderNavContainer,
-  HeaderNavOptions,
-  HeaderNavLink,
-  HeaderNavOption,
-  HeaderTitleText, HeaderTitleBackground
+  HeaderContainer, HeaderLink, HeaderTitleContainer, HeaderMenu, HeaderMenuBarOne, HeaderMenuBarThree,
+  HeaderMenuBarTwo, HeaderNavMobileContainer, HeaderNavMobileOptions, HeaderNavMobileOption, HeaderNavMobileLink,
+  HeaderNavContainer, HeaderNavOptions, HeaderNavLink, HeaderNavOption, HeaderTitleText, HeaderTitleBackground
 } from "./Header.styles";
 import {useState} from "react";
 import Typed from 'react-typed';
@@ -73,23 +60,23 @@ const MobileNav = (props: MobileNavProps) => {
         <HeaderNavMobileContainer isMenuClicked={isMenuClicked} onClick={() => setIsMenuClicked(false)}>
           <HeaderNavMobileOptions>
             <HeaderNavMobileOption>
-              <HeaderNavMobileLink href={"#home"}> Home </HeaderNavMobileLink>
+              <HeaderNavMobileLink to={"/#home"}> Home </HeaderNavMobileLink>
             </HeaderNavMobileOption>
 
             <HeaderNavMobileOption>
-              <HeaderNavMobileLink href={"#about"}> About </HeaderNavMobileLink>
+              <HeaderNavMobileLink to={"/#about"}> About </HeaderNavMobileLink>
             </HeaderNavMobileOption>
 
             <HeaderNavMobileOption>
-              <HeaderNavMobileLink href={"#skills"}> Skills </HeaderNavMobileLink>
+              <HeaderNavMobileLink to={"/#skills"}> Skills </HeaderNavMobileLink>
             </HeaderNavMobileOption>
 
             <HeaderNavMobileOption>
-              <HeaderNavMobileLink href={"#projects"}> Projects </HeaderNavMobileLink>
+              <HeaderNavMobileLink to={"/#projects"}> Projects </HeaderNavMobileLink>
             </HeaderNavMobileOption>
 
             <HeaderNavMobileOption>
-              <HeaderNavMobileLink href={"#contact"}> Contact </HeaderNavMobileLink>
+              <HeaderNavMobileLink to={"/#contact"}> Contact </HeaderNavMobileLink>
             </HeaderNavMobileOption>
           </HeaderNavMobileOptions>
         </HeaderNavMobileContainer>}
@@ -102,23 +89,23 @@ const NormalNav = () => {
     <HeaderNavContainer>
       <HeaderNavOptions>
         <HeaderNavOption>
-          <HeaderNavLink href={"#home"}> Home </HeaderNavLink>
+          <HeaderNavLink to={"/#home"}> Home </HeaderNavLink>
         </HeaderNavOption>
 
         <HeaderNavOption>
-          <HeaderNavLink href={"#about"}> About </HeaderNavLink>
+          <HeaderNavLink to={"/#about"}> About </HeaderNavLink>
         </HeaderNavOption>
 
         <HeaderNavOption>
-          <HeaderNavLink href={"#skills"}> Skills </HeaderNavLink>
+          <HeaderNavLink to={"/#skills"}> Skills </HeaderNavLink>
         </HeaderNavOption>
 
         <HeaderNavOption>
-          <HeaderNavLink href={"#projects"}> Projects </HeaderNavLink>
+          <HeaderNavLink to={"/#projects"}> Projects </HeaderNavLink>
         </HeaderNavOption>
 
         <HeaderNavOption>
-          <HeaderNavLink href={"#contact"}> Contact </HeaderNavLink>
+          <HeaderNavLink to={"/#contact"}> Contact </HeaderNavLink>
         </HeaderNavOption>
       </HeaderNavOptions>
     </HeaderNavContainer>
