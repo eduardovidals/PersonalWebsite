@@ -1,14 +1,15 @@
-import styled from "styled-components";
+import styled, {keyframes} from "styled-components";
 
 export const FooterContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
-  padding: 10px;
-  width: calc(100% - 20px);
-  background-color: ${props => props.theme.colors.main};
+  width: 100%;
   overflow-y: hidden;
+  padding-top: 60px;
+  padding-bottom: 40px;
 `
 
 export const SocialContainer = styled.div`
@@ -18,10 +19,6 @@ export const SocialContainer = styled.div`
   row-gap: 10px;
 `
 
-export const FooterConnectText = styled.p`
-  color: ${props => props.theme.colors.text}
-`
-
 export const SocialIconsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -29,10 +26,7 @@ export const SocialIconsContainer = styled.div`
   width: 100%;
   text-align: center;
   column-gap: 15px;
-  
-  @media (min-width: 47em){
-    column-gap: 30px;
-  }
+  margin: 10px 0;
 `
 
 export const SocialIconLink = styled.a`
@@ -48,12 +42,55 @@ export const SocialIconLink = styled.a`
   }
 `
 
-export const SocialIconText = styled.p`
-  display: none;
-  font-size: 1.2rem;
+export const SocialIconTooltip = styled.div`
+  position: relative;
+`
 
-  @media (min-width: 47em) {
-    display: flex;
-    align-items: center;
+export const SocialIconTooltipAnimation = keyframes`
+  0% {
+    opacity: 0;
   }
+
+  100% {
+    opacity: 1;
+  }
+`
+
+interface TooltipTextProps {
+  active: boolean
+}
+
+export const SocialIconTooltipText = styled.span<TooltipTextProps>`
+  display: ${props => props.active ? 'initial' : 'none'};
+  background-color: ${props => props.theme.colors.button};
+  font-size: 1rem;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  position: absolute;
+  width: 140px;
+  padding: 5px;
+  left: -60px;
+  bottom: 150%;
+  animation: ${SocialIconTooltipAnimation};
+  animation-duration: 150ms;
+  animation-timing-function: ease-in;
+  animation-iteration-count: initial;
+  animation-fill-mode: forwards;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: ${props => props.theme.colors.button} transparent transparent transparent;
+  }
+`
+
+export const FooterRightsText = styled.p`
+  margin-top: 10px;
+  text-align: center;
 `

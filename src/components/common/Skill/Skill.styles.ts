@@ -17,7 +17,7 @@ export const SkillImage = styled.img`
   }
 
   @media (min-width: 60em){
-    height: 80px;
+    height: 70px;
   }
 `
 

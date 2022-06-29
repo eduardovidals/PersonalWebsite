@@ -1,16 +1,10 @@
-import {MainChildContainer, MainContainer} from "components/layout/ui/Main/Main.styles";
 import {
-  HomeSectionContainer,
-  HomeSectionHeader,
-  HomeAboutMeText,
-  HomeAboutMeTextContainer,
-  HomeTitleContainer,
-  HomeTitleText,
-  HomeSkillsContainer,
-  HomeProjectsContainer, HomeProjectsSectionContainer, HomeContactContainer, HomeContactReachOut, HomeContactForm
+  HomeSectionContainer, HomeSectionHeader, HomeAboutMeText, HomeAboutMeTextContainer, HomeTitleContainer,
+  HomeTitleText, HomeSkillsContainer, HomeProjectsContainer, HomeProjectsSectionContainer, HomeContactContainer,
+  HomeContactReachOut, HomeContactForm, HomeContactSubmitText
 } from "views/Home/Home.styles";
 import Typed from "react-typed";
-import React, {createRef, useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import Aos from "aos";
 import "aos/dist/aos.css"
 import Images from "utils/images";
@@ -19,11 +13,12 @@ import Project from "components/common/Project/Project";
 import Projects from "utils/constants/projects";
 import "./Home.css"
 import Main from "components/layout/ui/Main/Main";
-import {useAppDispatch, useAppSelector} from "store/hooks";
-import {increment} from "store/home/home.slice";
-import TextField from "components/forms/TextField/TextField";
-import SubmitField from "components/forms/SubmitField/SubmitField";
+import {useAppSelector} from "store/hooks";
 import emailjs from '@emailjs/browser';
+import FormInput from "components/forms/FormInput/FormInput";
+import FormSubmit from "components/forms/FormSubmit/FormSubmit";
+import FormTextArea from "components/forms/FormTextArea/FormTextArea";
+import ReCAPTCHA from "react-google-recaptcha";
 
 
 const typedStrings = ["Software Engineer.", "Developer.", "Programmer."];
@@ -33,8 +28,13 @@ function Home() {
   // this ensures that the home typed text is in the middle of the screen for both mobile and desktop
   const [containerHeight, setContainerHeight] = useState((window.innerHeight).toString() + 'px')
   const [width, setWidth] = useState(window.innerWidth);
+
+  // form fields
   const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const [formResponse, setFormResponse] = useState('');
+  const [captchaToken, setCaptchaToken] = useState('');
   const count = useAppSelector(state => state.header);
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -52,8 +52,16 @@ function Home() {
     })
   }, [])
 
-  const sendEmail = (e: React.FormEvent) => {
+  const formSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!captchaToken) {
+      setFormResponse('Fill out the captcha!')
+      return;
+    } else {
+      setFormResponse('')
+    }
+
 
     if (formRef.current) {
       emailjs.sendForm(process.env.REACT_APP_SERVICE_ID as string, process.env.REACT_APP_TEMPLATE_ID as string, formRef.current, process.env.REACT_APP_PUBLIC_KEY)
@@ -131,21 +139,28 @@ function Home() {
       </HomeProjectsSectionContainer>
 
       <HomeSectionContainer id={'contact'}>
-        <HomeContactContainer data-aos="fade-up" data-aos-duration={3000}>
+        <HomeContactContainer data-aos="fade-up" data-aos-duration={2000}>
           <HomeSectionHeader> Let's talk </HomeSectionHeader>
           <HomeContactReachOut>
             If you want to have a coffee chat or just want to ask a simple question, then feel free to reach out
             to me by using the form below and I'll get back to you promptly.
           </HomeContactReachOut>
 
-          <HomeContactForm onSubmit={(e) => sendEmail(e)} ref={formRef}>
-            <TextField htmlFor={'fullName'} labelText={'Full Name'} placeholder={'Enter your full name'}
+          {formResponse &&
+            <HomeContactSubmitText>
+              {formResponse}
+            </HomeContactSubmitText>
+          }
+          <HomeContactForm onSubmit={(e) => formSubmit(e)} ref={formRef}>
+            <FormInput htmlFor={'fullName'} labelText={'Full Name'} placeholder={'Enter your full name'}
                        setTextField={setName} name={'from_name'} required={true}/>
-            <TextField htmlFor={'email'} labelText={'Email'} placeholder={'Enter your email'}
-                       setTextField={setName} name={'reply_to'} required={true} email={true}/>
-            <TextField htmlFor={'message'} labelText={'Message'} placeholder={'Enter your message'}
-                       setTextField={setMessage} name={'message'} style={{paddingBottom: 100}} required={true}/>
-            <SubmitField value={'Submit'}/>
+            <FormInput htmlFor={'email'} labelText={'Email'} placeholder={'Enter your email'}
+                       setTextField={setEmail} name={'reply_to'} required={true} email={true}/>
+            <FormTextArea htmlFor={'message'} labelText={'Message'} placeholder={'Enter your message'}
+                          setTextField={setMessage} name={'message'} required={true}/>
+            <ReCAPTCHA sitekey={process.env.REACT_APP_CAPTCHA_KEY as string} theme={'dark'}
+                       onChange={(e) => setCaptchaToken(e || '')}/>
+            <FormSubmit value={'Submit'}/>
           </HomeContactForm>
         </HomeContactContainer>
       </HomeSectionContainer>

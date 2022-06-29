@@ -70,7 +70,7 @@ export const HomeAboutMeText = styled.p`
 
   @media (min-width: 47em){
     max-width: 700px;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
 `
 
@@ -122,12 +122,18 @@ export const HomeContactContainer = styled.div`
 `
 
 export const HomeContactReachOut = styled.div`
+  margin-top: 10px;
+`
+
+export const HomeContactSubmitText = styled.div`
+  color: red;
+  margin-top: 10px;
 `
 
 export const HomeContactForm = styled.form`
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-top: 20px;
+  margin-top: 10px;
 `
 
