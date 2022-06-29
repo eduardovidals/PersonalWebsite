@@ -125,8 +125,12 @@ export const HomeContactReachOut = styled.div`
   margin-top: 10px;
 `
 
-export const HomeContactSubmitText = styled.div`
-  color: red;
+interface FormResponseProps {
+  error: boolean
+}
+
+export const HomeContactFormResponse = styled.p<FormResponseProps>`
+  color: ${props => props.error ? '#F00' : '#0F0'};
   margin-top: 10px;
 `
 

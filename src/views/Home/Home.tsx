@@ -1,7 +1,7 @@
 import {
   HomeSectionContainer, HomeSectionHeader, HomeAboutMeText, HomeAboutMeTextContainer, HomeTitleContainer,
   HomeTitleText, HomeSkillsContainer, HomeProjectsContainer, HomeProjectsSectionContainer, HomeContactContainer,
-  HomeContactReachOut, HomeContactForm, HomeContactSubmitText
+  HomeContactReachOut, HomeContactForm, HomeContactFormResponse
 } from "views/Home/Home.styles";
 import Typed from "react-typed";
 import React, {useEffect, useRef, useState} from "react";
@@ -23,6 +23,11 @@ import ReCAPTCHA from "react-google-recaptcha";
 
 const typedStrings = ["Software Engineer.", "Developer.", "Programmer."];
 
+interface FormResponseProps {
+  error: boolean,
+  message: string
+}
+
 function Home() {
   // inner height is used to conform to mobile and desktop views as 100vh does not react well on mobile
   // this ensures that the home typed text is in the middle of the screen for both mobile and desktop
@@ -33,7 +38,7 @@ function Home() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
-  const [formResponse, setFormResponse] = useState('');
+  const [formResponse, setFormResponse] = useState<FormResponseProps>({error: false, message: ''});
   const [captchaToken, setCaptchaToken] = useState('');
   const count = useAppSelector(state => state.header);
   const formRef = useRef<HTMLFormElement>(null);
@@ -56,12 +61,11 @@ function Home() {
     e.preventDefault();
 
     if (!captchaToken) {
-      setFormResponse('Fill out the captcha!')
+      setFormResponse({error: true, message: 'Fill out the captcha!'});
       return;
     } else {
-      setFormResponse('')
+      setFormResponse({error: false, message: 'Successfully sent email!'});
     }
-
 
     if (formRef.current) {
       emailjs.sendForm(process.env.REACT_APP_SERVICE_ID as string, process.env.REACT_APP_TEMPLATE_ID as string, formRef.current, process.env.REACT_APP_PUBLIC_KEY)
@@ -146,10 +150,10 @@ function Home() {
             to me by using the form below and I'll get back to you promptly.
           </HomeContactReachOut>
 
-          {formResponse &&
-            <HomeContactSubmitText>
-              {formResponse}
-            </HomeContactSubmitText>
+          {formResponse.message &&
+            <HomeContactFormResponse error={formResponse.error}>
+              {formResponse.message}
+            </HomeContactFormResponse>
           }
           <HomeContactForm onSubmit={(e) => formSubmit(e)} ref={formRef}>
             <FormInput htmlFor={'fullName'} labelText={'Full Name'} placeholder={'Enter your full name'}
