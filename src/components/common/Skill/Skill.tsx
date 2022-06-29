@@ -10,7 +10,7 @@ function Skill(props: SkillProps) {
   const {aos, img, skill} = props;
 
   return (
-    <SkillContainer data-aos={aos}>
+    <SkillContainer data-aos={aos} data-aos-duration={2000}>
       <SkillImage src={img}/>
       <SkillText> {skill} </SkillText>
     </SkillContainer>

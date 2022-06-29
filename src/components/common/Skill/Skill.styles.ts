@@ -11,9 +11,21 @@ export const SkillContainer = styled.div`
 
 export const SkillImage = styled.img`
   height: 50px;
+
+  @media (min-width: 47em){
+    height: 60px;
+  }
+
+  @media (min-width: 60em){
+    height: 80px;
+  }
 `
 
 export const SkillText = styled.p`
   margin-top: 10px;
   font-size: 1rem;
+
+  @media (min-width: 47em){
+    font-size: 1.2rem;
+  }
 `

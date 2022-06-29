@@ -27,12 +27,13 @@ export const ArticleContainer = styled.div`
   }
 
   li a {
-    color: #58a6ff
+    color: #58a6ff;
   }
 
   a {
     text-decoration: none;
-    color: #58a6ff
+    color: #58a6ff;
+    cursor: pointer;
   }
   
   h1 {
@@ -44,11 +45,17 @@ export const ArticleContainer = styled.div`
     padding: 5px 0;
     text-align: center;
   }
+  
+  td {
+    padding: 0 35px;
+    height: 100%;
+  }
 
   img {
     display: flex;
     margin: 0 auto;
     max-width: 100%;
+    max-height: 550px;
     padding: 10px 0;
   }
   

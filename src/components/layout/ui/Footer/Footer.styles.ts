@@ -5,9 +5,10 @@ export const FooterContainer = styled.div`
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
-  width: calc(100%);
-  height: 80px;
+  padding: 10px;
+  width: calc(100% - 20px);
   background-color: ${props => props.theme.colors.main};
+  overflow-y: hidden;
 `
 
 export const SocialContainer = styled.div`
@@ -23,10 +24,11 @@ export const FooterConnectText = styled.p`
 
 export const SocialIconsContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  justify-content: center;
   width: 100%;
   text-align: center;
-  column-gap: 5px;
+  column-gap: 15px;
   
   @media (min-width: 47em){
     column-gap: 30px;

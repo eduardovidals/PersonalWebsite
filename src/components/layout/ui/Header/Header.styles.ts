@@ -14,10 +14,6 @@ export const HeaderContainer = styled.div`
   color: ${props => props.theme.colors.text};
   padding: 0 15px;
   z-index: 1;
-  
-  @media (min-width: 0) and (max-width: 5rem){
-    position: relative;
-  }
 `
 
 export const HeaderTitleAnimation = keyframes`
@@ -150,7 +146,7 @@ export const HeaderNavMobileContainerAnimation = keyframes`
   }
 `
 
-export const HeaderNavMobileContainer = styled.div<BarProps>`
+export const HeaderNavMobileContainer = styled.nav<BarProps>`
   display: ${props => props.isMenuClicked ? 'flex' : 'none'};
   position: fixed;
   height: 100%;
@@ -190,7 +186,7 @@ export const HeaderNavMobileLink = styled(HashLink)`
   color: ${props => props.theme.colors.text}
 `
 
-export const HeaderNavContainer = styled.div<BarProps>`
+export const HeaderNavContainer = styled.nav<BarProps>`
   display: none;
   @media (min-width: 47em) {
     display: flex;

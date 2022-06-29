@@ -25,6 +25,10 @@ export const HomeTitleText = styled.h1`
   width: 95%;
   color: ${props => props.theme.colors.text};
   animation: ${HomeTitleAnimation} 1s ease-in;
+  
+  @media (min-width: 47em){
+    font-size: 2rem;
+  }
 `
 
 export const HomeSectionContainer = styled.div`
@@ -33,7 +37,8 @@ export const HomeSectionContainer = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
-  width: 100%;
+  width: calc(100% - 40px);
+  padding: 0 20px;
 `
 
 export const HomeAboutMeTextContainer = styled.div`
@@ -48,6 +53,10 @@ export const HomeSectionHeader = styled.h2`
   font-size: 2rem;
   color: ${props => props.theme.colors.text};
   text-align: center;
+
+  @media (min-width: 47em){
+    font-size: 2.5rem;
+  }
 `
 
 export const HomeAboutMeText = styled.p`
@@ -55,8 +64,13 @@ export const HomeAboutMeText = styled.p`
   color: ${props => props.theme.colors.text};
   max-width: 95%;
   
-  @media (min-width: 35rem){
+  @media (min-width: 35em){
     max-width: 500px;
+  }
+
+  @media (min-width: 47em){
+    max-width: 700px;
+    font-size: 1.2rem;
   }
 `
 
@@ -70,7 +84,7 @@ export const HomeSkillsContainer = styled.div`
   margin-top: 20px;
   padding-left: 20px;
 
-  @media (min-width: 60rem){
+  @media (min-width: 60em){
     grid-template-columns: auto auto auto auto;
   }
 `
@@ -93,10 +107,27 @@ export const HomeProjectsContainer = styled.div`
   row-gap: 40px;
   column-gap: 20px;
   width: 90%;
-  margin: 10px 0 30px 0;
-
-  @media (min-width: 60rem){
-    grid-template-columns: auto auto;
+  margin: 20px 0 30px 0;
+  
+  @media (min-width: 60em){
+    grid-template-columns: repeat(4, auto);
   }
+`
+
+export const HomeContactContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 500px;
+`
+
+export const HomeContactReachOut = styled.div`
+`
+
+export const HomeContactForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 20px;
 `
 

@@ -9,11 +9,19 @@ export const ProjectContainer = styled.div`
   background-color: ${props => props.theme.colors.project};
   border-radius: 20px;
   height: 100%;
+
+  @media (min-width: 60em) {
+    grid-column: span 2;
+    &:nth-last-child(1):nth-child(odd) {
+      grid-column: 2 / span 2;
+    }
+  }
 `
 
 export const ProjectImage = styled.img`
   width: 100%;
-  object-fit: contain;
+  height: 250px;
+  object-fit: cover;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
 `
@@ -51,6 +59,10 @@ export const ProjectReadMoreButton = styled(Link)`
   border-radius: 10px;
   font-weight: bold;
   overflow: hidden;
+
+  &:hover {
+    color: ${props => props.theme.colors.hover};
+  }
 `
 
 export const ProjectReadMoreText = styled.p`

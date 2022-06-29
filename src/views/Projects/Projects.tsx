@@ -1,16 +1,31 @@
 import Main from "components/layout/ui/Main/Main";
-import {Route, Routes} from "react-router-dom";
+import {Route, Routes, useLocation} from "react-router-dom";
 import Article from "components/common/Article/Article";
 import Projects from "utils/constants/projects";
+import {useEffect} from "react";
+import Project from "components/common/Project/Project";
+
+// ensures that page is at the top on route change
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({top: -100});
+  }, [pathname]);
+
+  return null;
+}
 
 function ProjectsPage() {
+  const routes = Projects.map((project) => {
+    return <Route path={project.path} element={<Article markdown={project.markdown}/>}/>
+  })
+
   return (
     <Main>
+      <ScrollToTop/>
       <Routes>
-        <Route path={Projects.sortingVisualizer.path}
-               element={<Article markdown={Projects.sortingVisualizer.markdown}/>}/>
-        <Route path={Projects.pathfindingVisualizer.path}
-               element={<Article markdown={Projects.pathfindingVisualizer.markdown}/>}/>
+        {routes}
       </Routes>
     </Main>
   )

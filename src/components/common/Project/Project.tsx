@@ -19,7 +19,7 @@ function Project(props: ProjectProps) {
   const {project, aos} = props;
 
   return (
-    <ProjectContainer data-aos={aos}>
+    <ProjectContainer data-aos={aos} data-aos-duration={2000}>
       <ProjectImage src={project.img}/>
       <ProjectBottomContainer>
         <ProjectTitle> {project.title} </ProjectTitle>
