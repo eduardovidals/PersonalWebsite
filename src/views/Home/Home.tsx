@@ -56,8 +56,6 @@ function Home() {
     e.preventDefault();
 
     if (formRef.current) {
-      console.log("SERVICE ID: " + process.env.REACT_APP_SERVICE_ID);
-      console.log("PUBLIC KEY: " + process.env.REACT_APP_PUBLIC_KEY);
       emailjs.sendForm(process.env.REACT_APP_SERVICE_ID as string, process.env.REACT_APP_TEMPLATE_ID as string, formRef.current, process.env.REACT_APP_PUBLIC_KEY)
         .then((result) => {
           console.log(result.text);
