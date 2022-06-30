@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import headerReducer from 'store/home/home.slice';
+import formScreenReducer from 'store/formScreen/formScreen.slice';
 
 export const store = configureStore({
   reducer: {
-    header: headerReducer
+    header: headerReducer,
+    formScreen: formScreenReducer
   }
 })
 

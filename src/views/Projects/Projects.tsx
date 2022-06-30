@@ -3,7 +3,6 @@ import {Route, Routes, useLocation} from "react-router-dom";
 import Article from "components/common/Article/Article";
 import Projects from "utils/constants/projects";
 import {useEffect} from "react";
-import Project from "components/common/Project/Project";
 
 // ensures that page is at the top on route change
 function ScrollToTop() {

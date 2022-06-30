@@ -1,7 +1,6 @@
 import {
   HomeSectionContainer, HomeSectionHeader, HomeAboutMeText, HomeAboutMeTextContainer, HomeTitleContainer,
-  HomeTitleText, HomeSkillsContainer, HomeProjectsContainer, HomeProjectsSectionContainer, HomeContactContainer,
-  HomeContactReachOut, HomeContactForm, HomeContactFormResponse
+  HomeTitleText, HomeSkillsContainer, HomeProjectsContainer, HomeProjectsSectionContainer
 } from "views/Home/Home.styles";
 import Typed from "react-typed";
 import React, {useEffect, useRef, useState} from "react";
@@ -13,73 +12,50 @@ import Project from "components/common/Project/Project";
 import Projects from "utils/constants/projects";
 import "./Home.css"
 import Main from "components/layout/ui/Main/Main";
-import {useAppSelector} from "store/hooks";
+import {useAppDispatch, useAppSelector} from "store/hooks";
 import emailjs from '@emailjs/browser';
-import FormInput from "components/forms/FormInput/FormInput";
-import FormSubmit from "components/forms/FormSubmit/FormSubmit";
-import FormTextArea from "components/forms/FormTextArea/FormTextArea";
+import FormContact from "views/FormFlow/FormContact/FormContact";
+import FormSuccess from "views/FormFlow/FormSuccess/FormSuccess";
 
 const typedStrings = ["Software Engineer.", "Developer.", "Programmer."];
 
-interface FormResponseProps {
-  error: boolean,
-  message: string
-}
 
 function Home() {
   // inner height is used to conform to mobile and desktop views as 100vh does not react well on mobile
   // this ensures that the home typed text is in the middle of the screen for both mobile and desktop
-  const [containerHeight, setContainerHeight] = useState((window.innerHeight).toString() + 'px')
+  const [containerHeight, setContainerHeight] = useState(window.innerHeight);
   const [width, setWidth] = useState(window.innerWidth);
 
-  // form fields
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
-  const [formResponse, setFormResponse] = useState<FormResponseProps>({error: false, message: ''});
-  const [captchaToken, setCaptchaToken] = useState('');
   const count = useAppSelector(state => state.header);
-  const formRef = useRef<HTMLFormElement>(null);
+  const formScreen = useAppSelector(state => state.formScreen);
   const titleRef = useRef<HTMLDivElement>(null);
+  const aboutRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     Aos.init();
-    // on resize fix window to be inner height of window, ensures entire screen is covered and that home typed text
-    // is centered to the middle of the screen
-    window.addEventListener("resize", () => {
-      // checks if window width has actually changed and it's not just iOS triggering a resize event on scroll
-      if (window.innerWidth != width) {
-        setWidth(window.innerWidth);
-        setContainerHeight((window.innerHeight).toString() + 'px')
-      }
-    });
 
     document.addEventListener("scroll", () => {
-      toggleVisibility();
+      if (!aboutRef.current) return;
+
+      if (aboutRef.current.getBoundingClientRect().top - 20 <= window.innerHeight) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
     });
   }, [])
 
-  const toggleVisibility = () => {
-    if (window.scrollY > 60) {
-      setIsVisible(false);
-    } else {
-      setIsVisible(true);
+  const showScreen = (screen: string) => {
+    switch (screen) {
+      case 'FormContactScreen':
+        return <FormContact/>;
+      case 'FormSuccessScreen':
+        return <FormSuccess/>;
+      default:
+        return <FormContact/>;
     }
   }
-
-  const formSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (formRef.current) {
-      emailjs.sendForm(process.env.REACT_APP_SERVICE_ID as string, process.env.REACT_APP_TEMPLATE_ID as string, formRef.current, process.env.REACT_APP_PUBLIC_KEY)
-        .then(() => {
-          setFormResponse({error: false, message: 'Successfully sent email!'});
-        }, () => {
-          setFormResponse({error: true, message: 'There was an error processing your request!'});
-        });
-    }
-  };
 
   const renderTypedComponent = () => {
     // upon load, if it's a user's first time rendering, then nothing is returned
@@ -97,22 +73,21 @@ function Home() {
 
   const projects = Projects.map((project, index) => {
     return (
-      <Project project={project} aos={index % 2 === 0 ? 'fade-right' : 'fade-left'}/>
+      <Project project={project} aos={index % 2 === 0 ? 'fade-right' : 'fade-left'} key={project.title}/>
     )
   })
 
   return (
     <Main>
-      <HomeTitleContainer style={{height: containerHeight}} id={"home"} ref={titleRef}>
+      <HomeTitleContainer style={{height: containerHeight.toString() + 'px'}} id={"home"} ref={titleRef}>
         {renderTypedComponent()}
-        <a className={`ca3-scroll-down-link ca3-scroll-down-arrow ${!isVisible ? 'fade' : ''}`}
-                         data-ca3_iconfont="ETmodules" data-ca3_icon=""/>
+        <a className={`ca3-scroll-down-link ca3-scroll-down-arrow ${!isVisible ? 'fade' : ''}`}/>
       </HomeTitleContainer>
 
       <HomeSectionContainer id={"about"}>
-        <HomeAboutMeTextContainer data-aos="fade-up" data-aos-duration={2000}>
-          <HomeSectionHeader> About me </HomeSectionHeader>
-          <HomeAboutMeText>
+        <HomeAboutMeTextContainer>
+          <HomeSectionHeader ref={aboutRef}> About me </HomeSectionHeader>
+          <HomeAboutMeText data-aos="fade-up" data-aos-duration={2000}>
             I am currently working as a Software Engineer Intern at PGIM. I am also the Director of the Software
             Development Club at NJCU, where we help students gain an insight of modern technologies and best
             practices. In the future, I aspire to become a full-time Software Engineer and gain many relevant
@@ -149,31 +124,11 @@ function Home() {
       </HomeProjectsSectionContainer>
 
       <HomeSectionContainer id={'contact'}>
-        <HomeContactContainer data-aos="fade-up" data-aos-duration={2000}>
-          <HomeSectionHeader> Let's talk </HomeSectionHeader>
-          <HomeContactReachOut>
-            If you want to have a coffee chat or just want to ask a simple question, then feel free to reach out
-            to me by using the form below and I'll get back to you promptly.
-          </HomeContactReachOut>
-
-          {formResponse.message &&
-            <HomeContactFormResponse error={formResponse.error}>
-              {formResponse.message}
-            </HomeContactFormResponse>
-          }
-          <HomeContactForm onSubmit={(e) => formSubmit(e)} ref={formRef}>
-            <FormInput htmlFor={'fullName'} labelText={'Full Name'} placeholder={'Enter your full name'}
-                       setTextField={setName} name={'from_name'} required={true}/>
-            <FormInput htmlFor={'email'} labelText={'Email'} placeholder={'Enter your email'}
-                       setTextField={setEmail} name={'reply_to'} required={true} email={true}/>
-            <FormTextArea htmlFor={'message'} labelText={'Message'} placeholder={'Enter your message'}
-                          setTextField={setMessage} name={'message'} required={true}/>
-            <FormSubmit value={'Submit'}/>
-          </HomeContactForm>
-        </HomeContactContainer>
+        {showScreen(formScreen)}
       </HomeSectionContainer>
     </Main>
   )
 }
 
 export default Home;
+
