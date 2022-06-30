@@ -8,7 +8,7 @@ export const FormTextAreaLabel = styled.label`
 
 export const FormTextAreaElement = styled.textarea`
   color: black;
-  padding: 15px 15px 100px 15px;
+  padding: 15px 15px 50px 15px;
   border-radius: 5px;
   margin-bottom: 10px;
   border: #8692A6 1px solid;

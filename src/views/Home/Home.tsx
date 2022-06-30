@@ -18,8 +18,6 @@ import emailjs from '@emailjs/browser';
 import FormInput from "components/forms/FormInput/FormInput";
 import FormSubmit from "components/forms/FormSubmit/FormSubmit";
 import FormTextArea from "components/forms/FormTextArea/FormTextArea";
-import ReCAPTCHA from "react-google-recaptcha";
-
 
 const typedStrings = ["Software Engineer.", "Developer.", "Programmer."];
 
@@ -42,7 +40,8 @@ function Home() {
   const [captchaToken, setCaptchaToken] = useState('');
   const count = useAppSelector(state => state.header);
   const formRef = useRef<HTMLFormElement>(null);
-
+  const titleRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     Aos.init();
@@ -54,25 +53,30 @@ function Home() {
         setWidth(window.innerWidth);
         setContainerHeight((window.innerHeight).toString() + 'px')
       }
-    })
+    });
+
+    document.addEventListener("scroll", () => {
+      toggleVisibility();
+    });
   }, [])
+
+  const toggleVisibility = () => {
+    if (window.scrollY > 60) {
+      setIsVisible(false);
+    } else {
+      setIsVisible(true);
+    }
+  }
 
   const formSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!captchaToken) {
-      setFormResponse({error: true, message: 'Fill out the captcha!'});
-      return;
-    } else {
-      setFormResponse({error: false, message: 'Successfully sent email!'});
-    }
-
     if (formRef.current) {
       emailjs.sendForm(process.env.REACT_APP_SERVICE_ID as string, process.env.REACT_APP_TEMPLATE_ID as string, formRef.current, process.env.REACT_APP_PUBLIC_KEY)
-        .then((result) => {
-          console.log(result.text);
-        }, (error) => {
-          console.log(error.text);
+        .then(() => {
+          setFormResponse({error: false, message: 'Successfully sent email!'});
+        }, () => {
+          setFormResponse({error: true, message: 'There was an error processing your request!'});
         });
     }
   };
@@ -99,8 +103,10 @@ function Home() {
 
   return (
     <Main>
-      <HomeTitleContainer style={{height: containerHeight}} id={"home"}>
+      <HomeTitleContainer style={{height: containerHeight}} id={"home"} ref={titleRef}>
         {renderTypedComponent()}
+        <a className={`ca3-scroll-down-link ca3-scroll-down-arrow ${!isVisible ? 'fade' : ''}`}
+                         data-ca3_iconfont="ETmodules" data-ca3_icon=""/>
       </HomeTitleContainer>
 
       <HomeSectionContainer id={"about"}>
@@ -162,8 +168,6 @@ function Home() {
                        setTextField={setEmail} name={'reply_to'} required={true} email={true}/>
             <FormTextArea htmlFor={'message'} labelText={'Message'} placeholder={'Enter your message'}
                           setTextField={setMessage} name={'message'} required={true}/>
-            <ReCAPTCHA sitekey={process.env.REACT_APP_CAPTCHA_KEY as string} theme={'dark'}
-                       onChange={(e) => setCaptchaToken(e || '')}/>
             <FormSubmit value={'Submit'}/>
           </HomeContactForm>
         </HomeContactContainer>
