@@ -12,8 +12,7 @@ import Project from "components/common/Project/Project";
 import Projects from "utils/constants/projects";
 import "./Home.css"
 import Main from "components/layout/ui/Main/Main";
-import {useAppDispatch, useAppSelector} from "store/hooks";
-import emailjs from '@emailjs/browser';
+import {useAppSelector} from "store/hooks";
 import FormContact from "views/FormFlow/FormContact/FormContact";
 import FormSuccess from "views/FormFlow/FormSuccess/FormSuccess";
 
