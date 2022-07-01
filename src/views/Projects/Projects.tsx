@@ -2,7 +2,8 @@ import Main from "components/layout/ui/Main/Main";
 import {Route, Routes, useLocation} from "react-router-dom";
 import Article from "components/common/Article/Article";
 import Projects from "utils/constants/projects";
-import {useEffect} from "react";
+import React, {useEffect} from "react";
+import NotFound from "views/NotFound/NotFound";
 
 // ensures that page is at the top on route change
 function ScrollToTop() {
@@ -24,6 +25,7 @@ function ProjectsPage() {
     <Main>
       <ScrollToTop/>
       <Routes>
+        <Route path='*' element={<NotFound/>}/>
         {routes}
       </Routes>
     </Main>
