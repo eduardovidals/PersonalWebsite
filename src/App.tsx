@@ -12,6 +12,7 @@ import Home from "views/Home/Home";
 import theme, {GlobalStyle} from "utils/theme";
 import {ThemeProvider} from "styled-components";
 import ProjectsPage from "views/Projects/Projects";
+import NotFound from "views/NotFound/NotFound";
 
 library.add(faGithub, faLinkedin, faInstagram, faDiscord, faEnvelope, faAngleRight, faArrowRight, faCheck);
 
@@ -24,6 +25,7 @@ function App() {
           <AppContainer>
             <Header/>
             <Routes>
+              <Route path='*' element={<NotFound/>}/>
               <Route path={'/'} element={<Home/>}/>
               <Route path={'projects/*'} element={<ProjectsPage/>}/>
             </Routes>
