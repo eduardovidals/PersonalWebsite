@@ -54,7 +54,7 @@ export const ProjectReadMoreButton = styled(Link)`
   margin-top: auto;
   color: ${props => props.theme.colors.text};
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 0.8rem;
   background-color: ${props => props.theme.colors.main};
   border-radius: 10px;
   font-weight: bold;

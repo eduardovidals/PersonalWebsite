@@ -2,8 +2,7 @@ import React, {useEffect} from "react";
 import {
   MainContainer, MainChildContainer
 } from "components/layout/ui/Main/Main.styles";
-import {useAppDispatch, useAppSelector} from "store/hooks";
-import Aos from "aos";
+import {useAppDispatch} from "store/hooks";
 import {increment} from "store/home/home.slice";
 
 interface MainProps extends React.HTMLAttributes<HTMLDivElement> {

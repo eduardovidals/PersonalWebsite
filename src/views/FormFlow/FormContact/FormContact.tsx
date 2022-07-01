@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import {useAppDispatch, useAppSelector} from "store/hooks";
+import {useAppDispatch} from "store/hooks";
 import {updateScreen} from "store/formScreen/formScreen.slice";
 import {
   FormContactContainer, FormContactFormResponse, FormContactForm, FormContactReachOut, FormSectionHeader
@@ -27,7 +27,6 @@ function FormContact() {
 
   const formSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(updateScreen('FormSuccessScreen'));
 
     if (formRef.current) {
       emailjs.sendForm(process.env.REACT_APP_SERVICE_ID as string, process.env.REACT_APP_TEMPLATE_ID as string, formRef.current, process.env.REACT_APP_PUBLIC_KEY)

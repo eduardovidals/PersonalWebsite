@@ -13,7 +13,7 @@ function FormSuccess() {
   const dispatch = useAppDispatch();
 
   return (
-      <FormSuccessContainer data-aos={'fade-up'} data-aos-duration={1000}>
+      <FormSuccessContainer data-aos={'fade-up'} data-aos-duration={2000}>
         <FormSuccessIconContainer>
           <FormSuccessIcon>
             <FontAwesomeIcon icon={'check'}/>

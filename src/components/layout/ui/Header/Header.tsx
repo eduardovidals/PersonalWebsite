@@ -3,8 +3,9 @@ import {
   HeaderMenuBarTwo, HeaderNavMobileContainer, HeaderNavMobileOptions, HeaderNavMobileOption, HeaderNavMobileLink,
   HeaderNavContainer, HeaderNavOptions, HeaderNavLink, HeaderNavOption, HeaderTitleText, HeaderTitleBackground
 } from "./Header.styles";
-import {useState} from "react";
+import React, {useState} from "react";
 import Typed from 'react-typed';
+import Socials from "components/common/Socials/Socials";
 
 function Header() {
   const [isMenuClicked, setIsMenuClicked] = useState(false);
@@ -77,6 +78,10 @@ const MobileNav = (props: MobileNavProps) => {
 
             <HeaderNavMobileOption>
               <HeaderNavMobileLink to={"/#contact"}> Contact </HeaderNavMobileLink>
+            </HeaderNavMobileOption>
+
+            <HeaderNavMobileOption>
+              <Socials/>
             </HeaderNavMobileOption>
           </HeaderNavMobileOptions>
         </HeaderNavMobileContainer>}

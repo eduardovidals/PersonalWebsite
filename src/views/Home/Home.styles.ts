@@ -39,6 +39,7 @@ export const HomeSectionContainer = styled.div`
   height: 100vh;
   width: calc(100% - 40px);
   padding: 0 20px;
+  overflow: hidden;
 `
 
 export const HomeAboutMeTextContainer = styled.div`
@@ -96,6 +97,7 @@ export const HomeProjectsSectionContainer = styled.div`
   justify-content: center;
   align-items: center;
   padding-top: 100px;
+  overflow: hidden;
 `
 
 export const HomeProjectsContainer = styled.div`
@@ -113,31 +115,11 @@ export const HomeProjectsContainer = styled.div`
     grid-template-columns: repeat(4, auto);
   }
 `
-
-export const HomeContactContainer = styled.div`
+export const HomeFormSectionContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  max-width: 500px;
+  width: calc(100% - 40px);
+  align-items: center;
+  padding: 100px 20px 80px 20px;
+  overflow: hidden;
 `
-
-export const HomeContactReachOut = styled.div`
-  margin-top: 10px;
-`
-
-interface FormResponseProps {
-  error: boolean
-}
-
-export const HomeContactFormResponse = styled.p<FormResponseProps>`
-  color: ${props => props.error ? '#F00' : '#0F0'};
-  margin-top: 10px;
-`
-
-export const HomeContactForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin-top: 10px;
-`
-

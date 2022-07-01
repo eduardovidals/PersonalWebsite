@@ -10,6 +10,7 @@ export const ButtonContainer = styled.button`
 
 export const ButtonText = styled.p`
   color: ${props => props.theme.colors.text};
+  font-size: 0.8rem;
   font-weight: bold;
   padding: 15px;
 `

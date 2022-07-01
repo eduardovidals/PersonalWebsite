@@ -1,6 +1,6 @@
 import {
   HomeSectionContainer, HomeSectionHeader, HomeAboutMeText, HomeAboutMeTextContainer, HomeTitleContainer,
-  HomeTitleText, HomeSkillsContainer, HomeProjectsContainer, HomeProjectsSectionContainer
+  HomeTitleText, HomeSkillsContainer, HomeProjectsContainer, HomeProjectsSectionContainer, HomeFormSectionContainer
 } from "views/Home/Home.styles";
 import Typed from "react-typed";
 import React, {useEffect, useRef, useState} from "react";
@@ -81,7 +81,7 @@ function Home() {
     <Main>
       <HomeTitleContainer style={{height: containerHeight.toString() + 'px'}} id={"home"} ref={titleRef}>
         {renderTypedComponent()}
-        <a className={`ca3-scroll-down-link ca3-scroll-down-arrow ${!isVisible ? 'fade' : ''}`}/>
+        <a className={`ca3-scroll-down-link ca3-scroll-down-arrow ${!isVisible ? 'fade' : ''}`} href={"#about"}/>
       </HomeTitleContainer>
 
       <HomeSectionContainer id={"about"}>
@@ -123,9 +123,9 @@ function Home() {
         </HomeProjectsContainer>
       </HomeProjectsSectionContainer>
 
-      <HomeSectionContainer id={'contact'}>
+      <HomeFormSectionContainer id={'contact'}>
         {showScreen(formScreen)}
-      </HomeSectionContainer>
+      </HomeFormSectionContainer>
     </Main>
   )
 }

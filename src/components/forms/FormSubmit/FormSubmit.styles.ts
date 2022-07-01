@@ -12,4 +12,5 @@ export const FormSubmitText = styled.p`
   color: ${props => props.theme.colors.text};
   font-weight: bold;
   padding: 15px;
+  font-size: 0.8rem;
 `

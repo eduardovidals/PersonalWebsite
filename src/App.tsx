@@ -11,7 +11,6 @@ import {store} from "store/store";
 import Home from "views/Home/Home";
 import theme, {GlobalStyle} from "utils/theme";
 import {ThemeProvider} from "styled-components";
-import Article from "components/common/Article/Article";
 import ProjectsPage from "views/Projects/Projects";
 
 library.add(faGithub, faLinkedin, faInstagram, faDiscord, faEnvelope, faAngleRight, faArrowRight, faCheck);
