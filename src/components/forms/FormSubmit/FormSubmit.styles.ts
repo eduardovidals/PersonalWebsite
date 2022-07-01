@@ -6,7 +6,7 @@ export const FormSubmitButton = styled.button`
   border-radius: 5px;
   margin-top: 10px;
   cursor: pointer;
-  transition: background-color 500ms ease-in-out;
+  transition: background-color 300ms;
   
   &:disabled, &[disabled] {
     background-color: ${props => props.theme.colors.buttonDisabled};
