@@ -6,6 +6,12 @@ export const FormSubmitButton = styled.button`
   border-radius: 5px;
   margin-top: 10px;
   cursor: pointer;
+  transition: background-color 500ms ease-in-out;
+  
+  &:disabled, &[disabled] {
+    background-color: ${props => props.theme.colors.buttonDisabled};
+    cursor: default;
+  }
 `
 
 export const FormSubmitText = styled.p`

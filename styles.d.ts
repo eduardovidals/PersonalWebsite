@@ -12,6 +12,7 @@ declare module 'styled-components' {
       project: string,
       background: string,
       button: string,
+      buttonDisabled: string,
       buttonHover: string,
       mobileBackground: string,
       titleBackground: string

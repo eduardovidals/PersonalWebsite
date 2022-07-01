@@ -17,6 +17,7 @@ function FormContact() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const [buttonDisabled, setButtonDisabled] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const dispatch = useAppDispatch();
 
@@ -27,6 +28,7 @@ function FormContact() {
 
   const formSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setButtonDisabled(true);
 
     if (formRef.current) {
       emailjs.sendForm(process.env.REACT_APP_SERVICE_ID as string, process.env.REACT_APP_TEMPLATE_ID as string, formRef.current, process.env.REACT_APP_PUBLIC_KEY)
@@ -58,7 +60,7 @@ function FormContact() {
                    setTextField={setEmail} name={'reply_to'} required={true} email={true}/>
         <FormTextArea htmlFor={'message'} labelText={'Message'} placeholder={'Enter your message'}
                       setTextField={setMessage} name={'message'} required={true}/>
-        <FormSubmit value={'Submit'}/>
+        <FormSubmit value={'Submit'} disabled={buttonDisabled}/>
       </FormContactForm>
     </FormContactContainer>
   )

@@ -18,6 +18,7 @@ const theme:DefaultTheme = {
     project: "#3e516b",
     background: "#1E3653",
     button: "#405475",
+    buttonDisabled: "rgba(101,112,129,0.82)",
     buttonHover: "#435779",
     mobileBackground: "rgba(33,59,93,0.8)",
     titleBackground: "rgba(30,54,83,0.8)"

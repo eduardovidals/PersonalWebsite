@@ -1,7 +1,7 @@
 import React from "react";
 import {FormSubmitButton, FormSubmitText} from "components/forms/FormSubmit/FormSubmit.styles";
 
-interface FormSubmitProps extends React.FormHTMLAttributes<HTMLButtonElement> {
+interface FormSubmitProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   value: string
 }
 
