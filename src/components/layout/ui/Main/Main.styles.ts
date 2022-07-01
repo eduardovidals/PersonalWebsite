@@ -12,4 +12,5 @@ export const MainChildContainer = styled.div`
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  padding-bottom: 80px;
 `

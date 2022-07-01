@@ -120,6 +120,5 @@ export const HomeFormSectionContainer = styled.div`
   flex-direction: column;
   width: calc(100% - 40px);
   align-items: center;
-  padding: 100px 20px 80px 20px;
-  overflow: hidden;
+  padding: 100px 20px 20px 20px;
 `
