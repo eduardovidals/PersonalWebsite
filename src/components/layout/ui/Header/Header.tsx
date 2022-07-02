@@ -3,7 +3,7 @@ import {
   HeaderMenuBarTwo, HeaderNavMobileContainer, HeaderNavMobileOptions, HeaderNavMobileOption, HeaderNavMobileLink,
   HeaderNavContainer, HeaderNavOptions, HeaderNavLink, HeaderNavOption, HeaderTitleText, HeaderTitleBackground
 } from "./Header.styles";
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import Typed from 'react-typed';
 import Socials from "components/common/Socials/Socials";
 
@@ -53,33 +53,29 @@ interface MobileNavProps {
 
 const MobileNav = (props: MobileNavProps) => {
   const {isMenuClicked, setIsMenuClicked} = props;
+  const paths = ['/#home', '/#about', '/#skills', '/#projects', '/#contact']
+  const sections = ['Home', 'About', 'Skills', 'Projects', 'Contact'];
+
+  const mobileOptions = paths.map((path, index) => {
+    return (
+      <HeaderNavMobileOption onClick={() => setIsMenuClicked(false)}>
+        <HeaderNavMobileLink to={path}> {sections[index]} </HeaderNavMobileLink>
+      </HeaderNavMobileOption>
+    )
+  })
 
   // react fragment is used to reload component each time with the animation
   return (
     <>
       {isMenuClicked &&
-        <HeaderNavMobileContainer isMenuClicked={isMenuClicked} onClick={() => setIsMenuClicked(false)}>
-          <HeaderNavMobileOptions>
-            <HeaderNavMobileOption>
-              <HeaderNavMobileLink to={"/#home"}> Home </HeaderNavMobileLink>
-            </HeaderNavMobileOption>
-
-            <HeaderNavMobileOption>
-              <HeaderNavMobileLink to={"/#about"}> About </HeaderNavMobileLink>
-            </HeaderNavMobileOption>
-
-            <HeaderNavMobileOption>
-              <HeaderNavMobileLink to={"/#skills"}> Skills </HeaderNavMobileLink>
-            </HeaderNavMobileOption>
-
-            <HeaderNavMobileOption>
-              <HeaderNavMobileLink to={"/#projects"}> Projects </HeaderNavMobileLink>
-            </HeaderNavMobileOption>
-
-            <HeaderNavMobileOption>
-              <HeaderNavMobileLink to={"/#contact"}> Contact </HeaderNavMobileLink>
-            </HeaderNavMobileOption>
-
+        <HeaderNavMobileContainer isMenuClicked={isMenuClicked}>
+          <HeaderNavMobileOptions onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              console.log('test')
+              setIsMenuClicked(false)
+            }
+          }}>
+            {mobileOptions}
             <HeaderNavMobileOption>
               <Socials/>
             </HeaderNavMobileOption>

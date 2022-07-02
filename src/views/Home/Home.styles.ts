@@ -115,7 +115,7 @@ export const HomeProjectsContainer = styled.div`
     grid-template-columns: repeat(4, auto);
   }
 `
-export const HomeFormSectionContainer = styled.div`
+export const HomeTopSectionContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: calc(100% - 40px);

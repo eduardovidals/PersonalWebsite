@@ -68,8 +68,8 @@ export const HeaderTitleContainer = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  position: fixed; 
-  font-size: 2.5rem;
+  position: fixed;
+  font-size: 40px;
   letter-spacing: 3px;
   width: 95%;
   z-index: 1;
@@ -85,7 +85,7 @@ export const HeaderTitleText = styled(Link)`
   top: 15px;
   left: 15px;
   position: fixed;
-  font-size: 2.5rem;
+  font-size: 40px;
   animation: ${HeaderTitleAnimation} 1.5s ease;
   letter-spacing: 3px;
   font-weight: bold;
@@ -104,7 +104,7 @@ export const HeaderMenu = styled.div`
   flex-direction: column;
   row-gap: 6px;
   z-index: 2;
-  top: 25px;
+  top: 26px;
   right: 15px;
 `
 
@@ -168,8 +168,7 @@ export const HeaderNavMobileOptions = styled.ul`
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin: 80px 0;
-  height: calc(100vh - 160px);
+  height: 100vh;
   list-style: none;
   row-gap: 30px;
   font-size: 1.5rem;

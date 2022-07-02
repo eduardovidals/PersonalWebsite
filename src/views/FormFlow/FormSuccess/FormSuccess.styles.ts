@@ -20,7 +20,7 @@ export const FormSuccessIconContainer = styled.div`
 
 export const FormSuccessIcon = styled.div`
   margin-top: 10px;
-  font-size: 4rem;
+  font-size: 64px;
 `
 
 export const FormSuccessHeader = styled.h2`

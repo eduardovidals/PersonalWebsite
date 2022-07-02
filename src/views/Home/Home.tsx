@@ -1,6 +1,14 @@
 import {
-  HomeSectionContainer, HomeSectionHeader, HomeAboutMeText, HomeAboutMeTextContainer, HomeTitleContainer,
-  HomeTitleText, HomeSkillsContainer, HomeProjectsContainer, HomeProjectsSectionContainer, HomeFormSectionContainer
+  HomeSectionContainer,
+  HomeSectionHeader,
+  HomeAboutMeText,
+  HomeAboutMeTextContainer,
+  HomeTitleContainer,
+  HomeTitleText,
+  HomeSkillsContainer,
+  HomeProjectsContainer,
+  HomeProjectsSectionContainer,
+  HomeTopSectionContainer
 } from "views/Home/Home.styles";
 import Typed from "react-typed";
 import React, {useEffect, useRef, useState} from "react";
@@ -27,20 +35,31 @@ function Home() {
 
   const count = useAppSelector(state => state.header);
   const formScreen = useAppSelector(state => state.formScreen);
-  const titleRef = useRef<HTMLDivElement>(null);
-  const aboutRef = useRef<HTMLDivElement>(null);
+  const aboutContainerRef = useRef<HTMLDivElement>(null);
+  const aboutHeaderRef = useRef<HTMLDivElement>(null);
+  const skillsHeaderRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(true);
+  const [isVisibleAbout, setIsVisibleAbout] = useState(false);
 
   useEffect(() => {
     Aos.init();
-
     document.addEventListener("scroll", () => {
-      if (!aboutRef.current) return;
+      if (!aboutContainerRef.current) return;
+      if (!aboutHeaderRef.current) return;
+      if (!skillsHeaderRef.current) return;
 
-      if (aboutRef.current.getBoundingClientRect().top - 20 <= window.innerHeight) {
+      if (aboutHeaderRef.current.getBoundingClientRect().top - 20 <= window.innerHeight) {
         setIsVisible(false);
       } else {
         setIsVisible(true);
+      }
+
+      if (aboutContainerRef.current.getBoundingClientRect().bottom - 50 >= window.innerHeight
+      || skillsHeaderRef.current.getBoundingClientRect().top - 20 <= window.innerHeight
+      ) {
+        setIsVisibleAbout(false);
+      } else {
+        setIsVisibleAbout(true);
       }
     });
   }, [])
@@ -78,14 +97,16 @@ function Home() {
 
   return (
     <Main>
-      <HomeTitleContainer style={{height: containerHeight.toString() + 'px'}} id={"home"} ref={titleRef}>
+      <HomeTitleContainer style={{height: containerHeight}} id={"home"}>
         {renderTypedComponent()}
-        <a className={`ca3-scroll-down-link ca3-scroll-down-arrow ${!isVisible ? 'fade' : ''}`} href={"#about"}/>
+        {isVisible &&
+          <a className={`ca3-scroll-down-link ca3-scroll-down-arrow ${!isVisible ? 'fade' : ''}`} href={"#about"}/>
+        }
       </HomeTitleContainer>
 
-      <HomeSectionContainer id={"about"}>
+      <HomeSectionContainer id={"about"} ref={aboutContainerRef} style={{height: containerHeight}}>
         <HomeAboutMeTextContainer>
-          <HomeSectionHeader ref={aboutRef}> About me </HomeSectionHeader>
+          <HomeSectionHeader ref={aboutHeaderRef}> About me </HomeSectionHeader>
           <HomeAboutMeText data-aos="fade-up" data-aos-duration={2000}>
             I am currently working as a Software Engineer Intern at PGIM. I am also the Director of the Software
             Development Club at NJCU, where we help students gain an insight of modern technologies and best
@@ -99,10 +120,13 @@ function Home() {
             Scroll down to check out my technical skills and personal projects! 😊
           </HomeAboutMeText>
         </HomeAboutMeTextContainer>
+        {isVisibleAbout &&
+          <a className={`ca3-scroll-down-link ca3-scroll-down-arrow ${!isVisibleAbout ? 'fade' : ''}`} href={"#skills"}/>
+        }
       </HomeSectionContainer>
 
-      <HomeSectionContainer id={'skills'}>
-        <HomeSectionHeader> Technical Skills </HomeSectionHeader>
+      <HomeTopSectionContainer id={'skills'}>
+        <HomeSectionHeader ref={skillsHeaderRef}> Technical Skills </HomeSectionHeader>
         <HomeSkillsContainer>
           <Skill aos={'fade-right-skill'} img={Images.javaLogo} skill={'Java'}/>
           <Skill aos={'fade-left-skill'} img={Images.cppLogo} skill={'C++'}/>
@@ -113,7 +137,7 @@ function Home() {
           <Skill aos={'fade-right-skill'} img={Images.pythonLogo} skill={'Python'}/>
           <Skill aos={'fade-left-skill'} img={Images.swaggerLogo} skill={'REST APIs'}/>
         </HomeSkillsContainer>
-      </HomeSectionContainer>
+      </HomeTopSectionContainer>
 
       <HomeProjectsSectionContainer id={'projects'}>
         <HomeSectionHeader> Projects </HomeSectionHeader>
@@ -122,9 +146,9 @@ function Home() {
         </HomeProjectsContainer>
       </HomeProjectsSectionContainer>
 
-      <HomeFormSectionContainer id={'contact'}>
+      <HomeTopSectionContainer id={'contact'}>
         {showScreen(formScreen)}
-      </HomeFormSectionContainer>
+      </HomeTopSectionContainer>
     </Main>
   )
 }
