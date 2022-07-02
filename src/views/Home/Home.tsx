@@ -8,7 +8,7 @@ import {
   HomeSkillsContainer,
   HomeProjectsContainer,
   HomeProjectsSectionContainer,
-  HomeTopSectionContainer
+  HomeFormSectionContainer, HomeSkillsSectionContainer
 } from "views/Home/Home.styles";
 import Typed from "react-typed";
 import React, {useEffect, useRef, useState} from "react";
@@ -125,7 +125,7 @@ function Home() {
         }
       </HomeSectionContainer>
 
-      <HomeTopSectionContainer id={'skills'}>
+      <HomeSkillsSectionContainer id={'skills'}>
         <HomeSectionHeader ref={skillsHeaderRef}> Technical Skills </HomeSectionHeader>
         <HomeSkillsContainer>
           <Skill aos={'fade-right-skill'} img={Images.javaLogo} skill={'Java'}/>
@@ -137,7 +137,7 @@ function Home() {
           <Skill aos={'fade-right-skill'} img={Images.pythonLogo} skill={'Python'}/>
           <Skill aos={'fade-left-skill'} img={Images.swaggerLogo} skill={'REST APIs'}/>
         </HomeSkillsContainer>
-      </HomeTopSectionContainer>
+      </HomeSkillsSectionContainer>
 
       <HomeProjectsSectionContainer id={'projects'}>
         <HomeSectionHeader> Projects </HomeSectionHeader>
@@ -146,9 +146,9 @@ function Home() {
         </HomeProjectsContainer>
       </HomeProjectsSectionContainer>
 
-      <HomeTopSectionContainer id={'contact'}>
+      <HomeFormSectionContainer id={'contact'}>
         {showScreen(formScreen)}
-      </HomeTopSectionContainer>
+      </HomeFormSectionContainer>
     </Main>
   )
 }

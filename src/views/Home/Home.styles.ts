@@ -75,6 +75,14 @@ export const HomeAboutMeText = styled.p`
   }
 `
 
+export const HomeSkillsSectionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 40px);
+  align-items: center;
+  padding: 100px 20px 100px 20px;
+`
+
 export const HomeSkillsContainer = styled.div`
   display: grid;
   justify-content: center;
@@ -115,7 +123,8 @@ export const HomeProjectsContainer = styled.div`
     grid-template-columns: repeat(4, auto);
   }
 `
-export const HomeTopSectionContainer = styled.div`
+
+export const HomeFormSectionContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: calc(100% - 40px);
