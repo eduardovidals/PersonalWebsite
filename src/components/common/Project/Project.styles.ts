@@ -74,7 +74,8 @@ export const ProjectReadMoreArrowContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px;
+  height: 100%;
+  padding: 0 10px;
   background-color: #273448;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;

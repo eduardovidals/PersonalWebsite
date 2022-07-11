@@ -82,7 +82,8 @@ export const HomeSkillsSectionContainer = styled.div`
   min-height: 100vh;
   box-sizing: border-box;
   align-items: center;
-  padding: 100px 20px 100px 20px;
+  padding-top: 100px;
+  margin-top: -100px;
 `
 
 export const HomeSkillsSection = styled.div`
@@ -115,7 +116,6 @@ export const HomeProjectsSectionContainer = styled.div`
   justify-content: center;
   align-items: center;
   padding-top: 100px;
-  overflow: hidden;
 `
 
 export const HomeProjectsContainer = styled.div`
