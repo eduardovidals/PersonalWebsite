@@ -31,6 +31,10 @@ export const HomeTitleText = styled.h1`
   }
 `
 
+export const HomeTitleTyped = styled.span`
+  color: ${props => props.theme.colors.hover};
+`
+
 export const HomeSectionContainer = styled.div`
   display: flex;
   flex-direction: column;

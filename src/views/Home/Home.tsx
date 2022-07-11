@@ -8,7 +8,7 @@ import {
   HomeSkillsContainer,
   HomeProjectsContainer,
   HomeProjectsSectionContainer,
-  HomeFormSectionContainer, HomeSkillsSectionContainer, HomeSkillsSection
+  HomeFormSectionContainer, HomeSkillsSectionContainer, HomeSkillsSection, HomeTitleTyped
 } from "views/Home/Home.styles";
 import Typed from "react-typed";
 import React, {useEffect, useRef, useState} from "react";
@@ -82,9 +82,9 @@ function Home() {
 
     return (
       <HomeTitleText> Hello, I'm Eduardo, a&nbsp;
-        <span>
+        <HomeTitleTyped>
           <Typed strings={typedStrings} typeSpeed={40} backSpeed={50} loop={true} startDelay={1000}/>
-        </span>
+        </HomeTitleTyped>
       </HomeTitleText>
     )
   }
