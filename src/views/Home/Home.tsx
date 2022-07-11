@@ -8,7 +8,7 @@ import {
   HomeSkillsContainer,
   HomeProjectsContainer,
   HomeProjectsSectionContainer,
-  HomeFormSectionContainer, HomeSkillsSectionContainer
+  HomeFormSectionContainer, HomeSkillsSectionContainer, HomeSkillsSection
 } from "views/Home/Home.styles";
 import Typed from "react-typed";
 import React, {useEffect, useRef, useState} from "react";
@@ -126,17 +126,19 @@ function Home() {
       </HomeSectionContainer>
 
       <HomeSkillsSectionContainer id={'skills'}>
-        <HomeSectionHeader ref={skillsHeaderRef}> Technical Skills </HomeSectionHeader>
-        <HomeSkillsContainer>
-          <Skill aos={'fade-right-skill'} img={Images.javaLogo} skill={'Java'}/>
-          <Skill aos={'fade-left-skill'} img={Images.cppLogo} skill={'C++'}/>
-          <Skill aos={'fade-right-skill'} img={Images.htmlLogo} skill={'HTML'}/>
-          <Skill aos={'fade-left-skill'} img={Images.cssLogo} skill={'CSS'}/>
-          <Skill aos={'fade-right-skill'} img={Images.reactLogo} skill={'React'}/>
-          <Skill aos={'fade-left-skill'} img={Images.typescriptLogo} skill={'Typescript'}/>
-          <Skill aos={'fade-right-skill'} img={Images.pythonLogo} skill={'Python'}/>
-          <Skill aos={'fade-left-skill'} img={Images.swaggerLogo} skill={'REST APIs'}/>
-        </HomeSkillsContainer>
+        <HomeSkillsSection>
+          <HomeSectionHeader ref={skillsHeaderRef}> Technical Skills </HomeSectionHeader>
+          <HomeSkillsContainer>
+            <Skill aos={'fade-right-skill'} img={Images.javaLogo} skill={'Java'}/>
+            <Skill aos={'fade-left-skill'} img={Images.cppLogo} skill={'C++'}/>
+            <Skill aos={'fade-right-skill'} img={Images.htmlLogo} skill={'HTML'}/>
+            <Skill aos={'fade-left-skill'} img={Images.cssLogo} skill={'CSS'}/>
+            <Skill aos={'fade-right-skill'} img={Images.reactLogo} skill={'React'}/>
+            <Skill aos={'fade-left-skill'} img={Images.typescriptLogo} skill={'Typescript'}/>
+            <Skill aos={'fade-right-skill'} img={Images.pythonLogo} skill={'Python'}/>
+            <Skill aos={'fade-left-skill'} img={Images.swaggerLogo} skill={'REST APIs'}/>
+          </HomeSkillsContainer>
+        </HomeSkillsSection>
       </HomeSkillsSectionContainer>
 
       <HomeProjectsSectionContainer id={'projects'}>

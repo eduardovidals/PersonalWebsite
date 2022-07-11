@@ -78,9 +78,19 @@ export const HomeAboutMeText = styled.p`
 export const HomeSkillsSectionContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: calc(100% - 40px);
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
   align-items: center;
   padding: 100px 20px 100px 20px;
+`
+
+export const HomeSkillsSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
 `
 
 export const HomeSkillsContainer = styled.div`
