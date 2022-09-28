@@ -11,5 +11,5 @@ export const homeSlice = createSlice({
 })
 
 export const {increment} = homeSlice.actions;
-
+  
 export default homeSlice.reducer;

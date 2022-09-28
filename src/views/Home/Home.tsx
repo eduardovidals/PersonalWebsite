@@ -1,13 +1,6 @@
 import {
-  HomeSectionContainer,
-  HomeSectionHeader,
-  HomeAboutMeText,
-  HomeAboutMeTextContainer,
-  HomeTitleContainer,
-  HomeTitleText,
-  HomeSkillsContainer,
-  HomeProjectsContainer,
-  HomeProjectsSectionContainer,
+  HomeSectionContainer, HomeSectionHeader, HomeAboutMeText, HomeAboutMeTextContainer, HomeTitleContainer,
+  HomeTitleText, HomeSkillsContainer, HomeProjectsContainer, HomeProjectsSectionContainer,
   HomeFormSectionContainer, HomeSkillsSectionContainer, HomeSkillsSection, HomeTitleTyped
 } from "views/Home/Home.styles";
 import Typed from "react-typed";
@@ -30,36 +23,48 @@ const typedStrings = ["Software Engineer.", "Developer.", "Programmer."];
 function Home() {
   // inner height is used to conform to mobile and desktop views as 100vh does not react well on mobile
   // this ensures that the home typed text is in the middle of the screen for both mobile and desktop
-  const [containerHeight, setContainerHeight] = useState(window.innerHeight);
-  const [width, setWidth] = useState(window.innerWidth);
+  const [containerHeight] = useState(window.innerHeight);
 
   const count = useAppSelector(state => state.header);
   const formScreen = useAppSelector(state => state.formScreen);
   const aboutContainerRef = useRef<HTMLDivElement>(null);
   const aboutHeaderRef = useRef<HTMLDivElement>(null);
   const skillsHeaderRef = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(true);
-  const [isVisibleAbout, setIsVisibleAbout] = useState(false);
+  const titleContainerRef = useRef<HTMLDivElement>(null);
+  const projectsHeaderRef = useRef<HTMLDivElement>(null);
+  const [showTitleArrow, setShowTitleArrow] = useState(false);
+  const [showAboutArrow, setShowAboutArrow] = useState(false);
+  const [showSkillsArrow, setShowSkillsArrow] = useState(false);
 
   useEffect(() => {
     Aos.init();
     document.addEventListener("scroll", () => {
-      if (!aboutContainerRef.current) return;
       if (!aboutHeaderRef.current) return;
       if (!skillsHeaderRef.current) return;
+      if (!aboutContainerRef.current) return;
+      if (!titleContainerRef.current) return;
+      if (!projectsHeaderRef.current) return;
 
       if (aboutHeaderRef.current.getBoundingClientRect().top - 20 <= window.innerHeight) {
-        setIsVisible(false);
+        setShowTitleArrow(false);
       } else {
-        setIsVisible(true);
+        setShowTitleArrow(true);
       }
 
-      if (aboutContainerRef.current.getBoundingClientRect().bottom - 50 >= window.innerHeight
-      || skillsHeaderRef.current.getBoundingClientRect().top - 20 <= window.innerHeight
-      ) {
-        setIsVisibleAbout(false);
+      // titleContainerRef.bottom reaches 0 the more you scroll down, only show arrow
+      // when .bottom is 150px away from the top of the window
+      if (skillsHeaderRef.current.getBoundingClientRect().top <= window.innerHeight ||
+        titleContainerRef.current.getBoundingClientRect().bottom - 150 >= 0) {
+        setShowAboutArrow(false);
       } else {
-        setIsVisibleAbout(true);
+        setShowAboutArrow(true);
+      }
+
+      if (projectsHeaderRef.current.getBoundingClientRect().top <= window.innerHeight
+        || aboutContainerRef.current.getBoundingClientRect().bottom - 100 >= 0) {
+        setShowSkillsArrow(false);
+      } else {
+        setShowSkillsArrow(true);
       }
     });
   }, [])
@@ -97,10 +102,10 @@ function Home() {
 
   return (
     <Main>
-      <HomeTitleContainer style={{height: containerHeight}} id={"home"}>
+      <HomeTitleContainer style={{height: containerHeight}} id={"home"} ref={titleContainerRef}>
         {renderTypedComponent()}
-        {isVisible &&
-          <a className={`ca3-scroll-down-link ca3-scroll-down-arrow ${!isVisible ? 'fade' : ''}`} href={"#about"}/>
+        {showTitleArrow &&
+          <a className={`ca3-scroll-down-link ca3-scroll-down-arrow ${!showTitleArrow ? 'fade' : ''}`} href={"#about"}/>
         }
       </HomeTitleContainer>
 
@@ -120,8 +125,9 @@ function Home() {
             Scroll down to check out my technical skills and personal projects! 😊
           </HomeAboutMeText>
         </HomeAboutMeTextContainer>
-        {isVisibleAbout &&
-          <a className={`ca3-scroll-down-link ca3-scroll-down-arrow ${!isVisibleAbout ? 'fade' : ''}`} href={"#skills"}/>
+        {showAboutArrow &&
+          <a className={`ca3-scroll-down-link ca3-scroll-down-arrow ${!showAboutArrow ? 'fade' : ''}`}
+             href={"#skills"}/>
         }
       </HomeSectionContainer>
 
@@ -139,10 +145,14 @@ function Home() {
             <Skill aos={'fade-left-skill'} img={Images.swaggerLogo} skill={'REST APIs'}/>
           </HomeSkillsContainer>
         </HomeSkillsSection>
+        {showSkillsArrow &&
+          <a className={`ca3-scroll-down-link ca3-scroll-down-arrow ${!showSkillsArrow ? 'fade' : ''}`}
+             href={"#projects"}/>
+        }
       </HomeSkillsSectionContainer>
 
       <HomeProjectsSectionContainer id={'projects'}>
-        <HomeSectionHeader> Projects </HomeSectionHeader>
+        <HomeSectionHeader ref={projectsHeaderRef}> Projects </HomeSectionHeader>
         <HomeProjectsContainer>
           {projects}
         </HomeProjectsContainer>

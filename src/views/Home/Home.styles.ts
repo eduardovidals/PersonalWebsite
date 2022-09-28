@@ -86,8 +86,8 @@ export const HomeSkillsSectionContainer = styled.div`
   min-height: 100vh;
   box-sizing: border-box;
   align-items: center;
-  padding-top: 100px;
-  margin-top: -100px;
+  padding-top: 80px;
+  margin-top: -80px;
 `
 
 export const HomeSkillsSection = styled.div`

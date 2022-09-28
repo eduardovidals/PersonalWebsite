@@ -1,6 +1,6 @@
-import styled, {keyframes} from 'styled-components'
+import styled, {css, keyframes} from 'styled-components'
 import {Link} from "react-router-dom";
-import { HashLink } from 'react-router-hash-link';
+import {HashLink} from 'react-router-hash-link';
 
 export const HeaderContainer = styled.div`
   display: flex;
@@ -47,7 +47,7 @@ export const HeaderTitleAnimation = keyframes`
   }
 `
 
-export const HeaderLink = styled(Link)`   
+export const HeaderLink = styled(Link)`
   text-decoration: none;
   color: ${props => props.theme.colors.text};
 `
@@ -76,6 +76,7 @@ export const HeaderTitleContainer = styled.div`
   font-weight: bold;
   pointer-events: none; // needed to allow scroll events when user scrolls on the typed component
   color: ${props => props.theme.colors.text};
+
   &:hover {
     color: ${props => props.theme.colors.hover}
   }
@@ -92,7 +93,7 @@ export const HeaderTitleText = styled(Link)`
   text-decoration: none;
   color: ${props => props.theme.colors.text};
   z-index: 2;
-  
+
   &:hover {
     color: ${props => props.theme.colors.hover}
   }
@@ -110,6 +111,7 @@ export const HeaderMenu = styled.div`
 
 interface BarProps {
   isMenuClicked?: boolean
+  initialClick?: boolean
 }
 
 export const HeaderMenuBar = styled.div<BarProps>`
@@ -136,27 +138,37 @@ export const HeaderMenuBarThree = styled(HeaderMenuBar)`
   transform: ${props => props.isMenuClicked ? "rotate(45deg) translate(-7px, -8px)" : ""};
 `
 
-export const HeaderNavMobileContainerAnimation = keyframes`
+export const HeaderNavMobileContainerOpenAnimation = keyframes`
   from {
-    left: 100%;
+    left: auto;
   }
-  
+
   to {
     left: 0;
   }
 `
 
+export const HeaderNavMobileContainerCloseAnimation = keyframes`
+  from {
+    left: auto;
+  }
+
+  to {
+    left: 100%;
+  }
+`
+
 export const HeaderNavMobileContainer = styled.nav<BarProps>`
-  display: ${props => props.isMenuClicked ? 'flex' : 'none'};
-  position: fixed;
+  display: flex;
+  position: fixed;  
   height: 100%;
   top: 0;
-  left: 0;
+  left: ${props => props.isMenuClicked ? 0 : '100%'};
   width: 100vw;
   background-color: ${props => props.theme.colors.mobileBackground};
-  animation: ${HeaderNavMobileContainerAnimation} 500ms ease;
   z-index: 2;
-  
+  transition: left 500ms ease;
+
   @media (min-width: 47em) {
     display: none;
   }
