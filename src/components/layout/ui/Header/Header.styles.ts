@@ -138,29 +138,9 @@ export const HeaderMenuBarThree = styled(HeaderMenuBar)`
   transform: ${props => props.isMenuClicked ? "rotate(45deg) translate(-7px, -8px)" : ""};
 `
 
-export const HeaderNavMobileContainerOpenAnimation = keyframes`
-  from {
-    left: auto;
-  }
-
-  to {
-    left: 0;
-  }
-`
-
-export const HeaderNavMobileContainerCloseAnimation = keyframes`
-  from {
-    left: auto;
-  }
-
-  to {
-    left: 100%;
-  }
-`
-
 export const HeaderNavMobileContainer = styled.nav<BarProps>`
   display: flex;
-  position: fixed;  
+  position: fixed;
   height: 100%;
   top: 0;
   left: ${props => props.isMenuClicked ? 0 : '100%'};
@@ -217,7 +197,11 @@ export const HeaderNavOptions = styled.ul`
 
 export const HeaderNavLink = styled(HashLink)`
   text-decoration: none;
-  color: ${props => props.theme.colors.text}
+  color: ${props => props.theme.colors.text};
+
+  &:hover {
+    color: ${props => props.theme.colors.hover}
+  }
 `
 
 export const HeaderNavOption = styled.li`
