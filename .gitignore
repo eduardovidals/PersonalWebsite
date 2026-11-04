@@ -31,3 +31,7 @@ yarn-error.log*
 *.tsbuildinfo
 /test-results/
 /playwright-report/
+
+# Local-only development tools and Next's generated agent instructions.
+/.dev-private/
+/AGENTS.md
