@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import Markdown from 'react-markdown';
 import { author } from '@/config/site';
 import { formatPostDate, getPost, getPosts } from '@/content/blog';
-import { articleProse } from './styles';
+import { articleProse } from '@/components/article-prose';
 
 type PostPageProps = { params: Promise<{ slug: string }> };
 

@@ -32,7 +32,7 @@ export function GET() {
   <title>Field notes — ${escapeXml(author)}</title>
   <link>${escapeXml(siteUrl)}/blog/</link>
   <atom:link href="${escapeXml(siteUrl)}/feed.xml" rel="self" type="application/rss+xml" />
-  <description>Notes on building software by ${escapeXml(author)}.</description>
+  <description>Engineering notes on design systems, reusable software, and visual experiments by ${escapeXml(author)}.</description>
   <language>en</language>
 ${items.join('\n')}
 </channel>

@@ -22,13 +22,13 @@ export function PersonalIntro() {
           Hey, I’m <span className="block text-vidals-accent">Eduardo.</span>
         </h1>
         <p className="mt-5 text-pretty text-lg font-medium sm:text-2xl">
-          At PGIM, I went from publishing Angular components to leading a platform used across
-          twenty applications.
+          I got hooked on design systems at PGIM. A keyboard fix in one shared component meant the
+          next team didn’t have to find and fix the same bug.
         </p>
         <p className="mt-2 max-w-[48ch] text-pretty text-base leading-relaxed text-vidals-muted sm:text-lg">
-          Today I work on accessible design systems at Prudential Financial. I started Software
-          Factory on my own time after untangling AI-generated code that worked but was painful to
-          maintain.
+          I wanted that same head start for APIs, databases, and releases. Later, untangling
+          AI-written code that worked but was hard to change gave me the push to build Software
+          Factory.
         </p>
         <div className="mt-7 flex flex-wrap items-center gap-3">
           <Link
@@ -61,7 +61,7 @@ export function PersonalIntro() {
               <dt className="text-sm text-vidals-muted">On my own time</dt>
               <dd className="mt-1 text-2xl font-medium tracking-tight text-vidals-text sm:text-3xl">
                 <Link
-                  href="/projects/#software-factory"
+                  href="/projects/software-factory/"
                   className="rounded-sm underline-offset-4 hover:text-vidals-accent hover:underline"
                 >
                   Software Factory

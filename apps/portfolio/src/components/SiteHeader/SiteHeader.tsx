@@ -5,7 +5,7 @@ import { signatureMarkId, signaturePath } from '@/components/SignatureIntro/sign
 const links = [
   ['Work', '/projects/'],
   ['Blog', '/blog/'],
-  ['About', '/#about'],
+  ['About', '/about/'],
   ['Contact', '/#contact'],
 ] as const;
 

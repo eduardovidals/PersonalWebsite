@@ -7,7 +7,7 @@ const jobs = [
     start: ['2021-10', 'Oct 2021'],
     end: ['2022-05', 'May 2022'],
     story:
-      'I started out building features in React and React Native. Working on subscriptions meant following a tap on a screen all the way through Stripe and our API. It taught me to look past my own part of the interface.',
+      'I built React Native screens and the REST endpoint behind a leaderboard. It was my first experience owning both sides of a feature.',
   },
   {
     company: 'PGIM',
@@ -15,7 +15,7 @@ const jobs = [
     start: ['2022-06', 'Jun 2022'],
     end: ['2023-07', 'Jul 2023'],
     story:
-      'This was my first taste of building for other developers. I packaged Angular components and services so teams could install them, and wrote Cypress tests for the behavior they relied on.',
+      'I published Angular components and services for other teams. For the first time, the person I was building for was another developer.',
   },
   {
     company: 'PGIM',
@@ -23,7 +23,7 @@ const jobs = [
     start: ['2023-07', 'Jul 2023'],
     end: ['2026-03', 'Mar 2026'],
     story:
-      'I led our department’s move from Angular to React. More than 50 shared components found a home in 20 internal apps. I also led delivery of 15+ full-stack apps using React, .NET, and SQL. Sometimes the best thing I could do for a user wasn’t a change to the screen: it was cutting a critical API’s response time in half.',
+      'I led our department’s move to React and the full-stack framework used across 20 apps. I also led delivery of 15+ applications with React, .NET, and SQL, and helped five teams get comfortable building on the platform.',
   },
   {
     company: 'Prudential Financial',
@@ -31,7 +31,7 @@ const jobs = [
     start: ['2026-03', 'Mar 2026'],
     end: null,
     story:
-      'I maintain and evolve our React and TypeScript design system. My focus is on accessible components that teams can use across applications. I also write examples and Claude Code skills so those same conventions carry through when someone builds with an agent.',
+      'I work on the React and TypeScript design system: accessible components, the examples that teach them, and conventions developers and coding agents can both follow.',
   },
 ] as const;
 
@@ -48,11 +48,15 @@ export function CareerJourney() {
             How I got here
           </h2>
           <p className="mt-5 leading-relaxed text-vidals-muted">
-            I studied computer science at New Jersey City University. While I was interning at PGIM,
-            I ran our software development club and taught its first frontend bootcamp. I still like
-            the moment when an example clicks for someone. Away from the keyboard, you’ll usually
-            find me running.
+            At NJCU I taught our club’s first frontend bootcamp. I still love the moment an example
+            clicks and someone can go build without me.
           </p>
+          <Link
+            href="/about/"
+            className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-sm font-medium text-vidals-accent underline underline-offset-4"
+          >
+            Read my story <span aria-hidden="true">→</span>
+          </Link>
         </div>
         <div className="min-w-0">
           <ol aria-label="Career timeline" className="ms-1.5">
@@ -79,27 +83,6 @@ export function CareerJourney() {
               </li>
             ))}
           </ol>
-          <aside
-            aria-labelledby="factory-journey"
-            className="mt-8 rounded-2xl bg-vidals-surface px-5 py-5 sm:px-7"
-          >
-            <h3 id="factory-journey" className="font-semibold">
-              Outside my day job
-            </h3>
-            <p className="mt-2 max-w-[59ch] leading-relaxed text-vidals-muted">
-              An anniversary gift and an order-entry dashboard have little in common. I built both
-              with coding agents, using the same project structure and conventions. The agents
-              didn’t need to invent a new way to build each feature. That’s the idea behind{' '}
-              <Link
-                href="/projects/#software-factory"
-                className="rounded-sm font-medium text-vidals-accent underline underline-offset-4"
-              >
-                Software Factory
-              </Link>
-              : give agents a foundation to work from, and leave the next engineer with code they
-              can understand, test, and change.
-            </p>
-          </aside>
         </div>
       </div>
     </section>

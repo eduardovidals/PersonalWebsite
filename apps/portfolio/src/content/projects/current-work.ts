@@ -4,6 +4,7 @@ interface WorkSnapshot {
   id: string;
   title: string;
   description: string;
+  href?: string;
   stack: readonly ToolName[];
   ai?: readonly { kind: string; tools: readonly ToolName[]; note: string }[];
 }
@@ -12,8 +13,9 @@ interface WorkSnapshot {
 export const softwareFactory: WorkSnapshot = {
   id: 'software-factory',
   title: 'Software Factory',
+  href: '/projects/software-factory/',
   description:
-    'I use NestJS with Fastify for the API and Kysely to query PostgreSQL. The database keeps the history of a change; a separate Go runner builds and tests it. I can try the result in a preview before approving a local release. I’m interested in the next change, too: when a dependency needs an update, what might break, and how would we know?',
+    'My independent project grew out of supporting other engineers. I want a business to be able to explain what it needs, understand the tradeoffs, and own the result. A new engineer should be able to pick up the software and see why it works the way it does.',
   stack: ['TypeScript', 'React', 'NestJS', 'Fastify', 'PostgreSQL', 'Kysely', 'Go', 'gRPC'],
   ai: [
     {
@@ -35,7 +37,7 @@ export const currentWork: readonly WorkSnapshot[] = [
     id: 'pgim-platform',
     title: 'PGIM application platform',
     description:
-      'The shared platform I helped teams adopt as we moved from Angular to React. My work included the component library, full-stack app tooling, and onboarding. The internal apps used the company’s existing Kerberos sign-in.',
+      'I led our department’s move from Angular to React and helped teams use the platform on real .NET and SQL apps. A single command set up a full-stack project; Storybook examples and onboarding guides helped engineers take it from there. The apps used the company’s existing Kerberos sign-in.',
     stack: [
       'React',
       'TypeScript',
@@ -50,9 +52,9 @@ export const currentWork: readonly WorkSnapshot[] = [
   },
   {
     id: 'design-system',
-    title: 'Design-system tooling',
+    title: 'Design systems at Prudential',
     description:
-      'Shared, accessible React components and the checks teams use when they change them.',
+      'My focus at Prudential Financial is the React and TypeScript design system. I care as much about how a control feels to someone using a keyboard as how easy it is for a developer to use it correctly.',
     stack: ['React', 'TypeScript', 'GitHub Actions'],
     ai: [
       {
@@ -66,7 +68,7 @@ export const currentWork: readonly WorkSnapshot[] = [
     id: 'market-data',
     title: 'Market data dashboard',
     description:
-      'An engineering assessment: compare instruments on a chart while the C# API calculates the historical statistics.',
+      'A chart can make two instruments look similar even when their histories differ. For this assessment I built the React comparisons and the C# API that calculates the statistics behind them.',
     stack: [
       'React',
       'TypeScript',
@@ -89,7 +91,7 @@ export const currentWork: readonly WorkSnapshot[] = [
     id: 'order-entry',
     title: 'Order entry dashboard',
     description:
-      'An engineering assessment pairing an order form and price lookup with an API that validates and stores orders.',
+      'An order form needs fast price feedback, but the server still has to decide what it can accept. I built both sides for this assessment, down to the database that keeps the order.',
     stack: [
       'React',
       'TanStack Router',
@@ -105,7 +107,7 @@ export const currentWork: readonly WorkSnapshot[] = [
     id: 'anniversary',
     title: 'Anniversary experience',
     description:
-      'A personal gift built as an interactive story, with a 3D opening and animated transitions between memories.',
+      'For our anniversary I wanted to give someone a website they could experience, not a gallery to scroll past. A 3D opening leads into an animated story made from our memories.',
     stack: [
       'React',
       'Vite',
@@ -121,7 +123,7 @@ export const currentWork: readonly WorkSnapshot[] = [
     id: 'portfolio',
     title: 'This portfolio',
     description:
-      'A statically exported portfolio and blog. The toolkit and case studies are readable without JavaScript.',
+      'My corner of the web for writing, experiments, and the work behind them. I kept my hand-drawn initials and typing effect, but neither has to run for you to read or navigate the site.',
     stack: ['Next.js', 'React Aria Components', 'Tailwind CSS', 'Nx', 'Playwright', 'Netlify'],
     ai: [
       {

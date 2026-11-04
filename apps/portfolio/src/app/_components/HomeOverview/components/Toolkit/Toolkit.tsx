@@ -17,6 +17,10 @@ export function Toolkit() {
         My toolkit
       </h2>
       <div className="max-w-4xl">
+        <p className="mb-4 max-w-[58ch] leading-relaxed text-vidals-muted">
+          I’ve shipped React, .NET, and SQL applications at PGIM. For my own backend work these
+          days, I like NestJS on Fastify and writing PostgreSQL queries with Kysely.
+        </p>
         <ToolChips tools={featuredTools} label="Everyday tools" />
         <h3 className="mt-6 mb-2.5 text-sm font-semibold text-vidals-muted">AI & coding agents</h3>
         <ToolChips tools={aiTools} label="AI tools" />

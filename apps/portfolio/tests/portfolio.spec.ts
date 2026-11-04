@@ -43,8 +43,10 @@ test('every indexed page is a real, canonical HTML document', async ({ request }
   expect(paths).toEqual(
     expect.arrayContaining([
       '/',
+      '/about/',
       '/blog/',
       '/projects/',
+      '/projects/software-factory/',
       ...[
         'props',
         'benev',
@@ -69,11 +71,14 @@ test('every indexed page is a real, canonical HTML document', async ({ request }
   }
   expect(titles.size).toBe(urls.length);
   const feed = await (await request.get('/feed.xml')).text();
-  for (const post of urls.filter(
+  const feedItems = Array.from(
+    feed.matchAll(/<item>([\s\S]*?)<\/item>/g),
+    (item) => item[1].match(/<link>([^<]+)<\/link>/)?.[1],
+  );
+  const posts = urls.filter(
     (url) => url.pathname.startsWith('/blog/') && url.pathname !== '/blog/',
-  )) {
-    expect(feed).toContain(post.href);
-  }
+  );
+  expect(feedItems.sort()).toEqual(posts.map((url) => url.href).sort());
   expect((await request.get('/not-a-project/')).status()).toBe(404);
 });
 
@@ -122,10 +127,13 @@ test('the greeting, toolkit, navigation and full blog posts work without JavaScr
     await expect(api).toBeHidden();
     await expect(prisma).toBeHidden();
     await expect(everyday).toBeVisible();
-    await page
-      .getByRole('navigation', { name: 'Primary' })
-      .getByRole('link', { name: 'Blog' })
-      .click();
+    const primaryNav = page.getByRole('navigation', { name: 'Primary' });
+    await primaryNav.getByRole('link', { name: 'About', exact: true }).click();
+    await expect(page).toHaveURL(/\/about\/$/);
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+      'From design systems to Software Factory',
+    );
+    await primaryNav.getByRole('link', { name: 'Blog' }).click();
     await expect(page.getByRole('heading', { level: 1, name: 'Blog', exact: true })).toBeVisible();
     await page.getByRole('link', { name: 'The search is not the path' }).click();
     await expect(
@@ -135,6 +143,13 @@ test('the greeting, toolkit, navigation and full blog posts work without JavaScr
   } finally {
     await page.close();
   }
+});
+
+test('the homepage featured project opens the Software Factory case study', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('link', { name: 'Why I’m building Software Factory', exact: true }).click();
+  await expect(page).toHaveURL(/\/projects\/software-factory\/$/);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Software Factory');
 });
 
 test('technology chips resolve to local marks and preserve each project’s own stack', async ({
@@ -302,8 +317,10 @@ test('small screens fit the page and core templates have accessible semantics', 
   await page.setViewportSize({ width: 375, height: 812 });
   for (const path of [
     '/',
+    '/about/',
     '/projects/',
     '/projects/benev/',
+    '/projects/software-factory/',
     '/blog/',
     '/blog/the-search-is-not-the-path/',
   ]) {

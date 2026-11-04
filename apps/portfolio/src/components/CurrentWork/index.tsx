@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { currentWork } from '@/content/projects/current-work';
 import { ToolChips } from '@/components/ToolChips';
 
@@ -16,7 +17,17 @@ export function CurrentWork() {
             className="min-w-0 border-t border-vidals-border/25 pt-4"
           >
             <h3 id={`work-${work.id}`} className="text-xl font-semibold tracking-tight">
-              {work.title}
+              {work.href ? (
+                <Link
+                  href={work.href}
+                  className="rounded-sm text-vidals-accent underline underline-offset-4"
+                >
+                  {work.title}
+                  <span aria-hidden="true"> ↗</span>
+                </Link>
+              ) : (
+                work.title
+              )}
             </h3>
             <p className="mt-2 mb-4 max-w-[54ch] text-sm leading-relaxed text-vidals-muted">
               {work.description}

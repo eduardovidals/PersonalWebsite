@@ -2,11 +2,11 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { CurrentWork } from '@/components/CurrentWork';
 import { ToolChips } from '@/components/ToolChips';
-import { imagePath, projectHref, projects } from '@/content/projects';
+import { projectHref, projects } from '@/content/projects';
 import { Arrow, Cover } from './archive-parts';
 
 const description =
-  'Current builds from Eduardo Vidals and six archived case studies covering mobile apps, web products, algorithms, and computer graphics.';
+  'Explore Eduardo’s independent Software Factory project, his professional work at PGIM and Prudential, and his early mobile apps and visual experiments.';
 
 export const metadata: Metadata = {
   title: 'Projects',
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     title: 'Projects · Eduardo Vidals',
     description,
     url: '/projects/',
-    images: [{ url: imagePath('props-ad-parents'), alt: projects[0].coverAlt }],
+    images: ['/social-card.png'],
   },
 };
 
@@ -28,8 +28,8 @@ export default function ProjectsPage() {
       <header>
         <h1 className="text-5xl font-semibold tracking-tight sm:text-6xl">Projects</h1>
         <p className="mt-4 max-w-[52ch] text-lg leading-relaxed text-vidals-muted">
-          What I’m building now, followed by six past projects from my internship at Smarttwigs and
-          my time studying algorithms and computer graphics.
+          Some of this work is for other engineers. Some was for one person I love. Here’s what I
+          contributed to each project, what I used, and why it mattered to me.
         </p>
       </header>
       <CurrentWork />

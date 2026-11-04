@@ -18,6 +18,7 @@ export function HomeOverview({ notes }: Readonly<{ notes: readonly PostSummary[]
   return (
     <>
       <PersonalIntro />
+      <CareerJourney />
 
       <section
         id="projects"
@@ -42,18 +43,18 @@ export function HomeOverview({ notes }: Readonly<{ notes: readonly PostSummary[]
               {softwareFactory.title}
             </h3>
             <Link
-              href="/projects/#software-factory"
+              href="/projects/software-factory/"
               className="mt-2 inline-flex min-h-11 items-center gap-2 rounded-sm text-sm font-medium text-vidals-accent underline-offset-4 hover:underline"
             >
-              Explore the stack <Arrow />
+              Why I’m building Software Factory <Arrow />
             </Link>
           </div>
           <div className="min-w-0 space-y-4">
             <p className="max-w-[58ch] leading-relaxed text-vidals-muted">
-              Could a coding agent add a priority filter to a working service desk without breaking
-              the requests already in its database? I built a local system to try it. Owen helps pin
-              down what should change. Iris edits a draft and runs the tests. I review the diff and
-              try the actual build before deciding whether to release it.
+              A small business shouldn’t need its own platform team to own good software. And a team
+              that already knows how to build it shouldn’t have to start over on every app. I’m
+              building Factory for both: reuse what engineers have learned, keep the business’s
+              decisions with the code, and make the software easier to change years from now.
             </p>
             <ToolChips
               label={`Tools used on ${softwareFactory.title}`}
@@ -64,8 +65,6 @@ export function HomeOverview({ notes }: Readonly<{ notes: readonly PostSummary[]
         </article>
         <ProjectShelf />
       </section>
-
-      <CareerJourney />
 
       <Toolkit />
 
@@ -119,8 +118,8 @@ export function HomeOverview({ notes }: Readonly<{ notes: readonly PostSummary[]
               Let’s talk
             </h2>
             <p className="mt-4 max-w-[37ch] leading-relaxed text-vidals-muted sm:text-lg">
-              Want to have a coffee chat or ask me a question about a project? I’d love to hear from
-              you.
+              What do you wish the last person who worked on your app had left you? I’d love to
+              trade stories. Coffee chats and questions about my projects are welcome, too.
             </p>
           </div>
           <ContactForm />

@@ -8,7 +8,7 @@ import './globals.css';
 
 const title = 'Eduardo Vidals — Full-Stack Software Engineer';
 const description =
-  'Eduardo Vidals works on accessible design systems at Prudential Financial. Explore his full-stack work at PGIM and his independent project, Software Factory.';
+  'Eduardo Vidals is a full-stack engineer working on accessible design systems at Prudential Financial and on Software Factory, his independent project for building software businesses can own and maintain.';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

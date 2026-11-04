@@ -20,7 +20,7 @@ export const projects: readonly Project[] = [
     category: 'Product engineering',
     context: 'Smarttwigs internship',
     description:
-      'Building the APIs, mobile screens, and subscription checkout behind a team recognition app.',
+      'I learned REST by building a leaderboard people could actually use, alongside mobile screens and subscription checkout.',
     stack: ['React Native', 'React', 'Redux', 'TypeScript', 'REST APIs', 'Stripe'],
     cover: 'props-ad-parents',
     coverAlt: 'Artwork from Props showing a family alongside the words “Rewarding good behavior!”',
@@ -32,7 +32,7 @@ export const projects: readonly Project[] = [
     category: 'Product engineering',
     context: 'Smarttwigs internship',
     description:
-      'Designing a reusable plan carousel and integrating Stripe checkout for a social impact platform.',
+      'I built the carousel for choosing a membership plan and connected the choice to Stripe checkout.',
     stack: ['React', 'Redux', 'TypeScript', 'Styled Components', 'Stripe'],
     cover: 'benev-home',
     coverAlt: 'Benev’s welcome screen, with an illustrated sidebar and a choice of account types.',
@@ -43,7 +43,8 @@ export const projects: readonly Project[] = [
     title: 'Sorting Visualizer',
     category: 'Algorithm visualization',
     context: 'AlgoVisual',
-    description: 'Turning Merge Sort, Quick Sort, and Heap Sort into step-by-step animations.',
+    description:
+      'Three algorithms can finish with the same sorted list. I animated the steps so you can see the different work each one does.',
     stack: ['React', 'TypeScript', 'HTML', 'CSS'],
     cover: 'sorting-visualizer',
     coverAlt: 'Uneven blue bars represent values in an array before they are sorted.',
@@ -54,7 +55,7 @@ export const projects: readonly Project[] = [
     category: 'Algorithm visualization',
     context: 'AlgoVisual',
     description:
-      'Exploring how search algorithms choose a route through walls and weighted terrain.',
+      'Watch where a search looks before it finds a route. Keep the walls in place, switch algorithms, and see what changes.',
     stack: ['React', 'TypeScript'],
     cover: 'pathfinding-visualizer',
     coverAlt: 'An explored path crosses a square grid, winding between dark walls.',
@@ -65,7 +66,7 @@ export const projects: readonly Project[] = [
     category: 'Computer graphics',
     context: 'NJCU coursework',
     description:
-      'Taking sorting algorithms into a 3D scene that you can walk through as the values move.',
+      'For a computer graphics class, I took my sorting bars off the page and made a scene you could walk through while they moved.',
     stack: ['React', 'Three.js'],
     cover: '3d-sorting-visualizer',
     coverAlt: 'A row of 3D sorting bars casts long shadows across a plane.',
@@ -75,7 +76,8 @@ export const projects: readonly Project[] = [
     title: 'Solar System',
     category: 'Computer graphics',
     context: 'NJCU coursework',
-    description: 'Using orbits, textures, and a movable camera to make a solar system explorable.',
+    description:
+      'I used planets to learn how motion fits together in a 3D scene: a planet can spin on its own axis while it circles the sun.',
     stack: ['React', 'Three.js', 'JavaScript'],
     cover: 'solar-system',
     coverAlt: 'Textured planets orbit a bright sun against a dark star field.',
