@@ -1,0 +1,42 @@
+@import 'tailwindcss' source(none);
+@source "../app";
+@source "../components";
+@theme {
+  --color-ink: #17242c;
+  --color-night: #15252d;
+  --color-paper: #fbf9f2;
+  --color-mist: #f1eee4;
+  --color-line: #c8c7bb;
+  --color-muted: #52605d;
+  --color-accent: #a73c1e;
+  --color-signal: #ff9268;
+  --font-sans: 'Helvetica Neue', Arial, sans-serif;
+  --font-serif: Georgia, 'Times New Roman', serif;
+  --font-mono: ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+@utility shell {
+  width: 100%;
+  max-width: 76rem;
+  margin-inline: auto;
+  padding-inline: clamp(1.15rem, 4vw, 3rem);
+}
+@layer base {
+  html {
+    scroll-padding-top: 1.5rem;
+  }
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+  :focus-visible {
+    outline: 3px solid #1978b2;
+    outline-offset: 4px;
+  }
+  ::selection {
+    background: #f8caad;
+    color: var(--color-ink);
+  }
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+}
