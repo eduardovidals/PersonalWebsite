@@ -22,13 +22,14 @@ export function PersonalIntro() {
           Hey, I’m <span className="block text-vidals-accent">Eduardo.</span>
         </h1>
         <p className="mt-5 text-pretty text-lg font-medium sm:text-2xl">
-          I like knowing what happens after you click Save.
+          At PGIM, I went from publishing Angular components to leading a platform used across
+          twenty applications.
         </p>
         <p className="mt-2 max-w-[48ch] text-pretty text-base leading-relaxed text-vidals-muted sm:text-lg">
-          I got into design systems at PGIM by building components other teams could reuse. Before
-          long I was shipping both sides of the form: the React interface and the .NET services and
-          SQL behind it. At Prudential, my work spans the components people use and the pipelines
-          that ship them.
+          I led the move to React and delivered full-stack apps in .NET and SQL. Today I build
+          design systems and delivery pipelines at Prudential. My independent project, Software
+          Factory, brings that experience to coding agents: they can change a real application and
+          run its tests, and I can review the code and try the build before it ships.
         </p>
         <div className="mt-7 flex flex-wrap items-center gap-3">
           <Link

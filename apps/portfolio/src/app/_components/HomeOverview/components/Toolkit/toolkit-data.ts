@@ -78,13 +78,14 @@ export const toolkit = [
       'Docusaurus',
       'Artifactory',
       'Git',
+      'Jenkins',
       'GitHub Actions',
       'Netlify',
     ],
   },
   {
     title: 'Runners & infrastructure',
-    tools: ['Go', 'gRPC', 'Linux', 'Docker', 'OpenTofu', 'AWS SDK for JavaScript'],
+    tools: ['Go', 'gRPC', 'Linux', 'Docker', 'OpenTofu', 'AWS', 'AWS SDK for JavaScript'],
   },
   {
     title: 'AWS adapters',
@@ -92,7 +93,7 @@ export const toolkit = [
   },
   {
     title: 'Identity & payments',
-    tools: ['WorkOS AuthKit', 'OAuth', 'Stripe'],
+    tools: ['WorkOS AuthKit', 'OAuth', 'Kerberos', 'Stripe'],
   },
   {
     title: 'Other languages',

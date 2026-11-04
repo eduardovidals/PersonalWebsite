@@ -31,7 +31,7 @@ const jobs = [
     start: ['2026-03', 'Mar 2026'],
     end: null,
     story:
-      'I maintain a React and TypeScript design system and build the GitHub Actions pipelines that test and release it. Rebuilding an app on that same system pushed me to test whole workflows, not just individual components. I also write Claude Code skills so an agent working alongside us can follow the same conventions.',
+      'Our CI/CD work moved from Jenkins to GitHub Actions. Today I build the pipelines that test and release our React and TypeScript design system. Rebuilding an app on that system pushed me to test whole workflows, not just components. I also write Claude Code skills so an agent working alongside us can follow the same conventions.',
   },
 ] as const;
 

@@ -32,6 +32,23 @@ export const softwareFactory: WorkSnapshot = {
 export const currentWork: readonly WorkSnapshot[] = [
   softwareFactory,
   {
+    id: 'pgim-platform',
+    title: 'PGIM application platform',
+    description:
+      'The shared platform I helped teams adopt as we moved from Angular to React. My work included the component library, full-stack app tooling, and onboarding. The internal apps used the company’s existing Kerberos sign-in.',
+    stack: [
+      'React',
+      'TypeScript',
+      'Angular',
+      'Nx',
+      'C#',
+      'SQL',
+      'Storybook',
+      'Docusaurus',
+      'Kerberos',
+    ],
+  },
+  {
     id: 'design-system',
     title: 'Design-system tooling',
     description:
