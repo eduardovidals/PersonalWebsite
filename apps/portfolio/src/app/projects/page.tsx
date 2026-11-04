@@ -21,36 +21,46 @@ export const metadata: Metadata = {
 
 export default function ProjectsPage() {
   return (
-    <div className="mx-auto w-full max-w-5xl px-5 py-10 text-vidals-text sm:px-8 sm:py-16">
-      <header className="text-center">
-        <h1 className="text-4xl font-bold sm:text-5xl">My projects</h1>
-        <p className="mx-auto mt-3 max-w-xl leading-relaxed text-vidals-muted sm:text-lg">
+    <div className="shell py-10 text-vidals-text sm:py-16">
+      <header className="grid items-end gap-5 border-b-4 border-vidals-text pb-6 md:grid-cols-[1.3fr_1fr] md:pb-9">
+        <h1 className="text-[clamp(4.25rem,10vw,8.75rem)] leading-[.88] font-black tracking-[-.05em]">
+          Projects
+        </h1>
+        <p className="max-w-[33ch] font-[Georgia,serif] text-xl leading-[1.3] italic sm:text-2xl">
           Apps I worked on at Smarttwigs, plus a few projects from my time studying algorithms and
           computer graphics.
         </p>
       </header>
-      <section aria-label="All projects" className="mt-8 grid gap-6 sm:grid-cols-2">
-        {projects.map((project) => (
-          <article key={project.slug} className="min-w-0 rounded-lg bg-vidals-surface">
+      <section aria-label="All projects">
+        {projects.map((project, index) => (
+          <article key={project.slug} className="border-b border-vidals-text">
             <Link
               href={projectHref(project.slug)}
-              className="group flex h-full flex-col rounded-lg"
+              className="group grid items-center gap-x-5 gap-y-4 py-6 sm:grid-cols-[3rem_minmax(0,1fr)_minmax(0,.8fr)] sm:py-8 lg:gap-x-10"
               aria-labelledby={`project-${project.slug}`}
             >
-              <Cover project={project} />
-              <div className="flex flex-1 flex-col items-center p-5 text-center sm:p-6">
+              <span
+                aria-hidden="true"
+                className="self-start font-mono text-sm tabular-nums text-vidals-accent"
+              >
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <div>
+                <p className="mb-3 text-sm font-medium text-vidals-muted">{project.category}</p>
                 <h2
-                  className="text-xl font-bold group-hover:text-vidals-accent sm:text-2xl"
+                  className="text-[clamp(2.1rem,4.5vw,4.3rem)] leading-[.98] font-bold tracking-[-.055em] group-hover:text-vidals-accent"
                   id={`project-${project.slug}`}
                 >
                   {project.title}
                 </h2>
-                <p className="mt-1 text-sm text-vidals-muted">{project.category}</p>
-                <p className="mt-3 mb-5 leading-relaxed text-vidals-text">{project.description}</p>
-                <span className="mt-auto inline-flex items-center gap-2 rounded-md bg-vidals-deep px-3 py-2 text-sm font-semibold text-vidals-accent">
-                  Read more <Arrow />
+                <p className="mt-3 max-w-[42ch] leading-relaxed text-vidals-muted">
+                  {project.description}
+                </p>
+                <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-vidals-accent underline decoration-1 underline-offset-4">
+                  Read case study <Arrow />
                 </span>
               </div>
+              <Cover project={project} />
             </Link>
           </article>
         ))}

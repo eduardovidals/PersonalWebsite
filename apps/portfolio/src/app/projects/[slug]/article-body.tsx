@@ -21,11 +21,15 @@ const components: Components = {
         {children}
       </div>
     ) : (
-      <p className="my-5">{children}</p>
+      <p className="my-5 first:mt-0">{children}</p>
     );
   },
   h2({ children }) {
-    return <h2 className="mt-9 mb-3 text-2xl font-semibold text-vidals-text">{children}</h2>;
+    return (
+      <h2 className="mt-9 mb-3 text-3xl leading-tight font-bold tracking-tight text-vidals-text">
+        {children}
+      </h2>
+    );
   },
   a({ href, children }) {
     const className = 'text-vidals-accent underline underline-offset-4 hover:decoration-2';
@@ -47,7 +51,7 @@ const components: Components = {
       <pre
         tabIndex={0}
         aria-label="Scrollable code sample"
-        className="my-6 overflow-x-auto rounded-md bg-vidals-deep p-4 font-mono text-sm leading-relaxed text-vidals-text sm:p-5"
+        className="my-6 overflow-x-auto border-s-2 border-vidals-accent bg-vidals-surface p-4 font-mono text-sm leading-relaxed text-vidals-text sm:p-5"
       >
         {children}
       </pre>
@@ -57,7 +61,9 @@ const components: Components = {
     if (typeof src !== 'string' || !src.startsWith('/work/')) return null;
     const name = src.slice('/work/'.length).replace(/\.[\w]+$/, '');
     const caption = (
-      <figcaption className="mt-2 text-sm leading-normal text-vidals-muted">{alt}</figcaption>
+      <figcaption className="mt-2 border-t border-vidals-border pt-2 font-[Georgia,serif] text-sm leading-normal italic text-vidals-muted">
+        {alt}
+      </figcaption>
     );
     if (src.endsWith('.mp4')) {
       return (
@@ -68,7 +74,7 @@ const components: Components = {
             playsInline
             preload="none"
             poster={imagePath(posters[name])}
-            className="aspect-video w-full rounded-md bg-vidals-deep object-contain"
+            className="aspect-video w-full bg-vidals-surface object-contain"
           >
             <source src={src} type="video/mp4" />
             <a href={src}>Download the recording</a>
@@ -86,7 +92,7 @@ const components: Components = {
           width={width}
           height={height}
           unoptimized
-          className="h-auto w-full rounded-md"
+          className="h-auto w-full border border-vidals-border"
         />
         {caption}
       </figure>

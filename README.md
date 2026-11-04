@@ -1,6 +1,6 @@
 # Eduardo Vidals — personal website
 
-[www.eduardovidals.com](https://www.eduardovidals.com) is my portfolio and blog. The greeting types through the same three roles as the original site. It can be paused, finishes on its own and presents a complete sentence with reduced motion or without JavaScript. The work archive keeps the original six project URLs.
+[www.eduardovidals.com](https://www.eduardovidals.com) is my portfolio and blog. The homepage opens with a playable sorting illustration based on my 3D visualizer. Beside it, the role line types through the original three roles; it can be paused, finishes on its own, and stays still with reduced motion or without JavaScript. The work archive keeps the original six project URLs.
 
 ## Run locally
 

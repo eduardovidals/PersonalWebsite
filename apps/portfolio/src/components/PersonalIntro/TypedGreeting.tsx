@@ -34,24 +34,36 @@ export function TypedGreeting() {
     } else setPaused(!paused);
   };
   return (
-    <>
-      <h1 className="text-balance text-[clamp(2.2rem,6.5vw,4.8rem)] leading-[1.13] font-bold tracking-tight">
-        <span className="sr-only">Hello, I’m Eduardo, a Software Engineer.</span>
-        <span aria-hidden="true" className="block">
-          Hello, I’m Eduardo, a
-        </span>
-        <span aria-hidden="true" className="block min-h-[1.2em] text-vidals-accent">
+    <div
+      role="group"
+      aria-label="Role animation"
+      className="mt-5 flex min-h-11 items-center gap-2 sm:mt-7"
+    >
+      <p className="font-mono text-xs font-bold tracking-wide sm:text-sm">
+        <span className="sr-only">Software Engineer.</span>
+        <span aria-hidden="true" className="inline-block min-w-[18ch]">
           {typingFrames[motion ? position : 0].word}
-          <span className="ms-1 inline-block h-[.88em] w-[.055em] align-[-.055em] bg-vidals-accent" />
+          <span className="ms-1 inline-block h-[.88em] w-1.5 align-[-.055em] bg-vidals-accent" />
         </span>
-      </h1>
-      <div className="mt-3 flex min-h-11 justify-center">
-        {motion && (
-          <VidalsButton variant="subtle" onPress={toggle}>
-            {last ? 'Replay typing' : paused ? 'Resume typing' : 'Pause typing'}
-          </VidalsButton>
-        )}
-      </div>
-    </>
+      </p>
+      {motion && (
+        <VidalsButton
+          variant="subtle"
+          onPress={toggle}
+          className="size-11 rounded-full border-transparent p-0 text-vidals-muted"
+          aria-label={last ? 'Replay typing' : paused ? 'Resume typing' : 'Pause typing'}
+        >
+          <svg aria-hidden="true" width="13" height="13" viewBox="0 0 16 16" fill="currentColor">
+            {last ? (
+              <path d="M3 4a6 6 0 1 1-1 7l1.8-.8a4.1 4.1 0 1 0 .5-4.6L6.5 8H1V2.7z" />
+            ) : paused ? (
+              <path d="M4 2l9 6-9 6z" />
+            ) : (
+              <path d="M3 2h3v12H3zm7 0h3v12h-3z" />
+            )}
+          </svg>
+        </VidalsButton>
+      )}
+    </div>
   );
 }

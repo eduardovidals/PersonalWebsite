@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-const greeting = 'Hello, I’m Eduardo, a Software Engineer.';
+const greeting = 'Eduardo Vidals.';
 const typingControls = /^(Pause|Resume|Replay) typing$/;
 
 test('every indexed page is a real, canonical HTML document', async ({ request }) => {
@@ -53,7 +53,9 @@ test('the greeting, navigation and full blog posts work without JavaScript', asy
     await page.goto('http://127.0.0.1:4173/');
     const heading = page.getByRole('heading', { level: 1, name: greeting, exact: true });
     await expect(heading).toBeVisible();
-    await expect(heading.getByText('Software Engineer.', { exact: true })).toBeVisible();
+    await expect(
+      page.getByRole('group', { name: 'Role animation' }).locator('[aria-hidden="true"]').first(),
+    ).toHaveText('Software Engineer.');
     await expect(page.getByRole('button', { name: typingControls })).toHaveCount(0);
     await expect(
       page.getByRole('banner').getByRole('link', { name: 'Eduardo Vidals — home' }),
@@ -83,7 +85,9 @@ test('keyboard control pauses, resumes and replays one finite typing sequence', 
   const heading = page.getByRole('heading', { level: 1 });
   await expect(heading).toHaveAccessibleName(greeting);
   // Keep a reference to the changing visual node, not its initial text.
-  const visual = heading.locator('[aria-hidden="true"]').last();
+  const visual = page
+    .getByRole('group', { name: 'Role animation' })
+    .locator('p [aria-hidden="true"]');
   await expect(visual).toHaveText('Software Engineer.');
   const pause = page.getByRole('button', { name: 'Pause typing', exact: true });
   const resume = page.getByRole('button', { name: 'Resume typing', exact: true });
@@ -141,7 +145,11 @@ test('reduced motion keeps the greeting still; keyboard demo and contact remain 
   await page.goto('/');
   const heading = page.getByRole('heading', { level: 1 });
   await expect(heading).toHaveAccessibleName(greeting);
-  await expect(heading.getByText('Software Engineer.', { exact: true })).toBeVisible();
+  const role = page
+    .getByRole('group', { name: 'Role animation' })
+    .locator('p [aria-hidden="true"]');
+  await expect(role).toBeVisible();
+  await expect(role).toHaveText('Software Engineer.');
   await expect(page.getByRole('button', { name: typingControls })).toHaveCount(0);
   await page.keyboard.press('Tab');
   await expect(page.getByRole('link', { name: 'Skip to content' })).toBeFocused();
@@ -160,7 +168,7 @@ test('reduced motion keeps the greeting still; keyboard demo and contact remain 
     'Replay 1',
   );
   await expect(heading).toHaveAccessibleName(greeting);
-  await expect(heading.getByText('Software Engineer.', { exact: true })).toBeVisible();
+  await expect(role).toHaveText('Software Engineer.');
   await expect(page.getByRole('button', { name: typingControls })).toHaveCount(0);
   await page
     .getByRole('navigation', { name: 'Primary' })

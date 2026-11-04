@@ -56,18 +56,37 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   );
 
   return (
-    <div className="mx-auto w-full max-w-[54rem] px-5 py-10 text-vidals-text sm:px-8 sm:py-16">
+    <div className="shell py-9 text-vidals-text sm:py-14">
       <article>
         <header>
-          <nav aria-label="Breadcrumb" className="text-sm">
+          <nav
+            aria-label="Breadcrumb"
+            className="flex items-center justify-between gap-4 border-b border-vidals-text pb-3 text-sm"
+          >
             <Link
               href="/projects/"
               className="inline-flex items-center gap-2 text-vidals-accent underline-offset-4 hover:underline"
             >
               <Arrow back /> All projects
             </Link>
+            <span className="font-mono text-vidals-muted">
+              {String(index + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
+            </span>
           </nav>
-          <div className="mt-6 text-center">
+          <div className="grid items-end gap-5 py-7 md:grid-cols-[minmax(0,1.3fr)_minmax(0,.85fr)] md:gap-10 md:py-12">
+            <h1 className="text-balance text-[clamp(2.8rem,7vw,6.2rem)] leading-[.95] font-black tracking-[-.045em]">
+              {project.title}
+            </h1>
+            <p className="max-w-[37ch] font-[Georgia,serif] text-xl leading-[1.3] italic sm:text-2xl">
+              {project.description}
+            </p>
+          </div>
+        </header>
+        <figure>
+          <Cover project={project} detail />
+        </figure>
+        <div className="mt-7 grid items-start gap-x-10 gap-y-7 border-t-2 border-vidals-text pt-5 md:mt-10 md:grid-cols-[minmax(8rem,1fr)_minmax(0,3fr)] md:pt-8">
+          <aside aria-label="Project details">
             {project.logo && (
               <Image
                 src={imagePath(project.logo)}
@@ -75,39 +94,30 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 width={mediaDimensions[project.logo][0]}
                 height={mediaDimensions[project.logo][1]}
                 unoptimized
-                className="mx-auto mb-3 h-12 w-auto max-w-28 object-contain"
+                className="mb-4 h-12 w-auto max-w-28 object-contain"
               />
             )}
-            <h1 className="text-3xl font-bold sm:text-4xl">{project.title}</h1>
-            <p className="mx-auto mt-3 max-w-[56ch] text-lg leading-relaxed text-vidals-muted">
-              {project.description}
-            </p>
-          </div>
-        </header>
-        <figure className="mt-6">
-          <Cover project={project} detail />
-        </figure>
-        <aside aria-label="Project details" className="mt-4 rounded-md bg-vidals-surface px-4 py-3">
-          <dl className="grid gap-x-6 gap-y-2 text-sm leading-relaxed sm:grid-cols-[auto_auto_1fr]">
-            {[
-              ['Project type', project.category],
-              ['Context', project.context],
-              ['Built with', project.stack.join(', ')],
-            ].map(([label, value]) => (
-              <div key={label}>
-                <dt className="inline font-semibold sm:block">{label}: </dt>
-                <dd className="inline text-vidals-muted sm:block">{value}</dd>
-              </div>
-            ))}
-          </dl>
-        </aside>
-        <section aria-label="Case study" className="mt-7">
-          <ArticleBody markdown={markdown} />
-        </section>
+            <dl className="grid gap-x-6 gap-y-3 text-sm leading-relaxed sm:grid-cols-3 md:grid-cols-1 md:gap-y-5">
+              {[
+                ['Project type', project.category],
+                ['Context', project.context],
+                ['Built with', project.stack.join(', ')],
+              ].map(([label, value]) => (
+                <div key={label}>
+                  <dt className="font-semibold">{label}</dt>
+                  <dd className="text-vidals-muted">{value}</dd>
+                </div>
+              ))}
+            </dl>
+          </aside>
+          <section aria-label="Case study" className="min-w-0 max-w-[68ch]">
+            <ArticleBody markdown={markdown} />
+          </section>
+        </div>
       </article>
       <nav
         aria-label="More projects"
-        className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-vidals-border pt-5"
+        className="mt-12 flex flex-wrap items-center justify-between gap-3 border-t-2 border-vidals-text pt-4"
       >
         <Link
           href="/projects/"
@@ -117,7 +127,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         </Link>
         <Link
           href={projectHref(next.slug)}
-          className="inline-flex items-center gap-2 text-sm text-vidals-accent underline-offset-4 hover:underline"
+          className="inline-flex items-center gap-2 font-[Georgia,serif] text-2xl italic text-vidals-accent underline-offset-4 hover:underline"
         >
           Next: {next.title} <Arrow />
         </Link>

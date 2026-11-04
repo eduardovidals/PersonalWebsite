@@ -20,7 +20,11 @@ export function Arrow({ back = false }: { back?: boolean }) {
 export function Cover({ project, detail = false }: { project: Project; detail?: boolean }) {
   const [width, height] = mediaDimensions[project.cover];
   return (
-    <div className={`overflow-hidden bg-vidals-deep ${detail ? 'rounded-lg' : 'rounded-t-lg'}`}>
+    <div
+      className={
+        detail ? 'border border-vidals-border bg-vidals-surface' : 'bg-vidals-surface p-3 sm:p-4'
+      }
+    >
       <Image
         src={imagePath(project.cover)}
         alt={detail ? project.coverAlt : ''}
@@ -30,8 +34,8 @@ export function Cover({ project, detail = false }: { project: Project; detail?: 
         loading={detail ? 'eager' : 'lazy'}
         className={
           detail
-            ? 'mx-auto block max-h-[30rem] w-full object-contain'
-            : 'aspect-[16/9] w-full object-cover'
+            ? 'mx-auto block max-h-[37rem] w-full object-contain'
+            : 'aspect-[16/10] w-full object-contain'
         }
       />
     </div>

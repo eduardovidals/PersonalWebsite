@@ -6,14 +6,14 @@
 
 @utility shell {
   width: 100%;
-  max-width: 72rem;
+  max-width: 82rem;
   margin-inline: auto;
   padding-inline: clamp(1.15rem, 4vw, 3rem);
 }
 @layer base {
   html {
     scroll-padding-block-start: 2rem;
-    color-scheme: dark;
+    color-scheme: light;
   }
   body {
     background: var(--color-vidals-background);
@@ -32,49 +32,17 @@
     cursor: pointer;
   }
 }
-/* One short signature, scoped to the desktop header; navigation never moves around it. */
-.signature-name {
-  display: none;
-}
-@media (min-width: 43rem) and (prefers-reduced-motion: no-preference) {
-  .signature {
-    min-width: 15ch;
-  }
+/* Reveal the wordmark without resizing the header or blocking navigation. */
+@media (prefers-reduced-motion: no-preference) {
   .signature-name {
-    display: inline-block;
-    overflow: hidden;
-    white-space: nowrap;
-    width: 0;
-    animation: signature 2.4s both;
+    animation: sign-name 880ms steps(13) both;
   }
-  .signature-mark {
-    animation: initials 2.4s step-end both;
-    overflow: hidden;
-  }
-  @keyframes signature {
-    0% {
-      width: 0;
-      animation-timing-function: steps(13);
+  @keyframes sign-name {
+    from {
+      clip-path: inset(0 100% 0 0);
     }
-    30%,
-    64% {
-      width: 13ch;
-    }
-    64% {
-      animation-timing-function: steps(13);
-    }
-    94%,
-    100% {
-      width: 0;
-    }
-  }
-  @keyframes initials {
-    0% {
-      width: 0;
-    }
-    94%,
-    100% {
-      width: 2ch;
+    to {
+      clip-path: inset(0);
     }
   }
 }

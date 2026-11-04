@@ -39,7 +39,7 @@ export function PathPlate() {
   }
 
   return (
-    <figure className="rounded-b-xl bg-vidals-deep p-5 text-vidals-text">
+    <figure className="my-2 max-w-sm border-l-2 border-vidals-print bg-vidals-paper p-5 text-vidals-text">
       <figcaption className="mb-3">
         <p className="font-semibold">Breadth-first search</p>
         <p className="mt-1 text-sm leading-relaxed text-vidals-muted">
@@ -59,8 +59,8 @@ export function PathPlate() {
         </desc>
         <defs>
           <pattern id="wall-stripes" width="5" height="5" patternUnits="userSpaceOnUse">
-            <rect width="5" height="5" fill="#344a63" />
-            <path d="M0 5L5 0" stroke="#8298ac" />
+            <rect width="5" height="5" fill="#36352f" />
+            <path d="M0 5L5 0" stroke="#9d9a90" />
           </pattern>
         </defs>
         {tiles.map(({ key, x, y, wall, routeAt, visitAt }) => {
@@ -78,25 +78,18 @@ export function PathPlate() {
                   wall
                     ? 'url(#wall-stripes)'
                     : isEndpoint || onRoute
-                      ? '#98d6e8'
+                      ? 'var(--color-vidals-print)'
                       : frame > visitAt
-                        ? '#40739a'
-                        : '#273f5e'
+                        ? '#aeb9f4'
+                        : '#e4e1d5'
                 }
               />
               {isEndpoint ? (
-                <text
-                  x="10"
-                  y="14"
-                  textAnchor="middle"
-                  fill="#14273e"
-                  fontSize="12"
-                  fontWeight="bold"
-                >
+                <text x="10" y="14" textAnchor="middle" fill="#fff" fontSize="12" fontWeight="bold">
                   {key === start ? 'A' : 'B'}
                 </text>
               ) : onRoute ? (
-                <circle cx="10" cy="10" r="2.5" fill="#14273e" />
+                <circle cx="10" cy="10" r="2.5" fill="#fff" />
               ) : null}
             </g>
           );

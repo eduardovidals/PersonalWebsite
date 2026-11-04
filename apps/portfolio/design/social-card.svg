@@ -1,4 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
-  <rect width="1200" height="630" fill="#1e3653"/>
-  <g font-family="Arial,sans-serif" fill="white"><text x="72" y="90" font-size="36" font-weight="700">EV<tspan fill="#98d6e8">_</tspan></text><text x="72" y="300" font-size="76" font-weight="700">Hello, I’m Eduardo, a</text><text x="72" y="400" font-size="76" font-weight="700" fill="#98d6e8">Software Engineer.|</text><text x="74" y="555" font-size="28">Eduardo Vidals · Projects and personal blog</text></g>
+  <rect width="1200" height="630" fill="#f6f4ec"/>
+  <path d="M64 95H1136M64 536H1136" stroke="#20211c" stroke-width="2"/>
+  <g fill="#20211c" font-family="Arial,sans-serif">
+    <text x="65" y="68" font-size="24" font-weight="bold" letter-spacing="3">PERSONAL PORTFOLIO</text>
+    <text x="58" y="300" font-size="142" font-weight="bold" letter-spacing="-8">Eduardo</text>
+    <text x="60" y="434" font-family="Georgia,serif" font-style="italic" font-size="155" fill="#293cba">Vidals.</text>
+    <text x="65" y="590" font-size="26">Software engineer  /  Projects and writing</text>
+  </g>
+  <g transform="translate(748 151)">
+    <path fill="#293cba" d="M0 0h388v316H0z"/>
+    <g stroke="#172777" stroke-width="2">
+      <path fill="#e1d393" d="m45 200 0-74 32 9v74zm58 14v-151l32 9v151zm58 14V126l32 9v102zm58 14V47l32 9v195zm58 14V125l32 9v131z"/>
+      <path fill="#fff2bb" d="m45 126 18-12 32 9-18 12zm58-63 18-12 32 9-18 12zm58 63 18-12 32 9-18 12zm58-79 18-12 32 9-18 12zm58 78 18-12 32 9-18 12z"/>
+      <path fill="#e88b6f" d="m77 135 18-12v74l-18 12zm58-63 18-12v151l-18 12zm58 63 18-12v102l-18 12zm58-79 18-12v195l-18 12zm58 78 18-12v131l-18 12z"/>
+    </g>
+  </g>
 </svg>
