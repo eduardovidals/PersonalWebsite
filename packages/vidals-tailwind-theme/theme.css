@@ -1,0 +1,17 @@
+@plugin "tailwindcss-react-aria-components";
+@theme {
+  --color-vidals-background: #101721;
+  --color-vidals-paper: #1b2737;
+  --color-vidals-deep: #121e2d;
+  --color-vidals-text: #f6faff;
+  --color-vidals-surface: #1b2737;
+  --color-vidals-border: #7289a3;
+  --color-vidals-muted: #bac9da;
+  --color-vidals-accent: #82baff;
+  --color-vidals-print: #82baff;
+  --color-vidals-highlight: #b1dfff;
+  --color-vidals-poster: #263b55;
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Consolas, monospace;
+}

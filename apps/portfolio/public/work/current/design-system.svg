@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480">
+  <defs><linearGradient id="paper" x2="1" y2="1"><stop stop-color="#d6eff2"/><stop offset="1" stop-color="#96c6d7"/></linearGradient><linearGradient id="chip"><stop stop-color="#184777"/><stop offset="1" stop-color="#29649b"/></linearGradient></defs>
+  <path fill="url(#paper)" d="M0 0h800v480H0z"/>
+  <g transform="translate(400 240) rotate(-10)">
+    <rect x="-212" y="-120" width="430" height="254" rx="28" fill="#56839f" opacity=".35"/>
+    <rect x="-220" y="-134" width="430" height="254" rx="28" fill="#f1f8f5"/>
+    <g transform="translate(-172 -81)">
+      <circle cx="23" cy="22" r="29" fill="#173d67"/><circle cx="64" cy="22" r="29" fill="#477fc9"/><circle cx="105" cy="22" r="29" fill="#82c9d5"/><circle cx="146" cy="22" r="29" fill="#eeaa7c"/>
+      <rect x="-8" y="84" width="180" height="68" rx="33" fill="none" stroke="#276cb1" stroke-width="5" stroke-dasharray="8 6"/>
+      <rect x="3" y="95" width="158" height="46" rx="23" fill="url(#chip)"/>
+      <path d="M41 118h76m-12-10 12 10-12 10" fill="none" stroke="#f3fbff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="223" y="1" width="104" height="42" rx="21" fill="#299383"/><circle cx="305" cy="22" r="15" fill="#f1f8f5"/>
+      <g fill="#a1bdc7"><rect x="223" y="85" width="84" height="8" rx="4"/><rect x="223" y="104" width="111" height="8" rx="4"/><rect x="223" y="123" width="67" height="8" rx="4"/></g>
+    </g>
+  </g>
+</svg>

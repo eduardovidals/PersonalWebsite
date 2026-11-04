@@ -1,0 +1,16 @@
+{
+  "name": "@vidals/tailwind-theme",
+  "version": "1.0.0",
+  "private": true,
+  "exports": {
+    ".": "./theme.css",
+    "./theme.css": "./theme.css"
+  },
+  "sideEffects": [
+    "*.css"
+  ],
+  "dependencies": {
+    "tailwindcss": "4.3.4",
+    "tailwindcss-react-aria-components": "2.2.0"
+  }
+}
