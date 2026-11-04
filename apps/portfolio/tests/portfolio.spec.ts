@@ -61,13 +61,25 @@ test('the greeting, toolkit, navigation and full blog posts work without JavaScr
       page.getByRole('banner').getByRole('link', { name: 'Eduardo Vidals — home' }),
     ).toHaveAttribute('href', '/');
     const toolkit = page.getByRole('region', { name: 'My toolkit' });
-    const stateTools = toolkit.getByRole('list', { name: 'Tools for Routing, data & state' });
-    await expect(stateTools).toContainText('TanStack Query');
-    await expect(stateTools).toContainText('Redux');
+    const everyday = toolkit.getByRole('list', { name: 'Everyday tools', exact: true });
+    await expect(
+      everyday.getByRole('listitem').filter({ hasText: /^TanStack Query$/ }),
+    ).toBeVisible();
+    await expect(everyday.getByRole('listitem').filter({ hasText: /^Redux$/ })).toBeVisible();
+    await expect(everyday.getByRole('button').or(everyday.getByRole('link'))).toHaveCount(0);
     const api = toolkit.getByText('APIs & storage', { exact: true });
+    const kysely = toolkit.getByRole('listitem').filter({ hasText: /^Kysely$/ });
+    const more = toolkit.locator('details > summary');
     await expect(api).toBeHidden();
-    await toolkit.locator('summary').press('Enter');
+    await expect(kysely).toBeHidden();
+    await more.press('Enter');
     await expect(api).toBeVisible();
+    await expect(kysely).toBeVisible();
+    await expect(more).toBeFocused();
+    await more.press('Space');
+    await expect(api).toBeHidden();
+    await expect(kysely).toBeHidden();
+    await expect(everyday).toBeVisible();
     await page
       .getByRole('navigation', { name: 'Primary' })
       .getByRole('link', { name: 'Blog' })
