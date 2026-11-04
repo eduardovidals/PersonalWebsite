@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { ToolChips } from '@/components/ToolChips';
+import { HomeSection } from '../../HomeSection';
 import { aiTools, featuredTools, toolkit } from './toolkit-data';
 
 const featuredNames = new Set<string>(featuredTools);
@@ -9,7 +10,7 @@ const moreTools = toolkit
 
 export function Toolkit() {
   return (
-    <section id="skills" aria-labelledby="toolkit-heading" className="shell py-10 sm:py-16">
+    <HomeSection id="skills" labelledBy="toolkit-heading" tone="tinted">
       <h2
         id="toolkit-heading"
         className="mb-5 text-[clamp(2rem,4.8vw,3.4rem)] leading-[1.08] font-semibold tracking-[-.045em] sm:mb-7"
@@ -59,6 +60,6 @@ export function Toolkit() {
           ))}
         </div>
       </details>
-    </section>
+    </HomeSection>
   );
 }

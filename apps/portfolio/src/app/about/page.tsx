@@ -68,8 +68,8 @@ export default function AboutPage() {
         </p>
         <h2>What I build outside work</h2>
         <p>
-          <Link href="/projects/#anniversary">YniBirthday</Link> was an anniversary gift for my
-          girlfriend. I wanted her to open a little 3D world, not another slideshow. My{' '}
+          I made <Link href="/projects/#anniversary">Girlfriend Birthday Gift</Link> so my
+          girlfriend could unwrap a little 3D world on her birthday. My{' '}
           <Link href="/projects/#order-entry">order-entry dashboard</Link> needed almost the
           opposite: a form that got out of the way and a server that wouldn’t accept an invalid
           order.

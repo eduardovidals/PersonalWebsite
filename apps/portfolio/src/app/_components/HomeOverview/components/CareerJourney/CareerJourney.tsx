@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { HomeSection } from '../../HomeSection';
 
 const jobs = [
   {
@@ -37,7 +38,7 @@ const jobs = [
 
 export function CareerJourney() {
   return (
-    <section id="about" aria-labelledby="about-heading" className="shell py-12 sm:py-20">
+    <HomeSection id="about" labelledBy="about-heading">
       <div className="grid items-start gap-9 lg:grid-cols-[.8fr_1.2fr] lg:gap-16">
         <div className="max-w-[42ch]">
           <p className="mb-3 font-mono text-xs text-vidals-accent">My career</p>
@@ -91,6 +92,6 @@ export function CareerJourney() {
           </ol>
         </div>
       </div>
-    </section>
+    </HomeSection>
   );
 }

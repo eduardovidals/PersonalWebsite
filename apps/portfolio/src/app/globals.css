@@ -16,6 +16,9 @@
     scroll-padding-block-start: 2rem;
     color-scheme: dark;
   }
+  html:has(.home-section-nav) {
+    scroll-padding-block-start: 3.75rem;
+  }
   body {
     background: var(--color-vidals-background);
     color: var(--color-vidals-text);

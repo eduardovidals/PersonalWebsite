@@ -156,16 +156,16 @@ export const currentWork: readonly WorkSnapshot[] = [
   },
   {
     id: 'anniversary',
-    title: 'YniBirthday',
+    title: 'Girlfriend Birthday Gift',
     visual: {
       kind: 'capture',
-      alt: 'Pink gift artwork from the anniversary site’s opening sequence.',
-      caption: 'Personal project · opening artwork',
+      alt: 'A pink 3D gift box tied with a burgundy bow, surrounded by flowers and floating hearts.',
+      caption: 'Personal project · 3D opening scene',
       detail: [786, 475],
       wide: [860, 484],
     },
     description:
-      'An anniversary gift I built for my girlfriend: a 3D opening and an animated story told through our memories. Behind it are the same feature folders, shared UI, and code checks I use for work much less romantic than this.',
+      'I made my girlfriend a gift box she could open in her browser. Inside is an animated story of our memories. It’s personal, but the feature folders, shared UI, and checks are the same ones I use on my other projects.',
     stack: [
       'React',
       'Vite',

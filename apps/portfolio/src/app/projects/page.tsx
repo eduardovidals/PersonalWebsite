@@ -28,8 +28,7 @@ export default function ProjectsPage() {
       <header>
         <h1 className="text-5xl font-semibold tracking-tight sm:text-6xl">Projects</h1>
         <p className="mt-4 max-w-[52ch] text-lg leading-relaxed text-vidals-muted">
-          Tools for engineers, experiments from school, and an anniversary gift for one person I
-          love.
+          Tools for engineers, experiments from school, and a birthday gift for one person I love.
         </p>
         <nav
           aria-label="Project collections"
