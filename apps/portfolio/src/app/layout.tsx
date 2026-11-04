@@ -8,7 +8,7 @@ import './globals.css';
 
 const title = 'Eduardo Vidals — Full-Stack Software Engineer';
 const description =
-  'Eduardo Vidals is a full-stack engineer working on DX at Prudential. Explore PInnacle, his PEAQ refactor, and Software Factory, his independent project for software businesses can own and maintain.';
+  'Eduardo Vidals is a full-stack engineer working on PEAQ for Prudential Retirement Strategies. Explore his design systems work and why he’s building Software Factory.';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

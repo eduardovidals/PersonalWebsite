@@ -26,6 +26,32 @@ export function HomeOverview({ notes }: Readonly<{ notes: readonly PostSummary[]
             All projects <Arrow />
           </Link>
         </div>
+        <div className="mb-4 grid sm:grid-cols-2 sm:gap-5">
+          {currentWork
+            .filter(({ id }) => id === 'anniversary' || id === 'peaq')
+            .map((work) => (
+              <Link
+                key={work.id}
+                href={'/projects/#' + work.id}
+                className="group flex items-center gap-4 border-b border-vidals-border/35 py-4 sm:rounded-2xl sm:border sm:p-3 sm:hover:border-vidals-accent"
+                aria-label={'Explore ' + work.title}
+              >
+                <div className="w-20 shrink-0 sm:w-24">
+                  <WorkVisual work={work} compact />
+                </div>
+                <div className="min-w-0">
+                  <h3 className="flex items-center gap-2 text-lg font-semibold group-hover:text-vidals-accent">
+                    {work.title} <Arrow />
+                  </h3>
+                  <p className="mt-1 text-sm text-vidals-muted">
+                    {work.id === 'anniversary'
+                      ? 'A 3D gift box I made for her birthday.'
+                      : 'Structured settlements at Prudential Retirement Strategies.'}
+                  </p>
+                </div>
+              </Link>
+            ))}
+        </div>
         <article
           aria-labelledby="featured-factory"
           className="mb-4 rounded-3xl bg-vidals-deep p-5 sm:p-8"
@@ -48,32 +74,6 @@ export function HomeOverview({ notes }: Readonly<{ notes: readonly PostSummary[]
             </Link>
           </div>
         </article>
-        <div className="mb-4 grid sm:grid-cols-2 sm:gap-5">
-          {currentWork
-            .filter(({ id }) => id === 'anniversary' || id === 'design-system')
-            .map((work) => (
-              <Link
-                key={work.id}
-                href={'/projects/#' + work.id}
-                className="group flex items-center gap-4 border-b border-vidals-border/35 py-4 sm:rounded-2xl sm:border sm:p-3 sm:hover:border-vidals-accent"
-                aria-label={'Explore ' + work.title}
-              >
-                <div className="w-20 shrink-0 sm:w-24">
-                  <WorkVisual work={work} compact />
-                </div>
-                <div className="min-w-0">
-                  <h3 className="flex items-center gap-2 text-lg font-semibold group-hover:text-vidals-accent">
-                    {work.title} <Arrow />
-                  </h3>
-                  <p className="mt-1 text-sm text-vidals-muted">
-                    {work.id === 'anniversary'
-                      ? 'A 3D gift box I made for her birthday.'
-                      : 'Accessible components at Prudential.'}
-                  </p>
-                </div>
-              </Link>
-            ))}
-        </div>
         <details>
           <summary className="w-fit cursor-pointer rounded-md py-3 text-sm font-semibold text-vidals-accent underline-offset-4 hover:underline">
             Browse six early projects and demos

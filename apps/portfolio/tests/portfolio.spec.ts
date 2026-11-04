@@ -93,12 +93,13 @@ test('the greeting, toolkit, navigation and full blog posts work without JavaScr
     await page.getByRole('link', { name: 'How I got here' }).click();
     const journey = page.getByRole('list', { name: 'Career timeline' });
     await expect(journey.getByRole('heading')).toHaveText([
-      'Smarttwigs',
-      'PGIM',
-      'PGIM',
       'Prudential Financial',
+      'PGIM',
+      'PGIM',
+      'Smarttwigs',
     ]);
-    await expect(journey.getByRole('listitem').last()).toContainText('Mar 2026 – Present');
+    await expect(journey.getByRole('listitem').first()).toContainText('Mar 2026 – Present');
+    await expect(journey.getByRole('listitem').first()).toContainText('My current project is PEAQ');
     await expect(
       page.getByRole('group', { name: 'Role animation' }).locator('[aria-hidden="true"]').first(),
     ).toHaveText('Software Engineer.');
@@ -165,6 +166,7 @@ test('project images preserve their subjects and link to the appropriate full ca
     await page.goto('/projects/');
     const cards = page.getByRole('article');
     await expect(cards).toHaveCount(currentWork.length + projects.length);
+    await expect(cards.first().getByRole('heading')).toHaveText('PEAQ');
     for (const card of await cards.all()) {
       const title = (await card.getByRole('heading').innerText()).replace('↗', '').trim();
       const work = currentWork.find((item) => item.title === title);

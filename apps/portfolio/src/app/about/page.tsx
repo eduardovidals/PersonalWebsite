@@ -21,8 +21,9 @@ export default function AboutPage() {
       </h1>
       <div className={`mt-8 ${articleProse}`}>
         <p>
-          I’m a senior software engineer at Prudential, where I work on our design system, DX.
-          Outside work, I’m building Software Factory for small businesses.
+          I’m a senior software engineer at Prudential. My current project is PEAQ, the structured
+          settlements application for Prudential Retirement Strategies. Outside work, I’m building
+          Software Factory for small businesses.
         </p>
         <h2>Getting started at NJCU and Smarttwigs</h2>
         <p>
@@ -58,10 +59,9 @@ export default function AboutPage() {
           follow our conventions when it makes changes to the library.
         </p>
         <p>
-          My latest project at Prudential was PEAQ, the app brokers use for structured settlements
-          and Income Advantage. Its AI-assisted screens loaded data in different ways, so knowing
-          how one worked didn’t help much with the next. I refactored how the screens were organized
-          and how they loaded data so they’d be easier to change.
+          On PEAQ, I work on the screens brokers use for structured settlements. The screens loaded
+          data in different ways, so knowing how one worked didn’t help much with the next. I
+          refactored them to follow a consistent pattern.
         </p>
         <h2>What I build outside work</h2>
         <p>

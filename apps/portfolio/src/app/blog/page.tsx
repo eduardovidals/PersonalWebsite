@@ -4,7 +4,7 @@ import { author } from '@/config/site';
 import { formatPostDate, getPosts, type PostSummary } from '@/content/blog';
 import { artworkForPost, PostArtwork } from './post-artwork';
 
-const description = `Engineering notes from ${author} on accessible interfaces, reusable software, and learning algorithms by making their behavior visible.`;
+const description = `Writing by ${author} on design systems, Software Factory, and the visual experiments that got him into programming.`;
 
 export const metadata: Metadata = {
   title: 'Blog',
@@ -39,8 +39,8 @@ export default function BlogPage() {
         <div>
           <h1 className="text-5xl font-semibold tracking-tight sm:text-6xl">Blog</h1>
           <p className="mt-4 max-w-[48ch] text-lg leading-relaxed text-vidals-muted">
-            I write about the things I had to build to understand: how a search finds its way across
-            a grid, or how one good component can teach a whole team.
+            Why I’m building Software Factory, what I learned working on design systems, and a few
+            experiments from my time studying computer science.
           </p>
         </div>
         <a

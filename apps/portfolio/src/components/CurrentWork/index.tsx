@@ -3,27 +3,25 @@ import { currentWork } from '@/content/projects/current-work';
 import { ToolChips } from '@/components/ToolChips';
 import { WorkVisual } from '@/components/WorkVisual';
 
-const professionalIds = new Set(['pgim-platform', 'design-system', 'peaq']);
+const professionalOrder = ['peaq', 'design-system', 'pgim-platform'];
 const collections = [
   {
-    id: 'current-work',
-    title: 'Independent builds',
-    works: currentWork.filter((work) => !professionalIds.has(work.id)),
+    id: 'professional-work',
+    works: currentWork
+      .filter((work) => professionalOrder.includes(work.id))
+      .sort((a, b) => professionalOrder.indexOf(a.id) - professionalOrder.indexOf(b.id)),
   },
   {
-    id: 'professional-work',
-    title: 'At PGIM and Prudential',
-    works: currentWork.filter((work) => professionalIds.has(work.id)),
+    id: 'current-work',
+    works: currentWork.filter((work) => !professionalOrder.includes(work.id)),
   },
 ];
 
 export function CurrentWork() {
-  return collections.map(({ id, title, works }) => (
-    <section key={id} id={id} aria-labelledby={id + '-heading'} className="mt-12 sm:mt-16">
-      <h2 id={id + '-heading'} className="mb-5 text-2xl font-semibold tracking-tight sm:mb-6">
-        {title}
-      </h2>
+  return collections.map(({ id, works }) => (
+    <div key={id} id={id} className="mt-12 sm:mt-16">
       <div
+        id={id + '-heading'}
         className={
           id === 'professional-work'
             ? 'grid items-start gap-x-7 gap-y-12 sm:grid-cols-2 xl:grid-cols-3'
@@ -41,10 +39,10 @@ export function CurrentWork() {
                 : 'min-w-0 border-t border-vidals-border/25 pt-5'
             }
           >
-            {work.visual.kind === 'planned' && (
-              <p className="mb-2 text-sm font-medium text-vidals-accent">{work.visual.status}</p>
-            )}
-            <h3 id={`work-${work.id}`} className="text-2xl font-semibold tracking-tight">
+            <h2
+              id={`work-${work.id}`}
+              className="text-2xl font-semibold tracking-tight sm:text-3xl"
+            >
               {work.href ? (
                 <Link
                   href={work.href}
@@ -56,7 +54,10 @@ export function CurrentWork() {
               ) : (
                 work.title
               )}
-            </h3>
+            </h2>
+            {work.visual.kind === 'planned' && (
+              <p className="mt-1 text-sm font-medium text-vidals-accent">{work.visual.status}</p>
+            )}
             <p className="mt-2 mb-4 max-w-[58ch] text-base leading-relaxed text-vidals-muted">
               {work.description}
             </p>
@@ -81,6 +82,6 @@ export function CurrentWork() {
           </article>
         ))}
       </div>
-    </section>
+    </div>
   ));
 }

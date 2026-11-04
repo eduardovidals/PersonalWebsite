@@ -3,20 +3,12 @@ import { HomeSection } from '../../HomeSection';
 
 const jobs = [
   {
-    company: 'Smarttwigs',
-    role: 'Software Engineer Intern',
-    start: ['2021-10', 'Oct 2021'],
-    end: ['2022-05', 'May 2022'],
+    company: 'Prudential Financial',
+    role: 'Senior Software Engineer',
+    start: ['2026-03', 'Mar 2026'],
+    end: null,
     story:
-      'I built mobile screens for Props in React Native and wrote the API for its leaderboard.',
-  },
-  {
-    company: 'PGIM',
-    role: 'Software Engineer Intern',
-    start: ['2022-06', 'Jun 2022'],
-    end: ['2023-07', 'Jul 2023'],
-    story:
-      'I built Angular components and services that other PGIM teams could reuse in their apps.',
+      'My current project is PEAQ, the structured settlements app for Prudential Retirement Strategies. I also build accessible React and TypeScript components for DX, Prudential’s design system.',
   },
   {
     company: 'PGIM',
@@ -27,12 +19,20 @@ const jobs = [
       'I led the move from Angular to React on PInnacle, the platform behind 20 of our internal apps. I also led development on 15+ apps built with React, .NET, and SQL.',
   },
   {
-    company: 'Prudential Financial',
-    role: 'Senior Software Engineer',
-    start: ['2026-03', 'Mar 2026'],
-    end: null,
+    company: 'PGIM',
+    role: 'Software Engineer Intern',
+    start: ['2022-06', 'Jun 2022'],
+    end: ['2023-07', 'Jul 2023'],
     story:
-      'I build accessible React and TypeScript components for DX, our design system. My latest project was refactoring PEAQ, the app our brokers use for structured settlements and Income Advantage.',
+      'I built Angular components and services that other PGIM teams could reuse in their apps.',
+  },
+  {
+    company: 'Smarttwigs',
+    role: 'Software Engineer Intern',
+    start: ['2021-10', 'Oct 2021'],
+    end: ['2022-05', 'May 2022'],
+    story:
+      'I built mobile screens for Props in React Native and wrote the API for its leaderboard.',
   },
 ] as const;
 

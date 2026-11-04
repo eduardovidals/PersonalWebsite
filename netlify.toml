@@ -6,3 +6,8 @@ publish = "apps/portfolio/out"
 NETLIFY_NEXT_PLUGIN_SKIP = "true"
 NODE_VERSION = "26.13.0"
 NPM_VERSION = "12.2.1"
+
+[[redirects]]
+from = "/blog/what-a-dialog-can-teach/"
+to = "/blog/why-im-building-software-factory/"
+status = 301

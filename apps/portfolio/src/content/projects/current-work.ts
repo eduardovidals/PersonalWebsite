@@ -93,12 +93,12 @@ export const currentWork: readonly WorkSnapshot[] = [
     id: 'peaq',
     title: 'PEAQ',
     description:
-      'Prudential brokers use PEAQ for structured settlements and Income Advantage. I reorganized the screens and made the way they load data more consistent.',
+      'I work on PEAQ, the internal application brokers use for structured settlements at Prudential Retirement Strategies. I refactored its screens so they load data consistently.',
     stack: ['React', 'TypeScript'],
     visual: {
       kind: 'illustration',
       alt: 'Parallel paper ribbons woven into an orderly pattern.',
-      caption: 'Prudential · refactor illustration',
+      caption: 'Prudential Retirement Strategies · illustration',
     },
   },
   {
