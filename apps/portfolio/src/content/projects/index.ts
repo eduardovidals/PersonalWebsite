@@ -1,8 +1,10 @@
 import type { ToolName } from '@/content/tools/marks';
+import type { ProjectKind } from './kind';
 
 // The public slugs are permanent: older versions of the portfolio link to them.
 export interface Project {
   slug: string;
+  kind: ProjectKind;
   title: string;
   category: string;
   context: string;
@@ -19,6 +21,7 @@ export interface Project {
 export const projects: readonly Project[] = [
   {
     slug: 'props',
+    kind: 'career',
     title: 'Props',
     category: 'Product engineering',
     context: 'Smarttwigs internship',
@@ -32,6 +35,7 @@ export const projects: readonly Project[] = [
   },
   {
     slug: 'benev',
+    kind: 'career',
     title: 'Benev',
     category: 'Product engineering',
     context: 'Smarttwigs internship',
@@ -44,6 +48,7 @@ export const projects: readonly Project[] = [
   },
   {
     slug: 'sorting-visualizer',
+    kind: 'personal',
     title: 'Sorting Visualizer',
     category: 'Algorithm visualization',
     context: 'AlgoVisual',
@@ -57,6 +62,7 @@ export const projects: readonly Project[] = [
   },
   {
     slug: 'pathfinding-visualizer',
+    kind: 'personal',
     title: 'Pathfinding Visualizer',
     category: 'Algorithm visualization',
     context: 'AlgoVisual',
@@ -70,6 +76,7 @@ export const projects: readonly Project[] = [
   },
   {
     slug: '3d-sorting-visualizer',
+    kind: 'personal',
     title: '3D Sorting Visualizer',
     category: 'Computer graphics',
     context: 'NJCU coursework',
@@ -84,6 +91,7 @@ export const projects: readonly Project[] = [
   },
   {
     slug: 'solar-system',
+    kind: 'personal',
     title: 'Solar System',
     category: 'Computer graphics',
     context: 'NJCU coursework',

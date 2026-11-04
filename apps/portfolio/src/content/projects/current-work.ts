@@ -1,7 +1,9 @@
 import type { ToolName } from '@/content/tools/marks';
+import type { ProjectKind } from './kind';
 
 export interface WorkSnapshot {
   id: string;
+  kind: ProjectKind;
   title: string;
   description: string;
   href?: string;
@@ -23,6 +25,7 @@ export interface WorkSnapshot {
 export const factorySiteStatus = 'Marketing site under construction';
 export const softwareFactory: WorkSnapshot = {
   id: 'software-factory',
+  kind: 'business',
   title: 'Software Factory',
   href: '/projects/software-factory/',
   visual: {
@@ -50,6 +53,7 @@ export const currentWork: readonly WorkSnapshot[] = [
   softwareFactory,
   {
     id: 'pgim-platform',
+    kind: 'career',
     title: 'PInnacle',
     visual: {
       kind: 'illustration',
@@ -72,6 +76,7 @@ export const currentWork: readonly WorkSnapshot[] = [
   },
   {
     id: 'design-system',
+    kind: 'career',
     title: 'DX design system',
     visual: {
       kind: 'illustration',
@@ -91,6 +96,7 @@ export const currentWork: readonly WorkSnapshot[] = [
   },
   {
     id: 'peaq',
+    kind: 'career',
     title: 'PEAQ',
     description:
       'I work on PEAQ, the internal application brokers use for structured settlements at Prudential Retirement Strategies. I refactored its screens so they load data consistently.',
@@ -103,6 +109,7 @@ export const currentWork: readonly WorkSnapshot[] = [
   },
   {
     id: 'market-data',
+    kind: 'career',
     title: 'Market data dashboard',
     visual: {
       kind: 'capture',
@@ -133,6 +140,7 @@ export const currentWork: readonly WorkSnapshot[] = [
   },
   {
     id: 'order-entry',
+    kind: 'career',
     title: 'Order entry dashboard',
     visual: {
       kind: 'capture',
@@ -156,6 +164,7 @@ export const currentWork: readonly WorkSnapshot[] = [
   },
   {
     id: 'anniversary',
+    kind: 'personal',
     title: 'Girlfriend Birthday Gift',
     visual: {
       kind: 'capture',
@@ -179,6 +188,7 @@ export const currentWork: readonly WorkSnapshot[] = [
   },
   {
     id: 'portfolio',
+    kind: 'personal',
     title: 'This portfolio',
     visual: {
       kind: 'capture',

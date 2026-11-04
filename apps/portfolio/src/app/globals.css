@@ -5,6 +5,12 @@
 @source '../content/tools';
 @source '../../../../packages/vidals-react-components/src';
 
+@media (scripting: none) {
+  .project-filter {
+    display: none;
+  }
+}
+
 @utility shell {
   width: 100%;
   max-width: 82rem;

@@ -16,6 +16,7 @@
     "gray-matter": "4.0.3",
     "next": "16.4.5",
     "react": "19.3.1",
+    "react-aria-components": "1.22.1",
     "react-dom": "19.3.1",
     "react-markdown": "10.1.0",
     "@vidals/react-components": "*",

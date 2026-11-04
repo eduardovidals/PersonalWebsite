@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from 'react';
 
 const sections = [
-  ['home', 'Intro'],
   ['projects', 'Work'],
   ['about', 'Career'],
   ['skills', 'Toolkit'],
@@ -28,7 +27,7 @@ export function HomeSectionNav() {
       const visible = atEnd
         ? targets.at(-1)
         : targets.findLast((el) => el.getBoundingClientRect().top <= readingLine);
-      setCurrent((visible ?? targets[0]).id);
+      setCurrent(visible?.id);
     }
     function schedule() {
       if (!frame) frame = requestAnimationFrame(measure);

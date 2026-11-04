@@ -9,9 +9,17 @@ for (const width of [320, 390, 1280]) {
     await page.goto('/');
     const nav = page.getByRole('navigation', { name: 'On this page' });
     const active = nav.locator('[aria-current="location"]');
-    await expect(active).toHaveText('Intro');
+    await expect(nav.getByRole('link')).toHaveText([
+      'Work',
+      'Career',
+      'Toolkit',
+      'Blog',
+      'Contact',
+    ]);
+    await expect(active).toHaveCount(0);
     await nav.getByRole('link', { name: 'Work', exact: true }).click();
     await expect(active).toHaveText('Work');
+    await expect(nav).toBeInViewport({ ratio: 1 });
     await expect(page).toHaveURL(/#projects$/);
     for (const [id, label] of [
       ['about', 'Career'],

@@ -220,6 +220,33 @@ test('project images preserve their subjects and link to the appropriate full ca
   }
 });
 
+test('project filters narrow the list without changing the order or losing the full gallery', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/projects/');
+  const cards = page.getByRole('article');
+  const chooser = page.getByRole('button', { name: /Show/ });
+  await expect(cards.first().getByRole('heading')).toHaveText('PEAQ');
+  for (const [label, count, first] of [
+    ['Career', 7, 'PEAQ'],
+    ['Personal', 6, 'Girlfriend Birthday Gift'],
+    ['Business', 1, 'Software Factory'],
+    ['All projects', 14, 'PEAQ'],
+  ] as const) {
+    await chooser.focus();
+    await chooser.press('Enter');
+    const option = page.getByRole('option', { name: label, exact: true });
+    await option.click();
+    await expect(chooser).toBeFocused();
+    await expect(cards).toHaveCount(count);
+    await expect(cards.first().getByRole('heading')).toContainText(first);
+    await expect(page.getByRole('status')).toHaveText(
+      count + (count === 1 ? ' project' : ' projects'),
+    );
+  }
+});
+
 test('technology chips resolve to local marks and preserve each project’s own stack', async ({
   page,
 }) => {
