@@ -22,13 +22,12 @@ export function PersonalIntro() {
           Hey, I’m <span className="block text-vidals-accent">Eduardo.</span>
         </h1>
         <p className="mt-5 text-pretty text-lg font-medium sm:text-2xl">
-          I got hooked on design systems at PGIM. A keyboard fix in one shared component meant the
-          next team didn’t have to find and fix the same bug.
+          At Prudential, I build for the people building the apps.
         </p>
         <p className="mt-2 max-w-[48ch] text-pretty text-base leading-relaxed text-vidals-muted sm:text-lg">
-          I wanted that same head start for APIs, databases, and releases. Later, untangling
-          AI-written code that worked but was hard to change gave me the push to build Software
-          Factory.
+          I work on DX, our design system. I love when one good fix reaches a whole family of apps.
+          Software Factory is my own project to give businesses that same head start, from their
+          first screen to their next release.
         </p>
         <div className="mt-7 flex flex-wrap items-center gap-3">
           <Link
@@ -54,7 +53,12 @@ export function PersonalIntro() {
             <div>
               <dt className="text-sm text-vidals-muted">At Prudential</dt>
               <dd className="mt-1 text-2xl font-medium tracking-tight text-vidals-text sm:text-3xl">
-                Design systems
+                <Link
+                  href="/projects/#design-system"
+                  className="rounded-sm underline-offset-4 hover:text-vidals-accent hover:underline"
+                >
+                  DX design system
+                </Link>
               </dd>
             </div>
             <div>

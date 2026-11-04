@@ -152,6 +152,41 @@ test('the homepage featured project opens the Software Factory case study', asyn
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Software Factory');
 });
 
+test('every project has a working image and selects the intended phone or desktop view', async ({
+  page,
+}) => {
+  for (const width of [390, 768, 1280]) {
+    await page.setViewportSize({ width, height: 850 });
+    await page.goto('/projects/');
+    const cards = page.getByRole('article');
+    await expect(cards).toHaveCount(currentWork.length + projects.length);
+    for (const card of await cards.all()) {
+      const img = card.getByRole('img').first();
+      await img.scrollIntoViewIfNeeded();
+      const source = await img.evaluate(async (image) => {
+        if (!(image instanceof HTMLImageElement)) throw new Error('Project image is missing.');
+        await image.decode();
+        return new URL(image.currentSrc).pathname;
+      });
+      const title = (await card.getByRole('heading').innerText()).replace('↗', '').trim();
+      const work = currentWork.find((item) => item.title === title);
+      if (work) {
+        const suffix =
+          work.visual.kind === 'illustration' ? '.svg' : width < 640 ? '-small.webp' : '-wide.webp';
+        expect(source, title).toBe('/work/current/' + work.id + suffix);
+        if (work.visual.kind === 'illustration')
+          await expect(card.locator('figcaption')).toContainText('illustration');
+      } else {
+        const project = projects.find((item) => item.title === title);
+        expect(project, title).toBeDefined();
+        expect(source, title).toBe(
+          '/work/' + ((width < 640 && project?.smallCover) || project?.cover) + '.webp',
+        );
+      }
+    }
+  }
+});
+
 test('technology chips resolve to local marks and preserve each project’s own stack', async ({
   page,
 }) => {
@@ -189,10 +224,12 @@ test('technology chips resolve to local marks and preserve each project’s own 
     }
     await expectToolMarks(items, symbols);
   }
+  await page.getByText('Browse six early projects and demos', { exact: true }).press('Enter');
   for (const project of projects) await checkProject(project);
   await page.goto('/projects/');
   for (const work of currentWork) {
     const article = page.getByRole('article', { name: work.title, exact: true });
+    await article.locator('summary').press('Enter');
     for (const [label, tools] of [
       [`Tools used on ${work.title}`, work.stack],
       ...(work.ai ?? []).map(({ kind, tools }) => [`${kind} on ${work.title}`, tools] as const),
@@ -291,6 +328,7 @@ test('reduced motion keeps the greeting still; keyboard demo and contact remain 
   await expect(page.locator('main')).toBeFocused();
   const replay = page.getByRole('button', { name: 'Replay trace' });
   await expect(replay).toBeHidden();
+  await page.getByText('Browse six early projects and demos', { exact: true }).press('Enter');
   const disclosure = page
     .locator('details > summary')
     .filter({ hasText: 'Try the pathfinding demo' });

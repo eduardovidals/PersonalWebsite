@@ -9,6 +9,7 @@ export interface Project {
   description: string;
   stack: readonly ToolName[];
   cover: string;
+  smallCover?: string;
   coverAlt: string;
   logo?: string;
 }
@@ -22,8 +23,9 @@ export const projects: readonly Project[] = [
     description:
       'I learned REST by building a leaderboard people could actually use, alongside mobile screens and subscription checkout.',
     stack: ['React Native', 'React', 'Redux', 'TypeScript', 'REST APIs', 'Stripe'],
-    cover: 'props-ad-parents',
-    coverAlt: 'Artwork from Props showing a family alongside the words “Rewarding good behavior!”',
+    cover: 'props-website',
+    smallCover: 'props-signup',
+    coverAlt: 'Archived Props account setup, from registration to choosing a subscription plan.',
     logo: 'props',
   },
   {
@@ -46,8 +48,9 @@ export const projects: readonly Project[] = [
     description:
       'Three algorithms can finish with the same sorted list. I animated the steps so you can see the different work each one does.',
     stack: ['React', 'TypeScript', 'HTML', 'CSS'],
-    cover: 'sorting-visualizer',
-    coverAlt: 'Uneven blue bars represent values in an array before they are sorted.',
+    cover: 'current/sorting-visualizer-wide',
+    smallCover: 'current/sorting-visualizer-small',
+    coverAlt: 'Light-blue bars rearranging during merge sort in AlgoVisual.',
   },
   {
     slug: 'pathfinding-visualizer',
@@ -57,8 +60,9 @@ export const projects: readonly Project[] = [
     description:
       'Watch where a search looks before it finds a route. Keep the walls in place, switch algorithms, and see what changes.',
     stack: ['React', 'TypeScript'],
-    cover: 'pathfinding-visualizer',
-    coverAlt: 'An explored path crosses a square grid, winding between dark walls.',
+    cover: 'current/pathfinding-visualizer-wide',
+    smallCover: 'current/pathfinding-visualizer-small',
+    coverAlt: 'A* search tracing a route through a generated maze in AlgoVisual.',
   },
   {
     slug: '3d-sorting-visualizer',
@@ -68,8 +72,9 @@ export const projects: readonly Project[] = [
     description:
       'For a computer graphics class, I took my sorting bars off the page and made a scene you could walk through while they moved.',
     stack: ['React', 'Three.js'],
-    cover: '3d-sorting-visualizer',
-    coverAlt: 'A row of 3D sorting bars casts long shadows across a plane.',
+    cover: 'current/3d-sorting-visualizer-wide',
+    smallCover: 'current/3d-sorting-visualizer-small',
+    coverAlt: 'Merge sort rearranging upright bars in a 3D scene.',
   },
   {
     slug: 'solar-system',
@@ -79,8 +84,9 @@ export const projects: readonly Project[] = [
     description:
       'I used planets to learn how motion fits together in a 3D scene: a planet can spin on its own axis while it circles the sun.',
     stack: ['React', 'Three.js', 'JavaScript'],
-    cover: 'solar-system',
-    coverAlt: 'Textured planets orbit a bright sun against a dark star field.',
+    cover: 'current/solar-system-wide',
+    smallCover: 'current/solar-system-small',
+    coverAlt: 'Textured Sun and planets on orbital paths against a starfield.',
   },
 ];
 
@@ -91,6 +97,10 @@ export function projectHref(slug: string) {
 }
 
 export const mediaDimensions: Readonly<Record<string, readonly [number, number]>> = {
+  'current/sorting-visualizer-wide': [1440, 900],
+  'current/pathfinding-visualizer-wide': [1440, 900],
+  'current/3d-sorting-visualizer-wide': [1440, 900],
+  'current/solar-system-wide': [1440, 900],
   props: [480, 480],
   'props-ad-parents': [1440, 756],
   'props-signup': [560, 1213],

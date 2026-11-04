@@ -66,12 +66,17 @@ function Preview({ project }: { project: Project }) {
   }
   return (
     <div className="aspect-[16/10] overflow-hidden rounded-3xl bg-vidals-surface sm:rounded-[2rem]">
-      <Screenshot
-        file={project.cover}
-        alt={project.coverAlt}
-        sizes={sizes}
-        className="size-full object-cover motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:scale-[1.025]"
-      />
+      <picture>
+        {project.smallCover && (
+          <source media="(max-width: 639px)" srcSet={imagePath(project.smallCover)} />
+        )}
+        <Screenshot
+          file={project.cover}
+          alt={project.coverAlt}
+          sizes={sizes}
+          className="size-full object-cover motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:scale-[1.025]"
+        />
+      </picture>
     </div>
   );
 }

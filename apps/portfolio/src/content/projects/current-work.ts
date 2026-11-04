@@ -1,10 +1,11 @@
 import type { ToolName } from '@/content/tools/marks';
 
-interface WorkSnapshot {
+export interface WorkSnapshot {
   id: string;
   title: string;
   description: string;
   href?: string;
+  visual: { kind: 'capture' | 'illustration'; alt: string; caption: string };
   stack: readonly ToolName[];
   ai?: readonly { kind: string; tools: readonly ToolName[]; note: string }[];
 }
@@ -14,6 +15,11 @@ export const softwareFactory: WorkSnapshot = {
   id: 'software-factory',
   title: 'Software Factory',
   href: '/projects/software-factory/',
+  visual: {
+    kind: 'capture',
+    alt: 'The Factory Console planning workspace with owner and developer views and blank planning fields.',
+    caption: 'Factory Console · local test workspace',
+  },
   description:
     'My independent project grew out of supporting other engineers. I want a business to be able to explain what it needs, understand the tradeoffs, and own the result. A new engineer should be able to pick up the software and see why it works the way it does.',
   stack: ['TypeScript', 'React', 'NestJS', 'Fastify', 'PostgreSQL', 'Kysely', 'Go', 'gRPC'],
@@ -35,9 +41,14 @@ export const currentWork: readonly WorkSnapshot[] = [
   softwareFactory,
   {
     id: 'pgim-platform',
-    title: 'PGIM application platform',
+    title: 'PInnacle',
+    visual: {
+      kind: 'illustration',
+      alt: 'Three blue architectural layers rising from one shared foundation.',
+      caption: 'PGIM · illustration of a shared platform',
+    },
     description:
-      'I led our department’s move from Angular to React and helped teams use the platform on real .NET and SQL apps. A single command set up a full-stack project; Storybook examples and onboarding guides helped engineers take it from there. The apps used the company’s existing Kerberos sign-in.',
+      'PGIM’s departmental application platform. I led the move from Angular to React and helped teams ship .NET and SQL apps from a shared foundation. One command set up a project; Storybook and onboarding guides helped the next engineer take it from there.',
     stack: [
       'React',
       'TypeScript',
@@ -52,9 +63,14 @@ export const currentWork: readonly WorkSnapshot[] = [
   },
   {
     id: 'design-system',
-    title: 'Design systems at Prudential',
+    title: 'DX design system',
+    visual: {
+      kind: 'illustration',
+      alt: 'An abstract collection of color swatches, a focus ring, and a toggle.',
+      caption: 'Prudential · design-system illustration',
+    },
     description:
-      'My focus at Prudential Financial is the React and TypeScript design system. I care as much about how a control feels to someone using a keyboard as how easy it is for a developer to use it correctly.',
+      'My design-system work at Prudential. I help make accessible React and TypeScript components predictable both for someone using a keyboard and for the engineer putting the screen together.',
     stack: ['React', 'TypeScript', 'GitHub Actions'],
     ai: [
       {
@@ -65,8 +81,25 @@ export const currentWork: readonly WorkSnapshot[] = [
     ],
   },
   {
+    id: 'peaq',
+    title: 'PEAQ',
+    description:
+      'An internal Prudential broker application for structured settlements and Income Advantage. I refactored how its screens were organized and how they loaded data, so the next change wouldn’t require learning a new pattern on every screen.',
+    stack: ['React', 'TypeScript'],
+    visual: {
+      kind: 'illustration',
+      alt: 'Parallel paper ribbons woven into an orderly pattern.',
+      caption: 'Prudential · refactor illustration',
+    },
+  },
+  {
     id: 'market-data',
     title: 'Market data dashboard',
+    visual: {
+      kind: 'capture',
+      alt: 'A performance chart comparing the price histories of three sample instruments.',
+      caption: 'Pharo assessment · sample market data',
+    },
     description:
       'A chart can make two instruments look similar even when their histories differ. For this assessment I built the React comparisons and the C# API that calculates the statistics behind them.',
     stack: [
@@ -90,6 +123,11 @@ export const currentWork: readonly WorkSnapshot[] = [
   {
     id: 'order-entry',
     title: 'Order entry dashboard',
+    visual: {
+      kind: 'capture',
+      alt: 'The order-entry dashboard showing sample trading activity.',
+      caption: 'Schonfeld assessment · local demo orders',
+    },
     description:
       'An order form needs fast price feedback, but the server still has to decide what it can accept. I built both sides for this assessment, down to the database that keeps the order.',
     stack: [
@@ -105,9 +143,14 @@ export const currentWork: readonly WorkSnapshot[] = [
   },
   {
     id: 'anniversary',
-    title: 'Anniversary experience',
+    title: 'YniBirthday',
+    visual: {
+      kind: 'capture',
+      alt: 'Pink gift artwork from the anniversary site’s opening sequence.',
+      caption: 'Personal project · opening artwork',
+    },
     description:
-      'For our anniversary I wanted to give someone a website they could experience, not a gallery to scroll past. A 3D opening leads into an animated story made from our memories.',
+      'An anniversary gift I built for my girlfriend: a 3D opening and an animated story told through our memories. Behind it are the same feature folders, shared UI, and code checks I use for work much less romantic than this.',
     stack: [
       'React',
       'Vite',
@@ -122,8 +165,13 @@ export const currentWork: readonly WorkSnapshot[] = [
   {
     id: 'portfolio',
     title: 'This portfolio',
+    visual: {
+      kind: 'capture',
+      alt: 'My blue portfolio homepage with its handwritten EV monogram and personal introduction.',
+      caption: 'Personal project · this site',
+    },
     description:
-      'My corner of the web for writing, experiments, and the work behind them. I kept my hand-drawn initials and typing effect, but neither has to run for you to read or navigate the site.',
+      'My writing, experiments, and work history in one place. This time I chose Next.js for static pages, but kept the same rules: shared controls, accessible interactions, and browser checks. Even the handwritten introduction works with motion turned off.',
     stack: ['Next.js', 'React Aria Components', 'Tailwind CSS', 'Nx', 'Playwright', 'Netlify'],
     ai: [
       {

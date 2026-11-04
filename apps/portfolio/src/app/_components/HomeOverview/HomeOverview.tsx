@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import { ContactForm } from '@/components/ContactForm';
 import { PersonalIntro } from '@/components/PersonalIntro';
-import { ToolChips } from '@/components/ToolChips';
+import { WorkVisual } from '@/components/WorkVisual';
 import { formatPostDate, type PostSummary } from '@/content/blog';
-import { softwareFactory } from '@/content/projects/current-work';
+import { currentWork, softwareFactory } from '@/content/projects/current-work';
 import { Arrow } from './components/Arrow/Arrow';
 import { CareerJourney } from './components/CareerJourney/CareerJourney';
 import { ProjectShelf } from './components/ProjectShelf/ProjectShelf';
@@ -18,7 +18,6 @@ export function HomeOverview({ notes }: Readonly<{ notes: readonly PostSummary[]
   return (
     <>
       <PersonalIntro />
-      <CareerJourney />
 
       <section
         id="projects"
@@ -35,13 +34,19 @@ export function HomeOverview({ notes }: Readonly<{ notes: readonly PostSummary[]
         </div>
         <article
           aria-labelledby="featured-factory"
-          className="mb-8 grid items-center gap-5 rounded-3xl bg-vidals-deep p-6 sm:mb-10 sm:p-8 md:grid-cols-[1fr_1.35fr] md:gap-10"
+          className="mb-5 grid items-center gap-6 rounded-3xl bg-vidals-deep p-5 sm:p-7 md:grid-cols-[1.1fr_1fr] md:gap-9"
         >
+          <WorkVisual work={softwareFactory} />
           <div>
             <p className="text-sm font-medium text-vidals-accent">My independent project</p>
             <h3 id="featured-factory" className="mt-1 text-3xl font-semibold tracking-tight">
               {softwareFactory.title}
             </h3>
+            <p className="mt-3 max-w-[49ch] leading-relaxed text-vidals-muted">
+              Why should a small business have to become a software company just to own a good app?
+              I’m building Factory so the owner keeps the decisions and the code, and the next
+              engineer can pick up where the last one left off.
+            </p>
             <Link
               href="/projects/software-factory/"
               className="mt-2 inline-flex min-h-11 items-center gap-2 rounded-sm text-sm font-medium text-vidals-accent underline-offset-4 hover:underline"
@@ -49,23 +54,42 @@ export function HomeOverview({ notes }: Readonly<{ notes: readonly PostSummary[]
               Why I’m building Software Factory <Arrow />
             </Link>
           </div>
-          <div className="min-w-0 space-y-4">
-            <p className="max-w-[58ch] leading-relaxed text-vidals-muted">
-              A small business shouldn’t need its own platform team to own good software. And a team
-              that already knows how to build it shouldn’t have to start over on every app. I’m
-              building Factory for both: reuse what engineers have learned, keep the business’s
-              decisions with the code, and make the software easier to change years from now.
-            </p>
-            <ToolChips
-              label={`Tools used on ${softwareFactory.title}`}
-              tools={softwareFactory.stack}
-              compact
-            />
-          </div>
         </article>
-        <ProjectShelf />
+        <div className="mb-4 grid gap-5 sm:grid-cols-2">
+          {currentWork
+            .filter(({ id }) => id === 'anniversary' || id === 'design-system')
+            .map((work) => (
+              <Link
+                key={work.id}
+                href={'/projects/#' + work.id}
+                className="group grid grid-cols-[5.5rem_1fr] items-center gap-4 rounded-2xl bg-vidals-surface p-3 sm:grid-cols-[7rem_1fr]"
+                aria-label={'Explore ' + work.title}
+              >
+                <WorkVisual work={work} compact />
+                <div>
+                  <h3 className="flex items-center gap-2 text-lg font-semibold group-hover:text-vidals-accent">
+                    {work.title} <Arrow />
+                  </h3>
+                  <p className="mt-1 text-sm text-vidals-muted">
+                    {work.id === 'anniversary'
+                      ? 'An anniversary gift for my girlfriend.'
+                      : 'Accessible components at Prudential.'}
+                  </p>
+                </div>
+              </Link>
+            ))}
+        </div>
+        <details>
+          <summary className="w-fit cursor-pointer rounded-md py-3 text-sm font-semibold text-vidals-accent underline-offset-4 hover:underline">
+            Browse six early projects and demos
+          </summary>
+          <div className="mt-5">
+            <ProjectShelf />
+          </div>
+        </details>
       </section>
 
+      <CareerJourney />
       <Toolkit />
 
       <section id="blog" aria-labelledby="journal-heading" className="shell py-12 sm:py-20">
@@ -118,8 +142,8 @@ export function HomeOverview({ notes }: Readonly<{ notes: readonly PostSummary[]
               Let’s talk
             </h2>
             <p className="mt-4 max-w-[37ch] leading-relaxed text-vidals-muted sm:text-lg">
-              What do you wish the last person who worked on your app had left you? I’d love to
-              trade stories. Coffee chats and questions about my projects are welcome, too.
+              Building something for people you know? I’d love to hear about it. Questions about my
+              work and coffee chats are welcome, too.
             </p>
           </div>
           <ContactForm />

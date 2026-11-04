@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { articleProse } from '@/components/article-prose';
 import { ToolChips } from '@/components/ToolChips';
+import { WorkVisual } from '@/components/WorkVisual';
 import { softwareFactory } from '@/content/projects/current-work';
 
 const description =
@@ -68,6 +69,7 @@ export default function SoftwareFactoryPage() {
           they can’t take their software to another engineer.
         </p>
         <h2>What I’m building now</h2>
+        <WorkVisual work={softwareFactory} />
         <p>
           In the local version, I can describe a change in the console, settle what it should do,
           and follow that decision into the source. I can inspect the diff, see what the tests
@@ -78,6 +80,11 @@ export default function SoftwareFactoryPage() {
           The part I care most about is what happens when I’m no longer the engineer in the room. I
           want the next person to be able to explain why the software works this way, decide what’s
           worth keeping, and change the rest. That’s the standard I’m building toward.
+        </p>
+        <p>
+          Next I want to get this platform into people’s hands and give it a public home. Here are{' '}
+          <Link href="/about/#whats-next">the people and projects I’d like to build for first</Link>
+          .
         </p>
       </div>
       <div className="mt-8">

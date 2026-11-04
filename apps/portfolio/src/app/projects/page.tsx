@@ -31,11 +31,42 @@ export default function ProjectsPage() {
           Some of this work is for other engineers. Some was for one person I love. Here’s what I
           contributed to each project, what I used, and why it mattered to me.
         </p>
+        <nav
+          aria-label="Project collections"
+          className="mt-4 flex flex-wrap gap-x-5 text-sm font-semibold text-vidals-accent"
+        >
+          <a
+            href="#current-work"
+            className="inline-flex min-h-11 items-center underline underline-offset-4"
+          >
+            Independent builds
+          </a>
+          <a
+            href="#professional-work"
+            className="inline-flex min-h-11 items-center underline underline-offset-4"
+          >
+            Professional work
+          </a>
+          <a
+            href="#early-work"
+            className="inline-flex min-h-11 items-center underline underline-offset-4"
+          >
+            Early projects
+          </a>
+        </nav>
       </header>
       <CurrentWork />
-      {contexts.map((context) => (
-        <section key={context} className="mt-12 sm:mt-16" aria-label={context}>
+      {contexts.map((context, index) => (
+        <section
+          key={context}
+          id={index === 0 ? 'early-work' : undefined}
+          className="mt-12 sm:mt-16"
+          aria-label={context}
+        >
           <h2 className="mb-5 text-2xl font-semibold tracking-tight sm:mb-6">{context}</h2>
+          {index === 0 && (
+            <p className="mb-5 text-sm text-vidals-muted">Archived screens from my internship.</p>
+          )}
           <div className="grid gap-x-7 gap-y-10 sm:grid-cols-2">
             {projects
               .filter((project) => project.context === context)

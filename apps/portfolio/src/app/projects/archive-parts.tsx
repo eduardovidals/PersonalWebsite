@@ -21,19 +21,24 @@ export function Cover({ project, detail = false }: { project: Project; detail?: 
   const [width, height] = mediaDimensions[project.cover];
   return (
     <div className="overflow-hidden rounded-2xl bg-vidals-surface">
-      <Image
-        src={imagePath(project.cover)}
-        alt={detail ? project.coverAlt : ''}
-        width={width}
-        height={height}
-        unoptimized
-        loading={detail ? 'eager' : 'lazy'}
-        className={
-          detail
-            ? 'mx-auto block max-h-[37rem] w-full object-contain'
-            : 'aspect-[16/10] w-full object-cover'
-        }
-      />
+      <picture>
+        {project.smallCover && (
+          <source media="(max-width: 639px)" srcSet={imagePath(project.smallCover)} />
+        )}
+        <Image
+          src={imagePath(project.cover)}
+          alt={project.coverAlt}
+          width={width}
+          height={height}
+          unoptimized
+          loading={detail ? 'eager' : 'lazy'}
+          className={
+            detail
+              ? 'mx-auto block max-h-[37rem] w-full object-contain'
+              : 'aspect-[4/3] w-full object-cover sm:aspect-[16/10]'
+          }
+        />
+      </picture>
     </div>
   );
 }

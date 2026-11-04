@@ -21,9 +21,10 @@ export default function AboutPage() {
       </h1>
       <div className={`mt-8 ${articleProse}`}>
         <p>
-          When I joined PGIM, I had a pretty strong opinion about Angular versus React. I still have
-          framework preferences. What I care about more now is whether something I learn building
-          one app makes life easier for the person building the next one.
+          At Prudential I work on DX, a design system. A few years ago at PGIM, I thought the
+          interesting question was Angular or React. It took building a platform, teaching other
+          engineers, and refactoring a working app to find the question I care about more: what does
+          one project leave the next?
         </p>
         <h2>I learned by building things I could explain</h2>
         <p>
@@ -45,7 +46,7 @@ export default function AboutPage() {
           the problems that drew me into design systems.
         </p>
         <p>
-          The work grew into an application framework with 50+ components used across 20 internal
+          That platform was PInnacle. Its library grew to 50+ components used across 20 internal
           apps. Teams could start a full-stack project in under five minutes. I also led delivery of
           15+ React, .NET, and SQL applications. Sometimes the right fix was nowhere near the
           screen: on one critical API endpoint, we cut response time in half.
@@ -60,26 +61,35 @@ export default function AboutPage() {
         </p>
         <h2>What working with agents brought into focus</h2>
         <p>
-          I’m a senior software engineer at Prudential Financial. My focus is the React and
-          TypeScript design system: accessible components, how they behave, and how teams use them.
-          I also rebuilt an application on that foundation. Much of its code had been written with
-          AI. The app worked, but I had to untangle how its screens were organized and how they
-          loaded data before I could make changes confidently.
+          As a senior software engineer at Prudential, I work on DX: accessible React and TypeScript
+          components, their behavior, and the examples teams learn from. PEAQ gave that work a
+          practical test. It’s an internal broker application for structured settlements and Income
+          Advantage. I refactored it; I didn’t build it from scratch.
         </p>
         <p>
-          That experience stuck with me. An agent can produce code far faster than someone can learn
-          their way around it. If the project never settled on a pattern, a longer prompt won’t give
-          the next developer one. I write Claude Code skills and plugins for the same reason I write
-          component examples: a convention is much more useful when it’s there at the moment someone
-          needs it.
+          PEAQ already worked. What made it hard to change was how its screens were organized and
+          how they loaded data. Refactoring AI-assisted code brought an old lesson into focus:
+          generating another screen is cheap compared with asking the next person to figure out why
+          every screen does the same job differently.
+        </p>
+        <p>
+          I write Claude Code skills and plugins for the same reason I write component examples: I
+          want the convention there when someone needs it, not buried in a document they had to know
+          to look for.
         </p>
         <h2>Why I took the idea outside work</h2>
         <p>
-          On my own time I built an <Link href="/projects/#anniversary">anniversary gift</Link> and
-          an <Link href="/projects/#order-entry">order-entry dashboard</Link> using the same project
-          foundation. One had a 3D opening; the other had an order form and a database. The products
-          didn’t need to look alike. But the same conventions helped a coding agent produce code I
-          could recognize and work on in both.
+          <Link href="/projects/#anniversary">YniBirthday</Link> was an anniversary gift for my
+          girlfriend. I wanted her to open a little 3D world, not another slideshow. My{' '}
+          <Link href="/projects/#order-entry">order-entry dashboard</Link> needed almost the
+          opposite: a form that got out of the way and a server that wouldn’t accept an invalid
+          order.
+        </p>
+        <p>
+          Underneath, they started to look familiar. I kept components with the features that own
+          them, gave shared controls one home, and tested what a person could actually do. I carried
+          those rules into my market-data dashboard and this portfolio, too. This site uses Next.js;
+          the dashboards use Vite. The conventions travel. The products don’t have to look alike.
         </p>
         <p>
           A conversation about what people were building with AI got me thinking about businesses
@@ -93,6 +103,18 @@ export default function AboutPage() {
           independently. AI made the problem harder to ignore. The part I’m passionate about is
           making hard-won engineering knowledge useful to someone else, long after the first version
           ships.
+        </p>
+        <h2 id="whats-next">What’s next</h2>
+        <p>
+          First I want Factory’s local platform ready for someone else to use, and a marketing site
+          that explains it without a tour from me. I also want to make a movie blog for myself and
+          build software for my girlfriend’s own business.
+        </p>
+        <p>
+          The first business owners I hope to build with are my friends Nicole and Glenn. Nicole
+          runs a party-rental business; Glenn works in produce. A reservation and a produce sale
+          aren’t the same problem. I want to learn what each of them needs, then see which parts of
+          the engineering can serve them both.
         </p>
       </div>
     </article>

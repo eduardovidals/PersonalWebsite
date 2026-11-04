@@ -23,7 +23,7 @@ const jobs = [
     start: ['2023-07', 'Jul 2023'],
     end: ['2026-03', 'Mar 2026'],
     story:
-      'I led our department’s move to React and the full-stack framework used across 20 apps. I also led delivery of 15+ applications with React, .NET, and SQL, and helped five teams get comfortable building on the platform.',
+      'I led the move to React for PInnacle, our departmental application platform. It served 20 apps. I also led delivery of 15+ applications using React, .NET, and SQL.',
   },
   {
     company: 'Prudential Financial',
@@ -31,7 +31,7 @@ const jobs = [
     start: ['2026-03', 'Mar 2026'],
     end: null,
     story:
-      'I work on the React and TypeScript design system: accessible components, the examples that teach them, and conventions developers and coding agents can both follow.',
+      'I work on DX, our accessible React and TypeScript design system. I put those conventions to work refactoring PEAQ, an internal broker application.',
   },
 ] as const;
 
@@ -56,6 +56,12 @@ export function CareerJourney() {
             className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-sm font-medium text-vidals-accent underline underline-offset-4"
           >
             Read my story <span aria-hidden="true">→</span>
+          </Link>
+          <Link
+            href="/about/#whats-next"
+            className="ms-4 inline-flex min-h-11 items-center rounded-sm text-sm text-vidals-muted underline underline-offset-4 hover:text-vidals-accent"
+          >
+            What’s next
           </Link>
         </div>
         <div className="min-w-0">
