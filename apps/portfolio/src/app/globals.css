@@ -13,7 +13,7 @@
 @layer base {
   html {
     scroll-padding-block-start: 2rem;
-    color-scheme: light;
+    color-scheme: dark;
   }
   body {
     background: var(--color-vidals-background);

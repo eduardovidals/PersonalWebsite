@@ -48,50 +48,43 @@ export default async function PostPage({ params }: PostPageProps) {
       ? entries[(entries.findIndex((entry) => entry.slug === slug) + 1) % entries.length]
       : undefined;
   return (
-    <article className="shell py-9 text-vidals-text sm:py-14">
-      <nav
-        aria-label="Article breadcrumb"
-        className="flex items-center justify-between gap-4 border-b border-vidals-text pb-3 text-sm"
-      >
+    <article className="mx-auto w-full max-w-[48rem] px-5 py-10 text-vidals-text sm:px-8 sm:py-16">
+      <nav aria-label="Article breadcrumb" className="text-sm font-medium">
         <Link href="/blog/" className="text-vidals-accent underline-offset-4 hover:underline">
           <span aria-hidden="true">← </span>All posts
         </Link>
-        <span className="font-medium">{category}</span>
       </nav>
-      <header className="py-7 sm:py-10">
-        <h1 className="max-w-[15ch] text-balance text-[clamp(2.9rem,8vw,6.75rem)] leading-[.96] font-black tracking-[-.045em]">
+      <header className="mt-8">
+        <p className="text-sm font-semibold text-vidals-accent">{category}</p>
+        <h1 className="mt-3 text-balance text-4xl leading-[1.08] font-semibold tracking-tight sm:text-5xl">
           {title}
         </h1>
-        <p className="mt-5 max-w-[46ch] font-[Georgia,serif] text-2xl leading-[1.3] italic sm:text-3xl">
-          {summary}
-        </p>
-      </header>
-      <div className="grid items-start gap-x-10 gap-y-6 border-t-2 border-vidals-text pt-5 md:grid-cols-[minmax(8rem,1fr)_minmax(0,3fr)] md:pt-8">
-        <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 text-sm text-vidals-muted md:grid md:gap-y-1.5">
+        <p className="mt-4 text-xl leading-relaxed text-vidals-muted">{summary}</p>
+        <div className="mt-6 flex flex-wrap items-baseline gap-x-4 gap-y-1 text-sm text-vidals-muted">
           <span className="font-semibold text-vidals-text">By {author}</span>
           <time dateTime={date}>{formatPostDate(date)}</time>
           <span>{readingMinutes} min read</span>
         </div>
-        <div className="min-w-0 max-w-[68ch]">
-          <div className={articleProse}>
-            <Markdown>{post.body}</Markdown>
-          </div>
-          {sourceUrl && (
-            <p className="mt-8 border-t border-vidals-border pt-4 text-sm leading-relaxed text-vidals-muted">
-              Adapted from my{' '}
-              <a href={sourceUrl} className="text-vidals-accent underline underline-offset-4">
-                original project write-up
-              </a>
-              , archived on {formatPostDate(date)}.
-            </p>
-          )}
+      </header>
+      <div className="mt-10">
+        <div className={articleProse}>
+          <Markdown>{post.body}</Markdown>
         </div>
+        {sourceUrl && (
+          <p className="mt-8 text-sm leading-relaxed text-vidals-muted">
+            Adapted from my{' '}
+            <a href={sourceUrl} className="text-vidals-accent underline underline-offset-4">
+              original project write-up
+            </a>
+            , archived on {formatPostDate(date)}.
+          </p>
+        )}
       </div>
       {next && (
-        <aside className="mt-12 flex flex-wrap items-baseline justify-between gap-2 border-t-2 border-vidals-text pt-4">
+        <aside className="mt-10 rounded-2xl bg-vidals-surface p-5 sm:p-6">
           <p className="text-sm text-vidals-muted">Another post</p>
           <Link
-            className="font-[Georgia,serif] text-2xl italic text-vidals-accent underline-offset-4 hover:underline"
+            className="mt-1 inline-block text-xl font-semibold text-vidals-accent underline-offset-4 hover:underline"
             href={`/blog/${next.slug}/`}
           >
             {next.title} <span aria-hidden="true">→</span>

@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-const greeting = 'Eduardo Vidals.';
+const greeting = 'Hey, I’m Eduardo.';
 const typingControls = /^(Pause|Resume|Replay) typing$/;
 
 test('every indexed page is a real, canonical HTML document', async ({ request }) => {

@@ -7,36 +7,35 @@ export function PersonalIntro() {
     <section
       id="home"
       aria-labelledby="intro-title"
-      className="shell grid items-center gap-8 py-8 sm:py-12 lg:grid-cols-[0.93fr_1.07fr] lg:gap-14 lg:py-14"
+      className="shell relative isolate grid items-center gap-6 pt-9 pb-10 md:grid-cols-[.95fr_1.05fr] md:gap-6 md:py-14 lg:py-20"
     >
+      <div
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_75%_47%,rgba(130,96,207,.12),transparent_54%)]"
+        aria-hidden="true"
+      />
       <div className="min-w-0">
-        <p className="mb-5 flex items-center gap-2.5 font-mono text-xs font-semibold tracking-widest uppercase">
-          <span aria-hidden="true" className="h-2 w-2 bg-vidals-print" /> Personal portfolio
-        </p>
+        <TypedGreeting />
         <h1
           id="intro-title"
-          className="text-[clamp(4.3rem,8.25vw,7.8rem)] leading-[.82] font-bold tracking-[-.05em]"
+          className="mt-3 text-[clamp(3.4rem,6.1vw,6.2rem)] leading-[.99] font-semibold tracking-[-.04em]"
         >
-          Eduardo{' '}
-          <span className="block font-editorial font-normal text-vidals-print italic">Vidals.</span>
+          Hey, I’m <span className="block text-vidals-accent">Eduardo.</span>
         </h1>
-        <TypedGreeting />
-        <p className="mt-3 max-w-[41ch] text-base leading-relaxed sm:text-lg">
-          I’ve built mobile checkout flows and a sorting visualizer you can walk through. Here are
-          the projects, and the notes I took along the way.
+        <p className="mt-5 max-w-[36ch] text-base leading-relaxed text-vidals-muted sm:text-xl">
+          I build mobile and web apps. For fun, I turn algorithms into things you can play with.
         </p>
-        <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2">
+        <div className="mt-7 flex flex-wrap items-center gap-3">
           <Link
             href="#projects"
-            className="inline-flex min-h-11 items-center gap-4 bg-vidals-text px-5 font-semibold text-vidals-paper hover:bg-vidals-print"
+            className="inline-flex min-h-12 items-center gap-3 rounded-full bg-vidals-text px-6 text-sm font-semibold text-vidals-background transition-colors hover:bg-vidals-accent"
           >
-            Selected work <span aria-hidden="true">↓</span>
+            Explore my work <span aria-hidden="true">↓</span>
           </Link>
           <Link
             href="/blog/"
-            className="inline-flex min-h-11 items-center gap-2 font-semibold underline decoration-vidals-border underline-offset-4 hover:text-vidals-accent"
+            className="inline-flex min-h-12 items-center gap-2 rounded-full bg-vidals-surface px-5 text-sm font-semibold text-vidals-text ring-1 ring-white/10 transition-colors hover:bg-vidals-poster"
           >
-            Read the blog <span aria-hidden="true">→</span>
+            Read my blog <span aria-hidden="true">↗</span>
           </Link>
         </div>
       </div>

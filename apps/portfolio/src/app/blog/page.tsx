@@ -2,15 +2,16 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { author } from '@/config/site';
 import { formatPostDate, getPosts, type PostSummary } from '@/content/blog';
+import { artworkForPost, PostArtwork } from './post-artwork';
 
-const description = `Engineering field notes by ${author}, with examples from the projects behind them.`;
+const description = `Notes from ${author} on building software, with examples from his projects.`;
 
 export const metadata: Metadata = {
-  title: 'Field notes',
+  title: 'Blog',
   description,
   alternates: { canonical: '/blog/', types: { 'application/rss+xml': '/feed.xml' } },
   openGraph: {
-    title: `Field notes — ${author}`,
+    title: `Blog — ${author}`,
     siteName: author,
     description,
     url: '/blog/',
@@ -19,60 +20,109 @@ export const metadata: Metadata = {
   },
 };
 
-function PostRow({ post, number }: { post: PostSummary; number: number }) {
+function PostDetails({ post }: { post: PostSummary }) {
   return (
-    <li className="grid grid-cols-[2rem_minmax(0,1fr)] gap-x-3 border-b border-vidals-border py-6 sm:grid-cols-[4rem_minmax(0,1fr)_8rem] sm:gap-x-7 sm:py-9">
-      <span aria-hidden="true" className="pt-1 font-mono text-sm tabular-nums text-vidals-accent">
-        {String(number).padStart(2, '0')}
-      </span>
-      <div>
-        <p className="mb-2 text-sm font-medium text-vidals-muted">{post.category}</p>
-        <h2 className="text-balance text-[clamp(1.7rem,3.5vw,3.15rem)] leading-[1.04] font-bold tracking-[-.04em]">
-          <Link
-            href={`/blog/${post.slug}/`}
-            className="decoration-1 underline-offset-4 hover:text-vidals-accent hover:underline"
-          >
-            {post.title}
-          </Link>
-        </h2>
-        <p className="mt-3 max-w-[55ch] leading-relaxed text-vidals-muted">{post.summary}</p>
-      </div>
-      <div className="col-start-2 mt-4 flex flex-wrap gap-x-3 gap-y-1 text-sm text-vidals-muted sm:col-start-auto sm:mt-0 sm:block sm:text-end">
-        <time dateTime={post.date} className="font-medium text-vidals-text">
-          {formatPostDate(post.date)}
-        </time>
-        <span className="sm:mt-1 sm:block">{post.readingMinutes} min read</span>
-      </div>
-    </li>
+    <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-vidals-muted">
+      <time dateTime={post.date}>{formatPostDate(post.date)}</time>
+      <span aria-hidden="true">·</span>
+      <span>{post.readingMinutes} min read</span>
+    </p>
   );
 }
 
 export default function BlogPage() {
-  const posts = getPosts();
+  const [latest, ...earlier] = getPosts();
+  const leadArt = latest && artworkForPost(latest.slug);
   return (
-    <section className="shell py-10 text-vidals-text sm:py-16">
-      <header className="grid items-end gap-5 border-b-4 border-vidals-text pb-6 sm:grid-cols-[1.3fr_1fr] sm:pb-9">
-        <h1 className="text-[clamp(4.75rem,13vw,10rem)] leading-[.88] font-black tracking-[-.05em]">
-          Blog
-        </h1>
-        <p className="max-w-[24ch] font-[Georgia,serif] text-2xl leading-[1.22] italic md:text-3xl">
-          Notes from my projects and what I learned while building them.
-        </p>
-      </header>
-      <div className="flex items-baseline justify-between gap-5 border-b border-vidals-text py-3 text-sm">
-        <p className="font-semibold">
-          All posts{' '}
-          <span className="ps-1 font-mono font-normal text-vidals-muted">({posts.length})</span>
-        </p>
-        <a href="/feed.xml" className="text-vidals-accent underline underline-offset-4">
+    <section className="shell py-12 text-vidals-text sm:py-20">
+      <header className="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
+        <div>
+          <h1 className="text-5xl font-semibold tracking-tight sm:text-6xl">Blog</h1>
+          <p className="mt-4 max-w-[48ch] text-lg leading-relaxed text-vidals-muted">
+            Notes from my projects and what I learned while building them.
+          </p>
+        </div>
+        <a
+          href="/feed.xml"
+          className="text-sm font-semibold text-vidals-accent underline-offset-4 hover:underline"
+        >
           RSS feed
         </a>
-      </div>
-      <ol>
-        {posts.map((post, index) => (
-          <PostRow key={post.slug} post={post} number={index + 1} />
-        ))}
-      </ol>
+      </header>
+      {latest && (
+        <article className="mt-9 rounded-3xl bg-vidals-surface">
+          <Link
+            href={`/blog/${latest.slug}/`}
+            aria-labelledby="latest-post"
+            className={
+              leadArt
+                ? 'group grid items-center gap-2 rounded-3xl p-3 sm:grid-cols-[1.05fr_1fr] sm:gap-5 sm:p-5'
+                : 'group block rounded-3xl p-4'
+            }
+          >
+            {leadArt && <PostArtwork project={leadArt} />}
+            <div className="p-3 sm:py-5 sm:pe-6">
+              <p className="text-sm font-semibold text-vidals-accent">{latest.category}</p>
+              <h2
+                id="latest-post"
+                className="mt-2 max-w-[19ch] text-balance text-3xl leading-tight font-semibold tracking-tight group-hover:text-vidals-accent lg:text-4xl"
+              >
+                {latest.title}
+              </h2>
+              <p className="mt-3 max-w-[52ch] leading-relaxed text-vidals-muted">
+                {latest.summary}
+              </p>
+              <div className="mt-5">
+                <PostDetails post={latest} />
+              </div>
+            </div>
+          </Link>
+        </article>
+      )}
+      {earlier.length > 0 && (
+        <section aria-labelledby="earlier-posts" className="mt-12 sm:mt-16">
+          <h2 id="earlier-posts" className="text-2xl font-semibold tracking-tight">
+            Earlier posts
+          </h2>
+          <ol className="mt-6 space-y-9">
+            {earlier.map((post) => {
+              const art = artworkForPost(post.slug);
+              return (
+                <li key={post.slug}>
+                  <Link
+                    href={`/blog/${post.slug}/`}
+                    aria-labelledby={`post-${post.slug}`}
+                    className={
+                      art
+                        ? 'group grid max-w-4xl items-center gap-5 rounded-xl sm:grid-cols-[11rem_minmax(0,1fr)] sm:gap-7'
+                        : 'group block max-w-4xl'
+                    }
+                  >
+                    {art && (
+                      <div className="max-w-48">
+                        <PostArtwork project={art} small />
+                      </div>
+                    )}
+                    <div>
+                      <PostDetails post={post} />
+                      <h3
+                        id={`post-${post.slug}`}
+                        className="mt-2 text-2xl font-semibold tracking-tight group-hover:text-vidals-accent"
+                      >
+                        {post.title}
+                      </h3>
+                      <p className="mt-2 max-w-[55ch] leading-relaxed text-vidals-muted">
+                        {post.summary}
+                      </p>
+                      <p className="mt-2 text-sm text-vidals-accent">{post.category}</p>
+                    </div>
+                  </Link>
+                </li>
+              );
+            })}
+          </ol>
+        </section>
+      )}
     </section>
   );
 }

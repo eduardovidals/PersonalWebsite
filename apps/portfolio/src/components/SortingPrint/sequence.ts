@@ -1,12 +1,12 @@
-export interface PrintFrame {
+export interface SortingFrame {
   readonly heights: readonly number[];
   /** Left-hand index of the next inverted pair; null in the final state. */
   readonly nextPair: number | null;
 }
 
-function recordSwaps(input: ReadonlyArray<number>): readonly PrintFrame[] {
+function recordSwaps(input: ReadonlyArray<number>): readonly SortingFrame[] {
   const heights = [...input];
-  const frames: PrintFrame[] = [];
+  const frames: SortingFrame[] = [];
   // Record only swaps, not comparisons. Each press therefore changes the illustration.
   for (let end = heights.length - 1; end > 0; end--) {
     let changed = false;

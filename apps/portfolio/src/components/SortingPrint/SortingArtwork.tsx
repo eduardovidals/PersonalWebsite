@@ -1,185 +1,186 @@
 import { useId } from 'react';
-import type { PrintFrame } from './sequence';
+import type { SortingFrame } from './sequence';
 
-const ink = '#17246f';
-const cream = '#fff0c8';
-const apricot = '#ffa477';
-const plane = '#aeb6ff';
-const width = 0.74;
+// The bases follow the lip of a shallow ellipse rather than a flat axis.
+const sockets = [
+  [72, 205],
+  [135, 230],
+  [199, 252],
+  [264, 269],
+  [329, 279],
+  [394, 281],
+  [458, 273],
+] as const;
 
-/** Project the three axes into a single drawing space, shared by blocks, grid and shadows. */
-function point(column: number, depth: number, height = 0) {
-  return [79 + column * 51 + depth * 28, 151 + column * 25.5 - depth * 14 - height * 19.8].join(
-    ',',
-  );
-}
+const materials = {
+  iris: ['#6c66a9', '#ebdcff', '#bcacff', '#826acc', '#403664', '#aa9be5'],
+  lilac: ['#9280b9', '#fff1ff', '#dec4ef', '#aa8cbd', '#5e4d7a', '#c8acd8'],
+  periwinkle: ['#666d9d', '#e2e8ff', '#b0bcff', '#808aca', '#3f446e', '#aab2dc'],
+  coral: ['#b1738d', '#fff1dc', '#ffccb2', '#ea9b99', '#88596f', '#e2a8af'],
+} as const;
+type Material = keyof typeof materials;
 
-function Registration({ x, y }: { x: number; y: number }) {
-  return (
-    <g transform={`translate(${x} ${y})`} stroke={cream} opacity=".8" fill="none" strokeWidth=".85">
-      <circle r="3.7" />
-      <path d="M-8 0H8 M0-8V8" />
-    </g>
-  );
-}
-
-function DrawingBoard() {
-  const crossRules = Array.from({ length: 17 }, (_, n) => {
-    const pos = -0.65 + n * 0.5;
-    return <line key={n} x1={pos} y1="-1.2" x2={pos} y2="2.15" vectorEffect="non-scaling-stroke" />;
-  });
-  const longRules = Array.from({ length: 7 }, (_, n) => {
-    const pos = -1.2 + n * 0.5;
-    return (
-      <line key={n} x1="-0.65" y1={pos} x2="7.35" y2={pos} vectorEffect="non-scaling-stroke" />
-    );
-  });
-  return (
-    <g>
-      <polygon
-        points={[point(-0.65, -1.2), point(7.35, -1.2), point(7.35, 2.15), point(-0.65, 2.15)].join(
-          ' ',
-        )}
-        fill="#3346bd"
-        stroke={plane}
-        strokeWidth=".8"
-      />
-      <g transform="matrix(51 25.5 28 -14 79 151)" stroke={plane} opacity=".64" strokeWidth=".55">
-        {crossRules}
-        {longRules}
-      </g>
-    </g>
-  );
-}
-
-function Block({
-  column,
+function Stack({
   height,
+  column,
   accent,
-  hatch,
+  uid,
 }: {
-  column: number;
   height: number;
+  column: number;
   accent: boolean;
-  hatch: string;
+  uid: string;
 }) {
-  const left = point(column, 0);
-  const right = point(column + width, 0);
-  const far = point(column + width, 1);
-  const topLeft = point(column, 0, height);
-  const topRight = point(column + width, 0, height);
-  const topFar = point(column + width, 1, height);
-  const topBack = point(column, 1, height);
-  const rightFace = [right, far, topFar, topRight].join(' ');
+  const [x, y] = sockets[column];
+  const finish: Material = accent
+    ? 'coral'
+    : (['iris', 'lilac', 'periwinkle'] as const)[height % 3];
+  const tones = materials[finish];
   return (
-    <g data-height={height} stroke={ink} strokeWidth="1.65" strokeLinejoin="round">
-      <polygon
-        points={[left, right, topRight, topLeft].join(' ')}
-        fill={accent ? apricot : '#e5e0c0'}
-      />
-      <polygon points={rightFace} fill={accent ? '#985967' : '#405394'} />
-      <polygon points={rightFace} fill={`url(#${hatch})`} stroke="none" />
-      <polygon
-        points={[topLeft, topRight, topFar, topBack].join(' ')}
-        fill={accent ? '#ffc8a0' : cream}
-      />
-      <path
-        d={`M${topLeft}L${topRight}`}
-        stroke={accent ? '#ffd9b3' : '#fff8df'}
-        strokeWidth="1.15"
-      />
+    <g
+      data-height={height}
+      style={{ transform: `translate(${x}px, ${y}px)` }}
+      className="transition-transform duration-500 ease-out motion-reduce:transition-none"
+    >
+      {Array.from({ length: height }, (_, layer) => (
+        <g key={layer} transform={`translate(0 ${-22 * layer})`}>
+          <path
+            d="M-29 -13 C-29 -27 29 -27 29 -13 L29 -6 C29 8 -29 8 -29 -6Z"
+            fill={`url(#${uid}-${finish})`}
+          />
+          <ellipse cy="-13" rx="29" ry="10.5" fill={tones[2]} />
+          <ellipse cy="-13" rx="29" ry="10.5" fill={`url(#${uid}-pearl)`} />
+          <ellipse cy="-13" rx="10.7" ry="3.9" fill={tones[4]} />
+          <path
+            d="M-27 -15C-22 -22 -4 -24 8 -22"
+            fill="none"
+            stroke={tones[1]}
+            strokeWidth="1"
+            strokeOpacity=".8"
+          />
+        </g>
+      ))}
     </g>
   );
 }
 
-export function SortingArtwork({
-  frame,
-  index,
-  swaps,
-}: {
-  frame: PrintFrame;
-  index: number;
-  swaps: number;
-}) {
-  const id = useId();
-  const hatch = `${id}-hatch`;
-  const grain = `${id}-dot`;
-  const title = `${id}-title`;
-  const description = `${id}-desc`;
+function Light({ uid }: { uid: string }) {
+  return (
+    <defs>
+      {Object.entries(materials).map(([name, tones]) => (
+        <linearGradient
+          key={name}
+          id={`${uid}-${name}`}
+          x1="0"
+          y1=".4"
+          x2="1"
+          y2=".49"
+          gradientUnits="objectBoundingBox"
+        >
+          {[0, 0.19, 0.41, 0.64, 0.87, 1].map((position, i) => (
+            <stop key={position} offset={position} stopColor={tones[i]} />
+          ))}
+        </linearGradient>
+      ))}
+      <radialGradient
+        id={`${uid}-pearl`}
+        cx="26%"
+        cy="6%"
+        r="87%"
+        gradientTransform="rotate(7 .5 .5)"
+      >
+        <stop stopColor="#fff8f1" stopOpacity=".71" />
+        <stop offset=".5" stopColor="#f1cfff" stopOpacity=".16" />
+        <stop offset="1" stopColor="#e5deff" stopOpacity="0" />
+      </radialGradient>
+      <radialGradient id={`${uid}-pool`}>
+        <stop stopColor="#9b8acf" stopOpacity=".23" />
+        <stop offset=".6" stopColor="#8a7da8" stopOpacity=".15" />
+        <stop offset="1" stopColor="#746c9c" stopOpacity="0" />
+      </radialGradient>
+      <radialGradient id={`${uid}-warm`}>
+        <stop stopColor="#f6b9a9" stopOpacity=".45" />
+        <stop offset="1" stopColor="#bb90af" stopOpacity="0" />
+      </radialGradient>
+      <linearGradient id={`${uid}-orbit`} x1="0" y1="1" x2=".9" y2="0">
+        <stop stopColor="#bdacf2" stopOpacity="0" />
+        <stop offset=".25" stopColor="#c9b5ea" stopOpacity=".65" />
+        <stop offset=".49" stopColor="#f1ccbe" stopOpacity=".07" />
+        <stop offset=".8" stopColor="#a1b3ef" stopOpacity=".36" />
+        <stop offset="1" stopColor="#afa7d0" stopOpacity="0" />
+      </linearGradient>
+      <filter id={`${uid}-soft`} x="-70%" y="-80%" width="260%" height="270%">
+        <feGaussianBlur stdDeviation="4" />
+      </filter>
+    </defs>
+  );
+}
+
+export function SortingArtwork({ frame }: { frame: SortingFrame }) {
+  const uid = useId();
+  const title = `${uid}-title`;
+  const desc = `${uid}-desc`;
   return (
     <svg
-      viewBox="0 0 540 370"
-      className="block h-auto w-full"
+      viewBox="0 0 540 344"
+      className="block h-auto w-full overflow-visible"
       role="img"
       aria-labelledby={title}
-      aria-describedby={description}
+      aria-describedby={desc}
     >
-      <title id={title}>Isometric sorting print</title>
-      <desc id={description}>
-        Seven columns on a drafted plane. Heights from left to right: {frame.heights.join(', ')}.
+      <title id={title}>Floating sorting sculpture</title>
+      <desc id={desc}>
+        Seven floating stacks of rings. Ring counts from left to right: {frame.heights.join(', ')}.
         {frame.nextPair === null
           ? ' Sorted from shortest to tallest.'
-          : ' The peach columns are the next pair to swap.'}
+          : ' The two peach stacks swap next.'}
       </desc>
-      <defs>
-        <pattern id={hatch} width="4" height="4" patternUnits="userSpaceOnUse">
-          <path d="M-1 1L1-1 M0 4L4 0 M3 5L5 3" stroke={ink} strokeWidth="1.25" opacity=".78" />
-        </pattern>
-        <pattern id={grain} width="7" height="7" patternUnits="userSpaceOnUse">
-          <circle cx="1" cy="1" r=".52" fill={cream} opacity=".39" />
-        </pattern>
-      </defs>
-      <rect width="540" height="370" fill="#293cba" />
-      <rect width="540" height="370" fill={`url(#${grain})`} />
+      <Light uid={uid} />
       <g aria-hidden="true">
-        <Registration x={21} y={21} />
-        <Registration x={519} y={21} />
-        <Registration x={21} y={349} />
-        <Registration x={519} y={349} />
-        <g fill={cream} fontFamily="ui-monospace, monospace" fontSize="9" letterSpacing="1.55">
-          <text x="39" y="24">
-            FIG. 01
-          </text>
-          <text x="501" y="24" textAnchor="end">
-            SORTING STUDY
-          </text>
-          <text x="39" y="352">
-            BUBBLE SORT
-          </text>
-          <text x="501" y="352" textAnchor="end">
-            {String(index).padStart(2, '0')} / {String(swaps).padStart(2, '0')}
-          </text>
-        </g>
-        <DrawingBoard />
-        {frame.heights.map((height, column) => {
-          const cast = 0.44 + height * 0.19;
-          const drift = height * 0.065;
+        <ellipse
+          cx="272"
+          cy="247"
+          rx="264"
+          ry="85"
+          transform="rotate(9 272 247)"
+          fill={`url(#${uid}-pool)`}
+        />
+        <ellipse
+          cx="273"
+          cy="249"
+          rx="241"
+          ry="53"
+          transform="rotate(9 273 249)"
+          stroke={`url(#${uid}-orbit)`}
+          strokeWidth="1"
+          fill="none"
+        />
+        {sockets.map(([x, y], i) => {
+          const active =
+            frame.nextPair !== null && (i === frame.nextPair || i === frame.nextPair + 1);
           return (
-            <polygon
-              key={column}
-              fill={ink}
-              opacity=".82"
-              points={[
-                point(column, 0),
-                point(column + width, 0),
-                point(column + width + drift, cast),
-                point(column + width + drift, 1 + cast),
-                point(column + drift, 1 + cast),
-                point(column, 1),
-              ].join(' ')}
-            />
+            <g key={i}>
+              {active && <ellipse cx={x} cy={y + 7} rx="65" ry="24" fill={`url(#${uid}-warm)`} />}
+              <ellipse
+                cx={x + 8}
+                cy={y + 11}
+                rx="29"
+                ry="7"
+                transform={`rotate(-9 ${x + 8} ${y + 11})`}
+                fill="#090910"
+                opacity=".75"
+                filter={`url(#${uid}-soft)`}
+              />
+            </g>
           );
         })}
-        {frame.heights.map((height, column) => (
-          <Block
-            key={column}
+        {frame.heights.map((height, i) => (
+          <Stack
+            key={height}
             height={height}
-            column={column}
-            hatch={hatch}
-            accent={
-              frame.nextPair !== null &&
-              (column === frame.nextPair || column === frame.nextPair + 1)
-            }
+            column={i}
+            uid={uid}
+            accent={frame.nextPair !== null && (i === frame.nextPair || i === frame.nextPair + 1)}
           />
         ))}
       </g>

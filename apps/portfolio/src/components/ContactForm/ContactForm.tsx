@@ -2,17 +2,15 @@ import { contactEmail } from '@/config/site';
 import { publicMailSettings } from '@/config/server';
 import { MessageFields } from './MessageFields';
 
-/** Static contact details always work; the delivery form is offered only when configured. */
+/** A direct email link also works when the optional delivery service is absent. */
 export function ContactForm() {
   const settings = publicMailSettings();
   return (
-    <div className="border-l-2 border-vidals-accent bg-vidals-surface p-6 text-vidals-text sm:p-8">
+    <div className="min-w-0 rounded-[1.75rem] bg-vidals-surface p-5 text-vidals-text sm:p-7">
       {settings && <MessageFields settings={settings} />}
-      <p className="mb-2 font-mono text-xs font-semibold uppercase tracking-widest text-vidals-muted">
-        Direct line
-      </p>
+      <p className="mb-1 text-sm font-medium text-vidals-muted">Email me directly</p>
       <a
-        className="inline-block max-w-full break-all font-semibold underline decoration-vidals-accent underline-offset-4 hover:text-vidals-accent"
+        className="inline-flex min-h-11 max-w-full items-center gap-2 break-all rounded-lg font-semibold text-vidals-accent underline-offset-4 hover:underline"
         href={'mailto:' + contactEmail}
       >
         {contactEmail} <span aria-hidden="true">↗</span>

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { profiles } from '@/config/site';
 
 const links = [
   ['Work', '/projects/'],
@@ -10,37 +11,47 @@ const links = [
 export function SiteHeader() {
   return (
     <header className="shell">
-      <div className="flex min-h-16 flex-wrap items-center justify-between gap-x-3 border-b border-vidals-text py-1.5 md:min-h-20">
+      <div className="flex min-h-18 flex-wrap items-center justify-between gap-2 py-2.5 sm:grid sm:min-h-24 sm:grid-cols-[1fr_auto_1fr]">
         <Link
           href="/"
           aria-label="Eduardo Vidals — home"
-          className="flex min-h-11 items-center gap-2.5"
+          className="inline-flex min-h-11 w-fit items-center gap-2.5 rounded-full"
         >
-          <svg aria-hidden="true" viewBox="0 0 44 38" width="44" height="38">
-            <path d="M0 0h44v38H0z" fill="var(--color-vidals-print)" />
+          <svg aria-hidden="true" viewBox="0 0 48 48" width="43" height="43">
+            <circle cx="24" cy="24" r="23" fill="var(--color-vidals-accent)" />
             <path
-              d="M8 9h12l-1 4h-7l-1 4h7l-1 4h-7l-1 4h8l-1 4H3zm13 0h5l1 14 8-14h6L28 29h-5z"
-              fill="var(--color-vidals-paper)"
+              d="M7 25q5 0 9-4c5-6 1-9-3-6-5 4-5 15 1 15 5 0 9-6 12-12-1 7-2 14 1 13 4-2 9-12 11-17"
+              fill="none"
+              stroke="#211a31"
+              strokeWidth="3.4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
-          <span className="signature-name hidden font-mono text-sm font-bold tracking-tight sm:block">
+          <span className="signature-name hidden text-base font-semibold tracking-tight lg:block">
             Eduardo Vidals
           </span>
         </Link>
         <nav
           aria-label="Primary"
-          className="flex flex-wrap items-center gap-x-4 text-sm font-semibold sm:gap-x-8"
+          className="inline-flex flex-wrap items-center rounded-full bg-vidals-surface/95 p-1 shadow-lg shadow-black/15 ring-1 ring-inset ring-white/10"
         >
           {links.map(([label, href]) => (
             <Link
               key={label}
               href={href}
-              className="inline-flex min-h-11 items-center hover:text-vidals-accent hover:underline"
+              className="inline-flex min-h-11 items-center rounded-full px-3 text-sm font-medium text-vidals-text transition-colors hover:bg-vidals-poster hover:text-vidals-accent sm:px-4"
             >
               {label}
             </Link>
           ))}
         </nav>
+        <a
+          href={profiles.GitHub}
+          className="hidden min-h-11 items-center gap-1.5 justify-self-end rounded-full px-2 text-sm font-medium text-vidals-muted hover:text-vidals-text sm:inline-flex"
+        >
+          GitHub <span aria-hidden="true">↗</span>
+        </a>
       </div>
     </header>
   );

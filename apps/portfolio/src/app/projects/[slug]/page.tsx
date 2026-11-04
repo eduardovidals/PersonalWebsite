@@ -56,28 +56,23 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   );
 
   return (
-    <div className="shell py-9 text-vidals-text sm:py-14">
+    <div className="mx-auto w-full max-w-5xl px-5 py-10 text-vidals-text sm:px-8 sm:py-16">
       <article>
         <header>
-          <nav
-            aria-label="Breadcrumb"
-            className="flex items-center justify-between gap-4 border-b border-vidals-text pb-3 text-sm"
-          >
+          <nav aria-label="Breadcrumb" className="text-sm font-medium">
             <Link
               href="/projects/"
               className="inline-flex items-center gap-2 text-vidals-accent underline-offset-4 hover:underline"
             >
               <Arrow back /> All projects
             </Link>
-            <span className="font-mono text-vidals-muted">
-              {String(index + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
-            </span>
           </nav>
-          <div className="grid items-end gap-5 py-7 md:grid-cols-[minmax(0,1.3fr)_minmax(0,.85fr)] md:gap-10 md:py-12">
-            <h1 className="text-balance text-[clamp(2.8rem,7vw,6.2rem)] leading-[.95] font-black tracking-[-.045em]">
+          <div className="mx-auto max-w-3xl py-8 sm:py-12 sm:text-center">
+            <p className="text-sm font-semibold text-vidals-accent">{project.category}</p>
+            <h1 className="mt-3 text-balance text-4xl leading-[1.08] font-semibold tracking-tight sm:text-6xl">
               {project.title}
             </h1>
-            <p className="max-w-[37ch] font-[Georgia,serif] text-xl leading-[1.3] italic sm:text-2xl">
+            <p className="mt-4 max-w-[52ch] text-lg leading-relaxed text-vidals-muted sm:mx-auto sm:text-xl">
               {project.description}
             </p>
           </div>
@@ -85,8 +80,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         <figure>
           <Cover project={project} detail />
         </figure>
-        <div className="mt-7 grid items-start gap-x-10 gap-y-7 border-t-2 border-vidals-text pt-5 md:mt-10 md:grid-cols-[minmax(8rem,1fr)_minmax(0,3fr)] md:pt-8">
-          <aside aria-label="Project details">
+        <div className="mx-auto mt-6 max-w-[70ch] sm:mt-9">
+          <aside
+            aria-label="Project details"
+            className="flex flex-wrap items-center gap-x-7 gap-y-4 rounded-2xl bg-vidals-surface px-5 py-4 sm:px-6"
+          >
             {project.logo && (
               <Image
                 src={imagePath(project.logo)}
@@ -94,12 +92,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 width={mediaDimensions[project.logo][0]}
                 height={mediaDimensions[project.logo][1]}
                 unoptimized
-                className="mb-4 h-12 w-auto max-w-28 object-contain"
+                className="h-12 w-auto max-w-24 rounded-lg object-contain"
               />
             )}
-            <dl className="grid gap-x-6 gap-y-3 text-sm leading-relaxed sm:grid-cols-3 md:grid-cols-1 md:gap-y-5">
+            <dl className="grid flex-1 gap-x-6 gap-y-3 text-sm leading-relaxed sm:grid-cols-[1fr_1.6fr]">
               {[
-                ['Project type', project.category],
                 ['Context', project.context],
                 ['Built with', project.stack.join(', ')],
               ].map(([label, value]) => (
@@ -110,14 +107,14 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               ))}
             </dl>
           </aside>
-          <section aria-label="Case study" className="min-w-0 max-w-[68ch]">
+          <section aria-label="Case study" className="mt-9 min-w-0">
             <ArticleBody markdown={markdown} />
           </section>
         </div>
       </article>
       <nav
         aria-label="More projects"
-        className="mt-12 flex flex-wrap items-center justify-between gap-3 border-t-2 border-vidals-text pt-4"
+        className="mx-auto mt-12 flex max-w-[70ch] flex-wrap items-center justify-between gap-4 rounded-2xl bg-vidals-surface p-5"
       >
         <Link
           href="/projects/"
@@ -127,7 +124,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         </Link>
         <Link
           href={projectHref(next.slug)}
-          className="inline-flex items-center gap-2 font-[Georgia,serif] text-2xl italic text-vidals-accent underline-offset-4 hover:underline"
+          className="inline-flex items-center gap-2 font-semibold text-vidals-accent underline-offset-4 hover:underline"
         >
           Next: {next.title} <Arrow />
         </Link>

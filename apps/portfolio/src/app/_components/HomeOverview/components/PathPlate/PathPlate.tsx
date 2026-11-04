@@ -39,7 +39,7 @@ export function PathPlate() {
   }
 
   return (
-    <figure className="my-2 max-w-sm border-l-2 border-vidals-print bg-vidals-paper p-5 text-vidals-text">
+    <figure className="my-2 max-w-sm rounded-3xl bg-vidals-surface p-5 text-vidals-text">
       <figcaption className="mb-3">
         <p className="font-semibold">Breadth-first search</p>
         <p className="mt-1 text-sm leading-relaxed text-vidals-muted">
@@ -54,13 +54,13 @@ export function PathPlate() {
       >
         <title id="plate-title">Finding a path from A to B</title>
         <desc id="plate-desc">
-          A two-dimensional maze. The search explores blue squares and avoids the striped walls. The
-          shortest route takes {steps} steps.
+          A two-dimensional maze. The search explores purple squares and avoids the striped walls.
+          The shortest route takes {steps} steps.
         </desc>
         <defs>
           <pattern id="wall-stripes" width="5" height="5" patternUnits="userSpaceOnUse">
-            <rect width="5" height="5" fill="#36352f" />
-            <path d="M0 5L5 0" stroke="#9d9a90" />
+            <rect width="5" height="5" fill="#393740" />
+            <path d="M0 5L5 0" stroke="#a7a3af" />
           </pattern>
         </defs>
         {tiles.map(({ key, x, y, wall, routeAt, visitAt }) => {
@@ -80,16 +80,23 @@ export function PathPlate() {
                     : isEndpoint || onRoute
                       ? 'var(--color-vidals-print)'
                       : frame > visitAt
-                        ? '#aeb9f4'
-                        : '#e4e1d5'
+                        ? '#7764a2'
+                        : '#35333b'
                 }
               />
               {isEndpoint ? (
-                <text x="10" y="14" textAnchor="middle" fill="#fff" fontSize="12" fontWeight="bold">
+                <text
+                  x="10"
+                  y="14"
+                  textAnchor="middle"
+                  fill="#19191f"
+                  fontSize="12"
+                  fontWeight="bold"
+                >
                   {key === start ? 'A' : 'B'}
                 </text>
               ) : onRoute ? (
-                <circle cx="10" cy="10" r="2.5" fill="#fff" />
+                <circle cx="10" cy="10" r="2.5" fill="#19191f" />
               ) : null}
             </g>
           );

@@ -57,7 +57,7 @@ export function MessageFields(props: { settings: DeliverySettings }) {
       onSubmit={(event) => handleSubmit(deliver)(event)}
       method="post"
       noValidate
-      className="mb-7 space-y-4 border-b border-vidals-border pb-6"
+      className="mb-6 space-y-4"
     >
       <fieldset aria-busy={isSubmitting} className="space-y-4">
         <legend className="sr-only">Send Eduardo a message</legend>

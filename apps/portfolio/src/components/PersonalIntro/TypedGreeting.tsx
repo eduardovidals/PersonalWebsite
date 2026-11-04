@@ -37,13 +37,13 @@ export function TypedGreeting() {
     <div
       role="group"
       aria-label="Role animation"
-      className="mt-5 flex min-h-11 items-center gap-2 sm:mt-7"
+      className="flex min-h-11 w-fit items-center gap-1 rounded-full bg-vidals-surface/80 ps-4 pe-1 ring-1 ring-inset ring-white/10"
     >
-      <p className="font-mono text-xs font-bold tracking-wide sm:text-sm">
+      <p className="font-mono text-xs font-medium text-vidals-accent">
         <span className="sr-only">Software Engineer.</span>
-        <span aria-hidden="true" className="inline-block min-w-[18ch]">
+        <span aria-hidden="true" className="inline-block min-w-[19ch]">
           {typingFrames[motion ? position : 0].word}
-          <span className="ms-1 inline-block h-[.88em] w-1.5 align-[-.055em] bg-vidals-accent" />
+          <span className="ms-0.5 inline-block h-[.88em] w-0.5 align-[-.055em] bg-vidals-accent" />
         </span>
       </p>
       {motion && (
