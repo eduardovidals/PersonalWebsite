@@ -1,3 +1,5 @@
+import type { ToolName } from '@/content/tools/marks';
+
 // The public slugs are permanent: older versions of the portfolio link to them.
 export interface Project {
   slug: string;
@@ -5,7 +7,7 @@ export interface Project {
   category: string;
   context: string;
   description: string;
-  stack: readonly string[];
+  stack: readonly ToolName[];
   cover: string;
   coverAlt: string;
   logo?: string;
@@ -19,7 +21,7 @@ export const projects: readonly Project[] = [
     context: 'Smarttwigs internship',
     description:
       'Building the APIs, mobile screens, and subscription checkout behind a team recognition app.',
-    stack: ['React Native', 'React', 'Redux', 'TypeScript', 'Stripe'],
+    stack: ['React Native', 'React', 'Redux', 'TypeScript', 'REST APIs', 'Stripe'],
     cover: 'props-ad-parents',
     coverAlt: 'Artwork from Props showing a family alongside the words “Rewarding good behavior!”',
     logo: 'props',
@@ -42,7 +44,7 @@ export const projects: readonly Project[] = [
     category: 'Algorithm visualization',
     context: 'AlgoVisual',
     description: 'Turning Merge Sort, Quick Sort, and Heap Sort into step-by-step animations.',
-    stack: ['React', 'TypeScript'],
+    stack: ['React', 'TypeScript', 'HTML', 'CSS'],
     cover: 'sorting-visualizer',
     coverAlt: 'Uneven blue bars represent values in an array before they are sorted.',
   },
@@ -74,7 +76,7 @@ export const projects: readonly Project[] = [
     category: 'Computer graphics',
     context: 'NJCU coursework',
     description: 'Using orbits, textures, and a movable camera to make a solar system explorable.',
-    stack: ['React', 'Three.js'],
+    stack: ['React', 'Three.js', 'JavaScript'],
     cover: 'solar-system',
     coverAlt: 'Textured planets orbit a bright sun against a dark star field.',
   },

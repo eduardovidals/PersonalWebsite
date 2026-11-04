@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { CurrentWork } from '@/components/CurrentWork';
+import { ToolChips } from '@/components/ToolChips';
 import { imagePath, projectHref, projects } from '@/content/projects';
 import { Arrow, Cover } from './archive-parts';
 
 const description =
-  'Six case studies by Eduardo Vidals, from mobile and web products at Smarttwigs to interactive experiments in algorithms and computer graphics.';
+  'Current builds from Eduardo Vidals and six archived case studies covering mobile apps, web products, algorithms, and computer graphics.';
 
 export const metadata: Metadata = {
   title: 'Projects',
@@ -26,10 +28,11 @@ export default function ProjectsPage() {
       <header>
         <h1 className="text-5xl font-semibold tracking-tight sm:text-6xl">Projects</h1>
         <p className="mt-4 max-w-[52ch] text-lg leading-relaxed text-vidals-muted">
-          Apps I worked on at Smarttwigs, plus a few projects from my time studying algorithms and
-          computer graphics.
+          What I’m building now, followed by six past projects from my internship at Smarttwigs and
+          my time studying algorithms and computer graphics.
         </p>
       </header>
+      <CurrentWork />
       {contexts.map((context) => (
         <section key={context} className="mt-12 sm:mt-16" aria-label={context}>
           <h2 className="mb-5 text-2xl font-semibold tracking-tight sm:mb-6">{context}</h2>
@@ -60,6 +63,13 @@ export default function ProjectsPage() {
                       </p>
                     </div>
                   </Link>
+                  <div className="mt-3">
+                    <ToolChips
+                      tools={project.stack}
+                      label={`Tools used on ${project.title}`}
+                      compact
+                    />
+                  </div>
                 </article>
               ))}
           </div>

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
+import { ToolChips } from '@/components/ToolChips';
 import {
   imagePath,
   mediaDimensions,
@@ -95,16 +96,21 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 className="h-12 w-auto max-w-24 rounded-lg object-contain"
               />
             )}
-            <dl className="grid flex-1 gap-x-6 gap-y-3 text-sm leading-relaxed sm:grid-cols-[1fr_1.6fr]">
-              {[
-                ['Context', project.context],
-                ['Built with', project.stack.join(', ')],
-              ].map(([label, value]) => (
-                <div key={label}>
-                  <dt className="font-semibold">{label}</dt>
-                  <dd className="text-vidals-muted">{value}</dd>
-                </div>
-              ))}
+            <dl className="grid min-w-0 flex-1 gap-x-6 gap-y-3 text-sm leading-relaxed sm:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
+              <div>
+                <dt className="font-semibold">Context</dt>
+                <dd className="text-vidals-muted">{project.context}</dd>
+              </div>
+              <div>
+                <dt className="font-semibold">Built with</dt>
+                <dd className="mt-1.5">
+                  <ToolChips
+                    tools={project.stack}
+                    label={`Tools used on ${project.title}`}
+                    compact
+                  />
+                </dd>
+              </div>
             </dl>
           </aside>
           <section aria-label="Case study" className="mt-9 min-w-0">

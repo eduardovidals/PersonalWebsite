@@ -1,3 +1,5 @@
+import type { ToolName } from '@/content/tools/marks';
+
 export const toolkit = [
   {
     title: 'Web & mobile',
@@ -17,7 +19,15 @@ export const toolkit = [
   },
   {
     title: 'Design systems',
-    tools: ['React Aria Components', 'Tailwind CSS', 'Storybook', 'i18next', 'HTML', 'CSS'],
+    tools: [
+      'React Aria Components',
+      'Tailwind CSS',
+      'Storybook',
+      'i18next',
+      'HTML',
+      'CSS',
+      'Styled Components',
+    ],
   },
   {
     title: 'Charts, 3D & motion',
@@ -33,6 +43,7 @@ export const toolkit = [
       'Fastify',
       'Express',
       'OpenAPI / Swagger',
+      'REST APIs',
       'SQL',
       'PostgreSQL',
       'Kysely',
@@ -80,28 +91,34 @@ export const toolkit = [
     tools: ['Fargate', 'CodeBuild', 'Step Functions'],
   },
   {
-    title: 'Identity, payments & AI',
-    tools: ['WorkOS AuthKit', 'OAuth', 'Stripe', 'Sign in with ChatGPT', 'Codex', 'Claude Code'],
+    title: 'Identity & payments',
+    tools: ['WorkOS AuthKit', 'OAuth', 'Stripe'],
   },
   {
     title: 'Other languages',
     tools: ['Python', 'Java', 'C++'],
   },
-] as const;
-
-type Tool = (typeof toolkit)[number]['tools'][number];
+] as const satisfies readonly { title: string; tools: readonly ToolName[] }[];
 
 export const featuredTools = [
-  ['React', 'react', 'text-cyan-300'],
-  ['TypeScript', 'typescript', 'text-blue-400'],
-  ['Next.js', 'nextdotjs', 'text-vidals-text'],
-  ['Tailwind CSS', 'tailwindcss', 'text-sky-300'],
-  ['TanStack Query', 'reactquery', 'text-rose-400'],
-  ['TanStack Router', 'route', 'text-emerald-300'],
-  ['Redux', 'redux', 'text-violet-300'],
-  ['React Aria Components', 'accessibility', 'text-vidals-highlight'],
-  ['Storybook', 'storybook', 'text-pink-400'],
-  ['Vite', 'vite', 'text-amber-300'],
-  ['Nx', 'nx', 'text-sky-200'],
-  ['Playwright', 'browser-check', 'text-green-300'],
-] as const satisfies ReadonlyArray<readonly [Tool, string, string]>;
+  'React',
+  'TypeScript',
+  'Next.js',
+  'Tailwind CSS',
+  'TanStack Query',
+  'Redux',
+  'React Aria Components',
+  'NestJS',
+  'Fastify',
+  'Kysely',
+  'PostgreSQL',
+  'ASP.NET Core',
+  'GitHub Actions',
+  'Playwright',
+] as const satisfies readonly ToolName[];
+
+export const aiTools = [
+  'Claude Code',
+  'Codex',
+  'Sign in with ChatGPT',
+] as const satisfies readonly ToolName[];

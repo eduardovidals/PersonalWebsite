@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { ToolChips } from '@/components/ToolChips';
 import {
   imagePath,
   mediaDimensions,
@@ -88,13 +89,7 @@ export function ProjectShelf() {
           >
             <Preview project={project} />
             <div className="mt-4 px-1 sm:mt-5">
-              <p className="text-sm font-medium text-vidals-accent">
-                {project.context}{' '}
-                <span aria-hidden="true" className="mx-0.5 text-vidals-muted">
-                  ·
-                </span>{' '}
-                {project.stack.slice(0, 2).join(', ')}
-              </p>
+              <p className="text-sm font-medium text-vidals-accent">{project.context}</p>
               <h3
                 id={`home-project-${project.slug}`}
                 className="mt-1 flex items-center gap-2 text-[clamp(1.5rem,2.7vw,2.1rem)] leading-tight font-semibold tracking-[-.04em] group-hover:text-vidals-accent"
@@ -107,6 +102,9 @@ export function ProjectShelf() {
               </p>
             </div>
           </Link>
+          <div className="mt-3 px-1">
+            <ToolChips tools={project.stack} label={`Tools used on ${project.title}`} compact />
+          </div>
           {project.slug === 'pathfinding-visualizer' && (
             <details className="mt-2 px-1">
               <summary className="w-fit max-w-full cursor-pointer rounded-full px-3 py-2.5 text-sm font-medium text-vidals-accent hover:bg-vidals-surface">

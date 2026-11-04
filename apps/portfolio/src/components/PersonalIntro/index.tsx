@@ -21,10 +21,14 @@ export function PersonalIntro() {
         >
           Hey, I’m <span className="block text-vidals-accent">Eduardo.</span>
         </h1>
-        <p className="mt-5 max-w-[43ch] text-pretty text-base leading-relaxed text-vidals-muted sm:text-xl">
-          At PGIM, I turned the setup for a new app into one command. Now I’m building Software
-          Factory around the question that came next: how do we make an app as easy to change as it
-          was to start?
+        <p className="mt-5 text-pretty text-lg font-medium sm:text-2xl">
+          I like knowing what happens after you click Save.
+        </p>
+        <p className="mt-2 max-w-[48ch] text-pretty text-base leading-relaxed text-vidals-muted sm:text-lg">
+          I got into design systems at PGIM by building components other teams could reuse. Before
+          long I was shipping both sides of the form: the React interface and the .NET services and
+          SQL behind it. At Prudential, my work spans the components people use and the pipelines
+          that ship them.
         </p>
         <div className="mt-7 flex flex-wrap items-center gap-3">
           <Link
@@ -50,13 +54,18 @@ export function PersonalIntro() {
             <div>
               <dt className="text-sm text-vidals-muted">At Prudential</dt>
               <dd className="mt-1 text-2xl font-medium tracking-tight text-vidals-text sm:text-3xl">
-                Design systems
+                Design systems & delivery
               </dd>
             </div>
             <div>
               <dt className="text-sm text-vidals-muted">On my own time</dt>
               <dd className="mt-1 text-2xl font-medium tracking-tight text-vidals-text sm:text-3xl">
-                Software Factory
+                <Link
+                  href="/projects/#software-factory"
+                  className="rounded-sm underline-offset-4 hover:text-vidals-accent hover:underline"
+                >
+                  Software Factory
+                </Link>
               </dd>
             </div>
           </dl>

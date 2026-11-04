@@ -2,6 +2,7 @@
 @import '@vidals/tailwind-theme/theme.css';
 @source '../app';
 @source '../components';
+@source '../content/tools';
 @source '../../../../packages/vidals-react-components/src';
 
 @utility shell {

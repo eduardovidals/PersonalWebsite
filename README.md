@@ -46,7 +46,7 @@ category: 'Engineering'
 Start the post here. The page already supplies its title.
 ```
 
-Case study Markdown and its typed catalog live in `apps/portfolio/src/content/projects/`. Local screenshots and videos live in `apps/portfolio/public/work/`. Preserve article slugs and attribution when editing.
+Case study Markdown, each project's stack, and recent work summaries live in `apps/portfolio/src/content/projects/`. Tool names resolve to labeled chips through `apps/portfolio/src/content/tools/marks.ts` and the local SVG sprite. Attribute AI by its actual role: a user-facing feature, developer tooling, or assistance during development. Local screenshots and videos live in `apps/portfolio/public/work/`. Preserve article slugs and attribution when editing.
 
 ## Netlify and contact
 

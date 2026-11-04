@@ -1,8 +1,40 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Locator } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { projects } from '../src/content/projects';
+import { currentWork } from '../src/content/projects/current-work';
+import { toolMarks } from '../src/content/tools/marks';
 
 const greeting = 'Hey, I’m Eduardo.';
 const typingControls = /^(Pause|Resume|Replay) typing$/;
+
+async function expectToolMarks(items: Locator, symbolIds: string[]) {
+  // Check the served symbol and its rendered geometry, not just the presence of an SVG tag.
+  await expect
+    .poll(() =>
+      items.evaluateAll(
+        (chips, ids) =>
+          chips.flatMap((chip) => {
+            const svg = chip.querySelector('svg');
+            const use = svg?.querySelector('use');
+            const href = use?.getAttribute('href');
+            const bounds = use?.getBBox();
+            const id = href?.match(/^\/tool-marks\.svg#([^#]+)$/)?.[1];
+            const valid =
+              chip.matches('li:not([tabindex])') &&
+              !chip.querySelector('button, a[href], [tabindex]') &&
+              svg?.getAttribute('aria-hidden') === 'true' &&
+              id &&
+              ids.includes(id) &&
+              bounds &&
+              bounds.width > 0 &&
+              bounds.height > 0;
+            return valid ? [] : [chip.textContent?.trim()];
+          }),
+        symbolIds,
+      ),
+    )
+    .toEqual([]);
+}
 
 test('every indexed page is a real, canonical HTML document', async ({ request }) => {
   const sitemap = await (await request.get('/sitemap.xml')).text();
@@ -53,6 +85,15 @@ test('the greeting, toolkit, navigation and full blog posts work without JavaScr
     await page.goto('http://127.0.0.1:4173/');
     const heading = page.getByRole('heading', { level: 1, name: greeting, exact: true });
     await expect(heading).toBeVisible();
+    await page.getByRole('link', { name: 'How I got here' }).click();
+    const journey = page.getByRole('list', { name: 'Career timeline' });
+    await expect(journey.getByRole('heading')).toHaveText([
+      'Smarttwigs',
+      'PGIM',
+      'PGIM',
+      'Prudential Financial',
+    ]);
+    await expect(journey.getByRole('listitem').last()).toContainText('Mar 2026 – Present');
     await expect(
       page.getByRole('group', { name: 'Role animation' }).locator('[aria-hidden="true"]').first(),
     ).toHaveText('Software Engineer.');
@@ -68,17 +109,18 @@ test('the greeting, toolkit, navigation and full blog posts work without JavaScr
     await expect(everyday.getByRole('listitem').filter({ hasText: /^Redux$/ })).toBeVisible();
     await expect(everyday.getByRole('button').or(everyday.getByRole('link'))).toHaveCount(0);
     const api = toolkit.getByText('APIs & storage', { exact: true });
-    const kysely = toolkit.getByRole('listitem').filter({ hasText: /^Kysely$/ });
+    await expect(everyday.getByRole('listitem').filter({ hasText: /^Kysely$/ })).toBeVisible();
+    const prisma = toolkit.getByRole('listitem').filter({ hasText: /^Prisma$/ });
     const more = toolkit.locator('details > summary');
     await expect(api).toBeHidden();
-    await expect(kysely).toBeHidden();
+    await expect(prisma).toBeHidden();
     await more.press('Enter');
     await expect(api).toBeVisible();
-    await expect(kysely).toBeVisible();
+    await expect(prisma).toBeVisible();
     await expect(more).toBeFocused();
     await more.press('Space');
     await expect(api).toBeHidden();
-    await expect(kysely).toBeHidden();
+    await expect(prisma).toBeHidden();
     await expect(everyday).toBeVisible();
     await page
       .getByRole('navigation', { name: 'Primary' })
@@ -92,6 +134,63 @@ test('the greeting, toolkit, navigation and full blog posts work without JavaScr
     await expect(page.locator('article time')).toBeVisible();
   } finally {
     await page.close();
+  }
+});
+
+test('technology chips resolve to local marks and preserve each project’s own stack', async ({
+  page,
+}) => {
+  const sprite = await page.goto('/tool-marks.svg');
+  expect(sprite?.ok()).toBe(true);
+  const symbols = await page
+    .locator('svg symbol[id]')
+    .evaluateAll((nodes) => nodes.map((node) => node.id));
+  expect(symbols.length).toBeGreaterThan(0);
+
+  await page.goto('/');
+  const toolkit = page.getByRole('region', { name: 'My toolkit' });
+  await toolkit.locator('details > summary').press('Enter');
+  const aiTools = toolkit
+    .getByRole('list', { name: 'AI tools', exact: true })
+    .getByRole('listitem');
+  await expect(aiTools.filter({ hasText: /^Claude Code$/ })).toBeVisible();
+  await expect(aiTools.filter({ hasText: /^Codex$/ })).toBeVisible();
+  expect((await toolkit.getByRole('listitem').allTextContents()).sort()).toEqual(
+    Object.keys(toolMarks).sort(),
+  );
+  await expectToolMarks(toolkit.getByRole('listitem'), symbols);
+
+  async function checkProject(project: (typeof projects)[number]) {
+    const items = page
+      .getByRole('list', { name: 'Tools used on ' + project.title, exact: true })
+      .getByRole('listitem');
+    await expect(items).toHaveText([...project.stack]);
+    await expect(items.filter({ hasText: /^(Claude Code|Codex)$/ })).toHaveCount(0);
+    if (project.slug === 'props') {
+      await expect(items.filter({ hasText: /^Redux$/ })).toBeVisible();
+      await expect(items.filter({ hasText: /^Stripe$/ })).toBeVisible();
+    } else if (project.slug === 'solar-system') {
+      await expect(items.filter({ hasText: /^Three\.js$/ })).toBeVisible();
+    }
+    await expectToolMarks(items, symbols);
+  }
+  for (const project of projects) await checkProject(project);
+  await page.goto('/projects/');
+  for (const work of currentWork) {
+    const article = page.getByRole('article', { name: work.title, exact: true });
+    for (const [label, tools] of [
+      [`Tools used on ${work.title}`, work.stack],
+      ...(work.ai ?? []).map(({ kind, tools }) => [`${kind} on ${work.title}`, tools] as const),
+    ] as const) {
+      const chips = article.getByRole('list', { name: label, exact: true }).getByRole('listitem');
+      await expect(chips).toHaveText([...tools]);
+      await expectToolMarks(chips, symbols);
+    }
+  }
+  for (const project of projects) await checkProject(project);
+  for (const project of projects) {
+    await page.goto('/projects/' + project.slug + '/');
+    await checkProject(project);
   }
 });
 

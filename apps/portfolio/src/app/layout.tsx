@@ -6,9 +6,9 @@ import { SiteHeader } from '@/components/SiteHeader/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter/SiteFooter';
 import './globals.css';
 
-const title = 'Eduardo Vidals — Software Engineer';
+const title = 'Eduardo Vidals — Full-Stack Software Engineer';
 const description =
-  'Eduardo Vidals is a senior software engineer at Prudential Financial and the engineer behind Software Factory. Personal projects and notes on building software that other people can change.';
+  'Eduardo Vidals is a senior software engineer at Prudential Financial. Explore his path from design systems to full-stack applications, delivery pipelines, and Software Factory.';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

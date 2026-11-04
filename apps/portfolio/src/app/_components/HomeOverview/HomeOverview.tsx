@@ -1,8 +1,11 @@
 import Link from 'next/link';
 import { ContactForm } from '@/components/ContactForm';
 import { PersonalIntro } from '@/components/PersonalIntro';
+import { ToolChips } from '@/components/ToolChips';
 import { formatPostDate, type PostSummary } from '@/content/blog';
+import { softwareFactory } from '@/content/projects/current-work';
 import { Arrow } from './components/Arrow/Arrow';
+import { CareerJourney } from './components/CareerJourney/CareerJourney';
 import { ProjectShelf } from './components/ProjectShelf/ProjectShelf';
 import { Toolkit } from './components/Toolkit/Toolkit';
 
@@ -29,35 +32,40 @@ export function HomeOverview({ notes }: Readonly<{ notes: readonly PostSummary[]
             All projects <Arrow />
           </Link>
         </div>
+        <article
+          aria-labelledby="featured-factory"
+          className="mb-8 grid items-center gap-5 rounded-3xl bg-vidals-deep p-6 sm:mb-10 sm:p-8 md:grid-cols-[1fr_1.35fr] md:gap-10"
+        >
+          <div>
+            <p className="text-sm font-medium text-vidals-accent">My independent project</p>
+            <h3 id="featured-factory" className="mt-1 text-3xl font-semibold tracking-tight">
+              {softwareFactory.title}
+            </h3>
+            <Link
+              href="/projects/#software-factory"
+              className="mt-2 inline-flex min-h-11 items-center gap-2 rounded-sm text-sm font-medium text-vidals-accent underline-offset-4 hover:underline"
+            >
+              Explore the stack <Arrow />
+            </Link>
+          </div>
+          <div className="min-w-0 space-y-4">
+            <p className="max-w-[58ch] leading-relaxed text-vidals-muted">
+              Could a coding agent add a priority filter to a working service desk without breaking
+              the requests already in its database? I built a local system to try it. Owen helps pin
+              down what should change. Iris edits a draft and runs the tests. I review the diff and
+              try the actual build before deciding whether to release it.
+            </p>
+            <ToolChips
+              label={`Tools used on ${softwareFactory.title}`}
+              tools={softwareFactory.stack}
+              compact
+            />
+          </div>
+        </article>
         <ProjectShelf />
       </section>
 
-      <section id="about" aria-labelledby="about-heading" className="shell py-12 sm:py-20">
-        <div className="grid items-start gap-5 lg:grid-cols-[.8fr_1.2fr] lg:gap-12">
-          <h2 id="about-heading" className={title}>
-            A little about me
-          </h2>
-          <div className="max-w-[62ch] space-y-4 leading-relaxed text-vidals-muted sm:text-lg">
-            <p>
-              At NJCU, I ran our software development club’s first frontend bootcamp. Later, at
-              PGIM, I helped teams move from Angular to React. We built a library of more than 50
-              components that found a home in 20 apps. I spent as much time helping people use those
-              components as I did writing them.
-            </p>
-            <p>
-              I’m now a senior software engineer at Prudential Financial. One part of my job I
-              particularly like: getting keyboard behavior right in a shared component, so the next
-              person who uses it doesn’t have to solve it again.
-            </p>
-            <p>
-              Software Factory is my own project. I want someone changing an app a year from now to
-              know why it works the way it does, without having to track down the person who wrote
-              it.
-            </p>
-            <p className="text-vidals-text">Away from the keyboard, I love running.</p>
-          </div>
-        </div>
-      </section>
+      <CareerJourney />
 
       <Toolkit />
 
