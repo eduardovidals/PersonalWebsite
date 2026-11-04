@@ -45,7 +45,7 @@ test('every indexed page is a real, canonical HTML document', async ({ request }
   expect((await request.get('/not-a-project/')).status()).toBe(404);
 });
 
-test('the greeting, navigation and full blog posts work without JavaScript', async ({
+test('the greeting, toolkit, navigation and full blog posts work without JavaScript', async ({
   browser,
 }) => {
   const page = await browser.newPage({ javaScriptEnabled: false });
@@ -60,6 +60,14 @@ test('the greeting, navigation and full blog posts work without JavaScript', asy
     await expect(
       page.getByRole('banner').getByRole('link', { name: 'Eduardo Vidals — home' }),
     ).toHaveAttribute('href', '/');
+    const toolkit = page.getByRole('region', { name: 'My toolkit' });
+    const stateTools = toolkit.getByRole('list', { name: 'Tools for Routing, data & state' });
+    await expect(stateTools).toContainText('TanStack Query');
+    await expect(stateTools).toContainText('Redux');
+    const api = toolkit.getByText('APIs & storage', { exact: true });
+    await expect(api).toBeHidden();
+    await toolkit.locator('summary').press('Enter');
+    await expect(api).toBeVisible();
     await page
       .getByRole('navigation', { name: 'Primary' })
       .getByRole('link', { name: 'Blog' })
