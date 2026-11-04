@@ -277,7 +277,7 @@ test('technology chips resolve to local marks and preserve each project’s own 
   }
 });
 
-test('keyboard control pauses, resumes and replays one finite typing sequence', async ({
+test('the roles loop automatically and keyboard controls pause and resume typing', async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
@@ -286,57 +286,38 @@ test('keyboard control pauses, resumes and replays one finite typing sequence', 
   await page.goto('/');
   const heading = page.getByRole('heading', { level: 1 });
   await expect(heading).toHaveAccessibleName(greeting);
-  // Keep a reference to the changing visual node, not its initial text.
-  const visual = page
-    .getByRole('group', { name: 'Role animation' })
-    .locator('p [aria-hidden="true"]');
+  const group = page.getByRole('group', { name: 'Role animation' });
+  const paragraph = group.getByRole('paragraph');
+  const visual = paragraph.locator('[aria-hidden="true"]');
   await expect(visual).toHaveText('Software Engineer.');
   const pause = page.getByRole('button', { name: 'Pause typing', exact: true });
   const resume = page.getByRole('button', { name: 'Resume typing', exact: true });
-  const replay = page.getByRole('button', { name: 'Replay typing', exact: true });
-  await pause.press('Enter');
-  await expect(resume).toBeFocused();
-  await page.clock.runFor(5_000);
-  await expect(visual).toHaveText('Software Engineer.');
-  await expect(resume).toBeFocused();
-  await resume.press('Space');
-
-  const sequence = ['Software Engineer.'];
-  const originalRoles = new Set(['Software Engineer.', 'Developer.', 'Programmer.']);
-  let sawPartial = false;
+  await expect(pause).toBeVisible();
+  const roles = ['Software Engineer.', 'Developer.', 'Programmer.'];
+  const expected = [...roles, ...roles, roles[0]];
+  const sequence = [roles[0]];
+  let pausedMidWord = false;
   // Sample often enough to see the holds without coupling the test to the exact typing speed.
-  for (let elapsed = 0; elapsed < 30_000 && !(await replay.isVisible()); elapsed += 200) {
+  for (let elapsed = 0; elapsed < 90_000 && sequence.length < expected.length; elapsed += 200) {
     await page.clock.runFor(200);
     const word = (await visual.textContent())?.trim() ?? '';
-    if (originalRoles.has(word)) {
+    if (roles.includes(word)) {
       if (sequence.at(-1) !== word) sequence.push(word);
-    } else if (word) {
-      if (!sawPartial) await expect(heading).toHaveAccessibleName(greeting);
-      sawPartial = true;
+    } else if (word && !pausedMidWord) {
+      await pause.press('Enter');
+      await expect(resume).toBeFocused();
+      await page.clock.runFor(5_000);
+      await expect(visual).toHaveText(word);
+      await expect(paragraph).toMatchAriaSnapshot('- paragraph: Software Engineer.');
+      await expect(heading).toHaveAccessibleName(greeting);
+      await resume.press('Space');
+      await expect(pause).toBeFocused();
+      pausedMidWord = true;
     }
   }
-  expect(sawPartial).toBe(true);
-  expect(sequence).toEqual([
-    'Software Engineer.',
-    'Developer.',
-    'Programmer.',
-    'Software Engineer.',
-  ]);
-  await expect(replay).toBeVisible();
-  await page.clock.runFor(30_000);
-  await expect(replay).toBeVisible();
-  await expect(visual).toHaveText('Software Engineer.');
-  await replay.press('Enter');
+  expect(pausedMidWord).toBe(true);
+  expect(sequence).toEqual(expected);
   await expect(pause).toBeFocused();
-  // The page must start typing again, not just relabel the replay button.
-  for (
-    let elapsed = 0;
-    elapsed < 5_000 && (await visual.textContent())?.trim() === 'Software Engineer.';
-    elapsed += 200
-  ) {
-    await page.clock.runFor(200);
-  }
-  await expect(visual).not.toHaveText('Software Engineer.');
   await expect(heading).toHaveAccessibleName(greeting);
 });
 

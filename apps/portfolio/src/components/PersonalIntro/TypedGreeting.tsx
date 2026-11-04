@@ -21,18 +21,14 @@ export function TypedGreeting() {
   const motion = useSyncExternalStore(subscribe, motionAllowed, staticSnapshot);
   const [position, setPosition] = useState(0);
   const [paused, setPaused] = useState(false);
-  const last = position === typingFrames.length - 1;
   useEffect(() => {
-    if (!motion || paused || last) return;
-    const timer = window.setTimeout(() => setPosition(position + 1), typingFrames[position].delay);
+    if (!motion || paused) return;
+    const timer = window.setTimeout(
+      () => setPosition((position + 1) % typingFrames.length),
+      typingFrames[position].delay,
+    );
     return () => window.clearTimeout(timer);
-  }, [motion, paused, last, position]);
-  const toggle = () => {
-    if (last) {
-      setPosition(0);
-      setPaused(false);
-    } else setPaused(!paused);
-  };
+  }, [motion, paused, position]);
   return (
     <div
       role="group"
@@ -49,18 +45,12 @@ export function TypedGreeting() {
       {motion && (
         <VidalsButton
           variant="subtle"
-          onPress={toggle}
+          onPress={() => setPaused((current) => !current)}
           className="size-11 rounded-full border-transparent p-0 text-vidals-muted"
-          aria-label={last ? 'Replay typing' : paused ? 'Resume typing' : 'Pause typing'}
+          aria-label={paused ? 'Resume typing' : 'Pause typing'}
         >
           <svg aria-hidden="true" width="13" height="13" viewBox="0 0 16 16" fill="currentColor">
-            {last ? (
-              <path d="M3 4a6 6 0 1 1-1 7l1.8-.8a4.1 4.1 0 1 0 .5-4.6L6.5 8H1V2.7z" />
-            ) : paused ? (
-              <path d="M4 2l9 6-9 6z" />
-            ) : (
-              <path d="M3 2h3v12H3zm7 0h3v12h-3z" />
-            )}
+            {paused ? <path d="M4 2l9 6-9 6z" /> : <path d="M3 2h3v12H3zm7 0h3v12h-3z" />}
           </svg>
         </VidalsButton>
       )}
