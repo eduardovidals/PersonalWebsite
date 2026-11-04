@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { profiles } from '@/config/site';
+import { signatureMarkId, signaturePath } from '@/components/SignatureIntro/signature';
 
 const links = [
   ['Work', '/projects/'],
@@ -10,48 +11,60 @@ const links = [
 
 export function SiteHeader() {
   return (
-    <header className="shell">
-      <div className="flex min-h-18 flex-wrap items-center justify-between gap-2 py-2.5 sm:grid sm:min-h-24 sm:grid-cols-[1fr_auto_1fr]">
-        <Link
-          href="/"
-          aria-label="Eduardo Vidals — home"
-          className="inline-flex min-h-11 w-fit items-center gap-2.5 rounded-full"
+    <header className="shell relative z-30">
+      <div className="grid min-h-18 grid-cols-[minmax(0,1fr)_auto] items-start gap-2 py-3 sm:min-h-22 sm:grid-cols-[1fr_auto_1fr] sm:items-center sm:py-4">
+        <a
+          href={profiles.GitHub}
+          className="hidden min-h-11 items-center gap-1.5 justify-self-start rounded-full px-2 text-sm font-medium text-vidals-muted hover:text-vidals-accent sm:inline-flex"
         >
-          <svg aria-hidden="true" viewBox="0 0 48 48" width="43" height="43">
-            <circle cx="24" cy="24" r="23" fill="var(--color-vidals-accent)" />
-            <path
-              d="M7 25q5 0 9-4c5-6 1-9-3-6-5 4-5 15 1 15 5 0 9-6 12-12-1 7-2 14 1 13 4-2 9-12 11-17"
-              fill="none"
-              stroke="#211a31"
-              strokeWidth="3.4"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          <span className="signature-name hidden text-base font-semibold tracking-tight lg:block">
-            Eduardo Vidals
-          </span>
-        </Link>
+          GitHub <span aria-hidden="true">↗</span>
+        </a>
         <nav
           aria-label="Primary"
-          className="inline-flex flex-wrap items-center rounded-full bg-vidals-surface/95 p-1 shadow-lg shadow-black/15 ring-1 ring-inset ring-white/10"
+          className="flex min-w-0 flex-wrap items-center justify-self-start rounded-3xl bg-vidals-surface/95 p-1 shadow-lg shadow-black/15 ring-1 ring-inset ring-white/10 sm:justify-self-center sm:rounded-full"
         >
           {links.map(([label, href]) => (
             <Link
               key={label}
               href={href}
-              className="inline-flex min-h-11 items-center rounded-full px-3 text-sm font-medium text-vidals-text transition-colors hover:bg-vidals-poster hover:text-vidals-accent sm:px-4"
+              className="inline-flex min-h-11 items-center rounded-full px-1.5 text-xs font-medium text-vidals-text transition-colors hover:bg-vidals-poster hover:text-vidals-accent max-[360px]:px-0.5 sm:px-4 sm:text-sm"
             >
               {label}
             </Link>
           ))}
+          <a
+            href={profiles.GitHub}
+            className="inline-flex min-h-11 items-center gap-1 rounded-full px-1.5 text-xs font-medium text-vidals-muted hover:text-vidals-accent max-[360px]:px-0.5 sm:hidden"
+          >
+            GitHub <span aria-hidden="true">↗</span>
+          </a>
         </nav>
-        <a
-          href={profiles.GitHub}
-          className="hidden min-h-11 items-center gap-1.5 justify-self-end rounded-full px-2 text-sm font-medium text-vidals-muted hover:text-vidals-text sm:inline-flex"
+        <Link
+          href="/"
+          aria-label="Eduardo Vidals — home"
+          className="inline-flex min-h-11 min-w-14 items-center justify-center justify-self-end rounded-xl text-vidals-accent hover:text-vidals-text sm:min-w-16"
         >
-          GitHub <span aria-hidden="true">↗</span>
-        </a>
+          <svg
+            id={signatureMarkId}
+            aria-hidden="true"
+            focusable="false"
+            viewBox="4 10 37 25"
+            width="62"
+            height="42"
+            className="pointer-events-none block h-auto w-13 origin-top-left overflow-visible sm:w-16"
+          >
+            <path
+              d={signaturePath}
+              pathLength="1"
+              strokeDasharray="1"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.7"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </Link>
       </div>
     </header>
   );

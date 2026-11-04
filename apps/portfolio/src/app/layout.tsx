@@ -8,7 +8,7 @@ import './globals.css';
 
 const title = 'Eduardo Vidals — Software Engineer';
 const description =
-  'Eduardo Vidals’s personal website. Explore his projects, play with algorithm visualizations, or read his blog.';
+  'Eduardo Vidals is a senior software engineer at Prudential Financial and the engineer behind Software Factory. Personal projects and notes on building software that other people can change.';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

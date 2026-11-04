@@ -58,21 +58,32 @@ export function HomeOverview({ notes }: Readonly<{ notes: readonly PostSummary[]
             </h2>
             <div className="mt-5 max-w-[58ch] space-y-4 leading-relaxed text-vidals-muted sm:text-lg">
               <p>
-                I interned as a software engineer at PGIM and led the Software Development Club at
-                NJCU, where we helped students get hands-on with new technologies.
+                At NJCU, I ran our software development club’s first frontend bootcamp. Later, at
+                PGIM, I helped teams move from Angular to React. We built a library of more than 50
+                components that found a home in 20 apps. I spent as much time helping people use
+                those components as I did writing them.
               </p>
               <p>
-                After taking Princeton’s algorithms courses, I wanted to see what Merge Sort does
-                between its first step and its last. I built a sorting visualizer in React, then
-                tried my hand at pathfinding.
+                I’m now a senior software engineer at Prudential Financial. One part of my job I
+                particularly like: getting keyboard behavior right in a shared component, so the
+                next person who uses it doesn’t have to solve it again.
               </p>
-              <p className="text-vidals-text">P.S. I also love running!</p>
+              <p>
+                Software Factory is my own project. I want someone changing an app a year from now
+                to know why it works the way it does, without having to track down the person who
+                wrote it.
+              </p>
+              <p className="text-vidals-text">Away from the keyboard, I love running.</p>
             </div>
           </div>
           <section id="skills" aria-labelledby="skills-heading" className="self-center">
             <h3 id="skills-heading" className="text-lg font-semibold tracking-tight">
               Tools I work with
             </h3>
+            <p className="mt-3 max-w-[40ch] leading-relaxed text-vidals-muted">
+              For design systems, I reach for React Aria, Tailwind CSS, and Storybook. For the
+              projects here, I’ve also worked with:
+            </p>
             <ul aria-label="Technologies" className="mt-4 flex max-w-md flex-wrap gap-2">
               {skills.map(([name, logo]) => (
                 <li

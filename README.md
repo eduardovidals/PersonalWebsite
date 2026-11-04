@@ -1,6 +1,6 @@
 # Eduardo Vidals — personal website
 
-[www.eduardovidals.com](https://www.eduardovidals.com) is my portfolio and blog. The homepage opens with a playable sorting illustration based on my 3D visualizer. Beside it, the role line types through the original three roles; it can be paused, finishes on its own, and stays still with reduced motion or without JavaScript. The work archive keeps the original six project URLs.
+[www.eduardovidals.com](https://www.eduardovidals.com) is my portfolio and blog. The homepage introduces my design-system work and Software Factory. The handwritten EV opens in the hero and settles into the top-right home link. With reduced motion or JavaScript disabled, the home link and introduction are already in place. The separate role line can be paused and finishes on its own. Both sorting visualizers remain in the six-project archive.
 
 ## Run locally
 

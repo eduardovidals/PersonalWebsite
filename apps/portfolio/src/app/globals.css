@@ -32,17 +32,3 @@
     cursor: pointer;
   }
 }
-/* Reveal the wordmark without resizing the header or blocking navigation. */
-@media (prefers-reduced-motion: no-preference) {
-  .signature-name {
-    animation: sign-name 880ms steps(13) both;
-  }
-  @keyframes sign-name {
-    from {
-      clip-path: inset(0 100% 0 0);
-    }
-    to {
-      clip-path: inset(0);
-    }
-  }
-}
