@@ -26,10 +26,9 @@ export function PersonalIntro() {
           twenty applications.
         </p>
         <p className="mt-2 max-w-[48ch] text-pretty text-base leading-relaxed text-vidals-muted sm:text-lg">
-          I led the move to React and delivered full-stack apps in .NET and SQL. Today I build
-          design systems and delivery pipelines at Prudential. My independent project, Software
-          Factory, brings that experience to coding agents: they can change a real application and
-          run its tests, and I can review the code and try the build before it ships.
+          Today I work on accessible design systems at Prudential Financial. I started Software
+          Factory on my own time after untangling AI-generated code that worked but was painful to
+          maintain.
         </p>
         <div className="mt-7 flex flex-wrap items-center gap-3">
           <Link
@@ -55,7 +54,7 @@ export function PersonalIntro() {
             <div>
               <dt className="text-sm text-vidals-muted">At Prudential</dt>
               <dd className="mt-1 text-2xl font-medium tracking-tight text-vidals-text sm:text-3xl">
-                Design systems & delivery
+                Design systems
               </dd>
             </div>
             <div>

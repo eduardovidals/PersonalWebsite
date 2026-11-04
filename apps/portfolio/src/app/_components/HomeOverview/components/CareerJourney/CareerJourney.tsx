@@ -31,7 +31,7 @@ const jobs = [
     start: ['2026-03', 'Mar 2026'],
     end: null,
     story:
-      'Our CI/CD work moved from Jenkins to GitHub Actions. Today I build the pipelines that test and release our React and TypeScript design system. Rebuilding an app on that system pushed me to test whole workflows, not just components. I also write Claude Code skills so an agent working alongside us can follow the same conventions.',
+      'I maintain and evolve our React and TypeScript design system. My focus is on accessible components that teams can use across applications. I also write examples and Claude Code skills so those same conventions carry through when someone builds with an agent.',
   },
 ] as const;
 
@@ -87,18 +87,17 @@ export function CareerJourney() {
               Outside my day job
             </h3>
             <p className="mt-2 max-w-[59ch] leading-relaxed text-vidals-muted">
-              I used the same engineering conventions on two unlikely neighbors: an anniversary gift
-              and an order-entry dashboard. Their screens had nothing in common, but a coding agent
-              could find its way around both without inventing a new structure. That’s the thread
-              I’m following with{' '}
+              An anniversary gift and an order-entry dashboard have little in common. I built both
+              with coding agents, using the same project structure and conventions. The agents
+              didn’t need to invent a new way to build each feature. That’s the idea behind{' '}
               <Link
                 href="/projects/#software-factory"
                 className="rounded-sm font-medium text-vidals-accent underline underline-offset-4"
               >
                 Software Factory
               </Link>
-              . I want the person who inherits an app to know why it works the way it does, what
-              they can safely change, and how to check their work.
+              : give agents a foundation to work from, and leave the next engineer with code they
+              can understand, test, and change.
             </p>
           </aside>
         </div>
