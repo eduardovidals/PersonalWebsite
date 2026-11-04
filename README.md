@@ -1,6 +1,6 @@
 # Eduardo Vidals — personal website
 
-[www.eduardovidals.com](https://www.eduardovidals.com) is my portfolio and blog. The homepage introduces my design-system work and Software Factory. The handwritten EV opens in the hero and settles into the top-right home link. With reduced motion or JavaScript disabled, the home link and introduction are already in place. The separate role line can be paused and finishes on its own. Both sorting visualizers remain in the six-project archive.
+[www.eduardovidals.com](https://www.eduardovidals.com) is my portfolio and blog. The homepage introduces my design-system work and Software Factory. The handwritten EV starts in the center of the visible screen on phones and tablets, or in the hero on desktop, then settles into the top-right home link. With reduced motion or JavaScript disabled, the home link and introduction are already in place. The separate role line can be paused and finishes on its own. Both sorting visualizers remain in the six-project archive.
 
 ## Run locally
 

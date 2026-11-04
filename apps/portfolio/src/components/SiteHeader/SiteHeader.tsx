@@ -44,26 +44,28 @@ export function SiteHeader() {
           aria-label="Eduardo Vidals — home"
           className="inline-flex min-h-11 min-w-14 items-center justify-center justify-self-end rounded-xl text-vidals-accent hover:text-vidals-text sm:min-w-16"
         >
-          <svg
-            id={signatureMarkId}
-            aria-hidden="true"
-            focusable="false"
-            viewBox="4 10 37 25"
-            width="62"
-            height="42"
-            className="pointer-events-none block h-auto w-13 origin-top-left overflow-visible sm:w-16"
-          >
-            <path
-              d={signaturePath}
-              pathLength="1"
-              strokeDasharray="1"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.7"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <span className="pointer-events-none block w-13 sm:w-16">
+            <svg
+              id={signatureMarkId}
+              aria-hidden="true"
+              focusable="false"
+              viewBox="4 10 37 25"
+              width="62"
+              height="42"
+              className="block h-auto w-full origin-top-left overflow-visible"
+            >
+              <path
+                d={signaturePath}
+                pathLength="1"
+                strokeDasharray="1"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.7"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </span>
         </Link>
       </div>
     </header>

@@ -2,9 +2,40 @@ import { signatureMarkId } from './signature';
 
 let signedThisDocument = false;
 
+/** Both rectangles are in layout-viewport CSS pixels, even when the visible viewport shrinks. */
+function takeoff(stage: HTMLElement, slot: HTMLElement, fromScreen: boolean) {
+  const viewport = window.visualViewport;
+  const scene = fromScreen
+    ? {
+        left: viewport?.offsetLeft ?? 0,
+        top: viewport?.offsetTop ?? 0,
+        width: viewport?.width ?? document.documentElement.clientWidth,
+        height: viewport?.height ?? window.innerHeight,
+      }
+    : stage.getBoundingClientRect();
+  // The slot stays in the header; measuring the flying SVG would feed its transform back into itself.
+  const dock = slot.getBoundingClientRect();
+  if (!dock.width || !dock.height || !scene.width || !scene.height) return;
+  if (!fromScreen && (scene.top >= window.innerHeight || scene.top + scene.height <= 0)) return;
+  const width = fromScreen
+    ? Math.min(scene.width * 0.6, (scene.height * 0.42 * dock.width) / dock.height, 300)
+    : Math.min(scene.width * 0.83, (scene.height * 0.94 * dock.width) / dock.height, 330);
+  const scale = width / dock.width;
+  if (scale < 1.4) return;
+  const x = scene.left + (scene.width - width) / 2 - dock.left;
+  const y = scene.top + (scene.height - dock.height * scale) / 2 - dock.top;
+  const transform = `translate3d(${x}px,${y}px,0) scale(${scale})`;
+  return [
+    { transform, offset: 0 },
+    { transform, offset: 0.46, easing: 'cubic-bezier(.43,.03,.14,1)' },
+    { transform: 'none', offset: 1 },
+  ];
+}
+
 /** Animate the header's actual ink, not a second logo. The linked hit target never moves. */
 export function beginSignatureFlight(stage: HTMLElement, copy: HTMLElement) {
   const mark = document.getElementById(signatureMarkId);
+  const slot = mark?.parentElement;
   const ink = mark?.querySelector('path');
   const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
   // A delayed bundle must not hide copy that the visitor has already started reading.
@@ -13,6 +44,7 @@ export function beginSignatureFlight(stage: HTMLElement, copy: HTMLElement) {
   if (
     signedThisDocument ||
     !mark ||
+    !slot ||
     !ink ||
     typeof mark.animate !== 'function' ||
     reading ||
@@ -23,38 +55,20 @@ export function beginSignatureFlight(stage: HTMLElement, copy: HTMLElement) {
   )
     return;
 
-  const source = stage.getBoundingClientRect();
-  const dock = mark.getBoundingClientRect();
-  if (source.top >= window.innerHeight || source.bottom <= 0 || !dock.width || !source.width)
-    return;
-
-  // Fit inside the hero even on short phones; viewBox and native aspect ratio never change.
-  const width = Math.min(
-    source.width * 0.83,
-    ((source.height * dock.width) / dock.height) * 0.94,
-    330,
-  );
-  const scale = width / dock.width;
-  if (scale < 1.4) return;
-  const dx = source.left + (source.width - width) / 2 - dock.left;
-  const dy = source.top + (source.height - dock.height * scale) / 2 - dock.top;
-  const from = `translate3d(${dx}px,${dy}px,0) scale(${scale})`;
+  const compact = window.matchMedia('(width < 64rem)');
+  const fromScreen = compact.matches;
+  const frames = takeoff(stage, slot, fromScreen);
+  if (!frames) return;
   const duration = 2450;
 
-  const travel = mark.animate(
-    [
-      { transform: from, offset: 0 },
-      { transform: from, offset: 0.36, easing: 'cubic-bezier(.43,.03,.14,1)' },
-      { transform: 'translate3d(0,0,0) scale(1)', offset: 1 },
-    ],
-    { duration, fill: 'both' },
-  );
+  const travel = mark.animate(frames, { duration, fill: 'both' });
   const write = ink.animate([{ strokeDashoffset: '.98' }, { strokeDashoffset: '0' }], {
-    duration: 630,
+    duration: 500,
     easing: 'cubic-bezier(.22,.7,.24,1)',
     fill: 'both',
   });
-  const reveal = copy.animate(
+  const backdrop = fromScreen ? (stage.closest('section') ?? copy) : copy;
+  const reveal = backdrop.animate(
     [
       { opacity: 0, offset: 0 },
       { opacity: 0, offset: 0.46 },
@@ -76,10 +90,18 @@ export function beginSignatureFlight(stage: HTMLElement, copy: HTMLElement) {
     release();
   };
   const options = { signal: controller.signal };
+  const retarget = () => {
+    const next = takeoff(stage, slot, fromScreen);
+    if (compact.matches === fromScreen && next && travel.effect instanceof KeyframeEffect)
+      travel.effect.setKeyframes(next);
+    else settle();
+  };
   travel.addEventListener('finish', settle, options);
   preference.addEventListener('change', settle, options);
   window.addEventListener('scroll', settle, { ...options, passive: true });
-  window.addEventListener('resize', settle, options);
+  window.addEventListener('resize', retarget, options);
+  window.visualViewport?.addEventListener('resize', retarget, options);
+  window.visualViewport?.addEventListener('scroll', retarget, options);
   document.addEventListener('focusin', settle, options);
   document.addEventListener('pointerdown', settle, { ...options, passive: true });
   document.addEventListener('visibilitychange', settle, options);
