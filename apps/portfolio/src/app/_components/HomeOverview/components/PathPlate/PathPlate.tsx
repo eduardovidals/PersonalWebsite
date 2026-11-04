@@ -43,7 +43,7 @@ export function PathPlate() {
       <figcaption className="mb-3">
         <p className="font-semibold">Breadth-first search</p>
         <p className="mt-1 text-sm leading-relaxed text-vidals-muted">
-          Watch the search spread out from A. The dots trace a shortest route to B.
+          Blue squares for places searched, dots for a shortest route from A to B
         </p>
       </figcaption>
       <svg

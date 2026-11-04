@@ -8,6 +8,7 @@ export interface Project {
   title: string;
   category: string;
   context: string;
+  caption: string;
   description: string;
   stack: readonly ToolName[];
   cover: string;
@@ -23,6 +24,7 @@ export const projects: readonly Project[] = [
     slug: 'props',
     kind: 'career',
     title: 'Props',
+    caption: 'Mobile screens, subscription checkout, and the API behind the leaderboard',
     category: 'Product engineering',
     context: 'Smarttwigs internship',
     description:
@@ -37,6 +39,7 @@ export const projects: readonly Project[] = [
     slug: 'benev',
     kind: 'career',
     title: 'Benev',
+    caption: 'A membership carousel connected to Stripe checkout',
     category: 'Product engineering',
     context: 'Smarttwigs internship',
     description:
@@ -50,6 +53,7 @@ export const projects: readonly Project[] = [
     slug: 'sorting-visualizer',
     kind: 'personal',
     title: 'Sorting Visualizer',
+    caption: 'Three sorting algorithms animated one step at a time',
     category: 'Algorithm visualization',
     context: 'AlgoVisual',
     description:
@@ -64,6 +68,7 @@ export const projects: readonly Project[] = [
     slug: 'pathfinding-visualizer',
     kind: 'personal',
     title: 'Pathfinding Visualizer',
+    caption: 'Different search algorithms finding their way through the same maze',
     category: 'Algorithm visualization',
     context: 'AlgoVisual',
     description:
@@ -78,6 +83,7 @@ export const projects: readonly Project[] = [
     slug: '3d-sorting-visualizer',
     kind: 'personal',
     title: '3D Sorting Visualizer',
+    caption: 'A sorting animation you can walk through in 3D',
     category: 'Computer graphics',
     context: 'NJCU coursework',
     description:
@@ -93,6 +99,7 @@ export const projects: readonly Project[] = [
     slug: 'solar-system',
     kind: 'personal',
     title: 'Solar System',
+    caption: 'A 3D model of planetary rotation and orbits',
     category: 'Computer graphics',
     context: 'NJCU coursework',
     description:

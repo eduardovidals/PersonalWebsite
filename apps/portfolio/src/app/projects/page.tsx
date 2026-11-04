@@ -43,9 +43,7 @@ function EarlyProjectCard({ project }: Readonly<{ project: Project }>) {
             </span>
           </h2>
           <p className="mt-1 text-sm font-medium text-vidals-accent">{project.context}</p>
-          <p className="mt-2 max-w-[48ch] leading-relaxed text-vidals-muted">
-            {project.description}
-          </p>
+          <p className="mt-2 max-w-[48ch] leading-relaxed text-vidals-muted">{project.caption}</p>
         </div>
         <Cover project={project} />
       </Link>

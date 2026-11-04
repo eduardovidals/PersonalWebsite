@@ -1,5 +1,6 @@
 ---
 title: 'What a sorted array hides'
+caption: 'Merge sort, quicksort, and heapsort before the bars fall into place'
 summary: 'Merge sort, quicksort, and heapsort can produce exactly the same bars. The interesting part happens before the last frame.'
 date: '2022-06-21'
 category: 'Sorting'

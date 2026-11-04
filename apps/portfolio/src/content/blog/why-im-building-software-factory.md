@@ -1,5 +1,6 @@
 ---
 title: 'How design systems led me to build Software Factory'
+caption: 'From building PInnacle at PGIM to helping small businesses own their software'
 summary: 'At PGIM, we got starting an app down to one command. The part I wanted to keep working on was everything that happened after that.'
 date: '2026-11-04'
 category: 'Design systems'

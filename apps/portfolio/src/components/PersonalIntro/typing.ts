@@ -1,4 +1,4 @@
-const roles = ['Software Engineer.', 'Developer.', 'Programmer.'];
+const roles = ['Software Engineer', 'Developer', 'Programmer'];
 
 /** Each role owns one hold; the last transition types back into the first hold. */
 function makeFrames() {

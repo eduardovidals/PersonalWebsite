@@ -45,8 +45,8 @@ export function HomeOverview({ notes }: Readonly<{ notes: readonly PostSummary[]
                   </h3>
                   <p className="mt-1 text-sm text-vidals-muted">
                     {work.id === 'anniversary'
-                      ? 'A 3D gift box I made for her birthday.'
-                      : 'Structured settlements at Prudential Retirement Strategies.'}
+                      ? 'A 3D gift box I made for her birthday'
+                      : 'Structured settlements at Prudential Retirement Strategies'}
                   </p>
                 </div>
               </Link>
@@ -62,9 +62,7 @@ export function HomeOverview({ notes }: Readonly<{ notes: readonly PostSummary[]
               {softwareFactory.title}
             </h3>
             <p className="mt-3 max-w-[49ch] leading-relaxed text-vidals-muted">
-              Why should a small business have to become a software company just to own a good app?
-              I’m building Factory so the owner keeps the decisions and the code, and the next
-              engineer can pick up where the last one left off.
+              My platform for small businesses to build, own, and keep improving their software
             </p>
             <Link
               href="/projects/software-factory/"
@@ -118,7 +116,7 @@ export function HomeOverview({ notes }: Readonly<{ notes: readonly PostSummary[]
                   />
                 </h3>
                 <p className="mt-2 max-w-[49ch] leading-relaxed text-vidals-muted">
-                  {note.summary}
+                  {note.caption}
                 </p>
               </Link>
             </article>

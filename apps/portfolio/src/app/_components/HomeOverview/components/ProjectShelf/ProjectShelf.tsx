@@ -37,7 +37,7 @@ export function ProjectShelf() {
             </div>
             <ArchiveArtwork project={project} />
             <p className="mt-3 max-w-[50ch] px-1 text-[15px] leading-relaxed text-vidals-muted">
-              {project.description}
+              {project.caption}
             </p>
           </Link>
           <div className="mt-3 px-1">

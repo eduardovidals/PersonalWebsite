@@ -1,5 +1,6 @@
 ---
 title: 'The search is not the path'
+caption: 'The difference between where an algorithm looks and the route it chooses'
 summary: 'On a pathfinding grid, the squares an algorithm visits tell a different story from the route it finally chooses.'
 date: '2022-06-29'
 category: 'Pathfinding'

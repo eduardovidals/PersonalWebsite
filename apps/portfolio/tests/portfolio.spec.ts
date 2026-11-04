@@ -102,7 +102,7 @@ test('the greeting, toolkit, navigation and full blog posts work without JavaScr
     await expect(journey.getByRole('listitem').first()).toContainText('My current project is PEAQ');
     await expect(
       page.getByRole('group', { name: 'Role animation' }).locator('[aria-hidden="true"]').first(),
-    ).toHaveText('Software Engineer.');
+    ).toHaveText('Software Engineer');
     await expect(page.getByRole('button', { name: typingControls })).toHaveCount(0);
     await expect(
       page.getByRole('banner').getByRole('link', { name: 'Eduardo Vidals — home' }),
@@ -318,11 +318,11 @@ test('the roles loop automatically and keyboard controls pause and resume typing
   const group = page.getByRole('group', { name: 'Role animation' });
   const paragraph = group.getByRole('paragraph');
   const visual = paragraph.locator('[aria-hidden="true"]');
-  await expect(visual).toHaveText('Software Engineer.');
+  await expect(visual).toHaveText('Software Engineer');
   const pause = page.getByRole('button', { name: 'Pause typing', exact: true });
   const resume = page.getByRole('button', { name: 'Resume typing', exact: true });
   await expect(pause).toBeVisible();
-  const roles = ['Software Engineer.', 'Developer.', 'Programmer.'];
+  const roles = ['Software Engineer', 'Developer', 'Programmer'];
   const expected = [...roles, ...roles, roles[0]];
   const sequence = [roles[0]];
   let pausedMidWord = false;
@@ -337,7 +337,7 @@ test('the roles loop automatically and keyboard controls pause and resume typing
       await expect(resume).toBeFocused();
       await page.clock.runFor(5_000);
       await expect(visual).toHaveText(word);
-      await expect(paragraph).toMatchAriaSnapshot('- paragraph: Software Engineer.');
+      await expect(paragraph).toMatchAriaSnapshot('- paragraph: Software Engineer');
       await expect(heading).toHaveAccessibleName(greeting);
       await resume.press('Space');
       await expect(pause).toBeFocused();
@@ -361,7 +361,7 @@ test('reduced motion keeps the greeting still; keyboard demo and contact remain 
     .getByRole('group', { name: 'Role animation' })
     .locator('p [aria-hidden="true"]');
   await expect(role).toBeVisible();
-  await expect(role).toHaveText('Software Engineer.');
+  await expect(role).toHaveText('Software Engineer');
   await expect(page.getByRole('button', { name: typingControls })).toHaveCount(0);
   await page.keyboard.press('Tab');
   await expect(page.getByRole('link', { name: 'Skip to content' })).toBeFocused();
@@ -381,7 +381,7 @@ test('reduced motion keeps the greeting still; keyboard demo and contact remain 
     'Replay 1',
   );
   await expect(heading).toHaveAccessibleName(greeting);
-  await expect(role).toHaveText('Software Engineer.');
+  await expect(role).toHaveText('Software Engineer');
   await expect(page.getByRole('button', { name: typingControls })).toHaveCount(0);
   await page
     .getByRole('navigation', { name: 'Primary' })

@@ -33,6 +33,8 @@ For browser checks, install Chromium with `npx playwright install chromium`, or 
 
 ## Writing and projects
 
+Write legends and card descriptions as short phrases without a final period. For blog posts, use `caption` in the frontmatter for the card and `summary` for the full article and feed. Keep normal punctuation in body copy and image descriptions.
+
 Software Factory is a text-only entry while its marketing site is under construction. Project cards distinguish product captures from editorial artwork. On small screens, the dashboard previews show a complete chart or quote, with a link to the uncropped phone screenshot. Girlfriend Birthday Gift shows the loaded gift box from the actual opening scene, without exposing personal memories. The portfolio capture shows the real homepage. PInnacle, DX, and PEAQ use generic illustrations, never internal screens. The four algorithm/graphics demos use images of their public sites; Props and Benev retain their archived product screens.
 
 Add a Markdown file to `apps/portfolio/src/content/blog/`. Its lowercase hyphenated filename becomes its permanent URL. The homepage, blog index, RSS feed and sitemap discover it at build time. Use the actual publication date; an archive adaptation may include an HTTPS `sourceUrl`.
@@ -40,6 +42,7 @@ Add a Markdown file to `apps/portfolio/src/content/blog/`. Its lowercase hyphena
 ```markdown
 ---
 title: 'A title for the post'
+caption: 'A short phrase for the blog card'
 summary: 'What the reader will learn.'
 date: '2026-11-04'
 category: 'Engineering'

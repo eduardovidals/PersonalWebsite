@@ -33,7 +33,7 @@ export const softwareFactory: WorkSnapshot = {
     status: factorySiteStatus,
   },
   description:
-    'My independent project grew out of supporting other engineers. I want a business to be able to explain what it needs, understand the tradeoffs, and own the result. A new engineer should be able to pick up the software and see why it works the way it does.',
+    'My independent project to help businesses define and own their software, with design decisions documented for the next engineer',
   stack: ['TypeScript', 'React', 'NestJS', 'Fastify', 'PostgreSQL', 'Kysely', 'Go', 'gRPC'],
   ai: [
     {
@@ -61,7 +61,7 @@ export const currentWork: readonly WorkSnapshot[] = [
       caption: 'PGIM · illustration of a shared platform',
     },
     description:
-      'I led the move from Angular to React on PInnacle, PGIM’s platform for internal apps. Teams could start a full-stack project with one command. I wrote onboarding guides and Storybook examples to show how the components worked.',
+      'PGIM’s internal app platform, where I led the move from Angular to React and wrote Storybook examples for teams',
     stack: [
       'React',
       'TypeScript',
@@ -84,7 +84,7 @@ export const currentWork: readonly WorkSnapshot[] = [
       caption: 'Prudential · design-system illustration',
     },
     description:
-      'I build accessible React components for Prudential’s design system and write the examples teams use to get started.',
+      'Accessible React components I build for Prudential’s design system, with examples that show teams how to use them',
     stack: ['React', 'TypeScript', 'GitHub Actions'],
     ai: [
       {
@@ -99,7 +99,7 @@ export const currentWork: readonly WorkSnapshot[] = [
     kind: 'career',
     title: 'PEAQ',
     description:
-      'I work on PEAQ, the internal application brokers use for structured settlements at Prudential Retirement Strategies. I refactored its screens so they load data consistently.',
+      'My current project at Prudential Retirement Strategies, where I standardized how the structured settlements app loads data for brokers',
     stack: ['React', 'TypeScript'],
     visual: {
       kind: 'illustration',
@@ -119,7 +119,7 @@ export const currentWork: readonly WorkSnapshot[] = [
       wide: [1440, 900],
     },
     description:
-      'A chart can make two instruments look similar even when their histories differ. For this assessment I built the React comparisons and the C# API that calculates the statistics behind them.',
+      'React charts for comparing price histories and a C# statistics API, both built for the Pharo assessment',
     stack: [
       'React',
       'TypeScript',
@@ -150,7 +150,7 @@ export const currentWork: readonly WorkSnapshot[] = [
       wide: [1440, 1024],
     },
     description:
-      'An order form needs fast price feedback, but the server still has to decide what it can accept. I built both sides for this assessment, down to the database that keeps the order.',
+      'An order form I built for the Schonfeld assessment, with instant price feedback, server-side checks, and SQLite storage',
     stack: [
       'React',
       'TanStack Router',
@@ -174,7 +174,7 @@ export const currentWork: readonly WorkSnapshot[] = [
       wide: [860, 484],
     },
     description:
-      'I made my girlfriend a gift box she could open in her browser. Inside is an animated story of our memories. It’s personal, but the feature folders, shared UI, and checks are the same ones I use on my other projects.',
+      'A 3D gift box my girlfriend can open in her browser to see an animated story of our memories',
     stack: [
       'React',
       'Vite',
@@ -198,7 +198,7 @@ export const currentWork: readonly WorkSnapshot[] = [
       wide: [1980, 1124],
     },
     description:
-      'My writing, experiments, and work history in one place. This time I chose Next.js for static pages, but kept the same rules: shared controls, accessible interactions, and browser checks. Even the handwritten introduction works with motion turned off.',
+      'My writing, experiments, and work history on a static site with a reduced-motion version of my handwritten introduction',
     stack: ['Next.js', 'React Aria Components', 'Tailwind CSS', 'Nx', 'Playwright', 'Netlify'],
     ai: [
       {

@@ -7,6 +7,7 @@ export interface PostSummary {
   slug: string;
   title: string;
   summary: string;
+  caption: string;
   /** Original note date for archival adaptations; otherwise publication date. */
   date: string;
   category: string;
@@ -65,6 +66,7 @@ function readPost(filename: string): Post {
       slug,
       title: field('title'),
       summary: field('summary'),
+      caption: field('caption'),
       date,
       category: field('category'),
       readingMinutes: Math.max(1, Math.ceil(body.split(/\s+/).length / 220)),

@@ -71,7 +71,7 @@ export default function BlogPage() {
                 {latest.title}
               </h2>
               <p className="mt-3 max-w-[52ch] leading-relaxed text-vidals-muted">
-                {latest.summary}
+                {latest.caption}
               </p>
               <div className="mt-5">
                 <PostDetails post={latest} />
@@ -113,7 +113,7 @@ export default function BlogPage() {
                         {post.title}
                       </h3>
                       <p className="mt-2 max-w-[55ch] leading-relaxed text-vidals-muted">
-                        {post.summary}
+                        {post.caption}
                       </p>
                       <p className="mt-2 text-sm text-vidals-accent">{post.category}</p>
                     </div>
