@@ -22,12 +22,12 @@ export function PersonalIntro() {
           Hey, I’m <span className="block text-vidals-accent">Eduardo.</span>
         </h1>
         <p className="mt-5 text-pretty text-lg font-medium sm:text-2xl">
-          At Prudential, I build for the people building the apps.
+          I’m a full-stack engineer at Prudential. I work on DX, our design system.
         </p>
         <p className="mt-2 max-w-[48ch] text-pretty text-base leading-relaxed text-vidals-muted sm:text-lg">
-          I work on DX, our design system. I love when one good fix reaches a whole family of apps.
-          Software Factory is my own project to give businesses that same head start, from their
-          first screen to their next release.
+          I love that a keyboard fix in one component can make several apps easier to use. That idea
+          led me to start Software Factory: I want small businesses to benefit from what engineers
+          have already learned, without having to start from scratch.
         </p>
         <div className="mt-7 flex flex-wrap items-center gap-3">
           <Link
