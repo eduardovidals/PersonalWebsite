@@ -28,8 +28,8 @@ export default function ProjectsPage() {
       <header>
         <h1 className="text-5xl font-semibold tracking-tight sm:text-6xl">Projects</h1>
         <p className="mt-4 max-w-[52ch] text-lg leading-relaxed text-vidals-muted">
-          Some of this work is for other engineers. Some was for one person I love. Here’s what I
-          contributed to each project, what I used, and why it mattered to me.
+          Tools for engineers, experiments from school, and an anniversary gift for one person I
+          love.
         </p>
         <nav
           aria-label="Project collections"
@@ -39,19 +39,19 @@ export default function ProjectsPage() {
             href="#current-work"
             className="inline-flex min-h-11 items-center underline underline-offset-4"
           >
-            Independent builds
+            Independent
           </a>
           <a
             href="#professional-work"
             className="inline-flex min-h-11 items-center underline underline-offset-4"
           >
-            Professional work
+            At work
           </a>
           <a
             href="#early-work"
             className="inline-flex min-h-11 items-center underline underline-offset-4"
           >
-            Early projects
+            Archive
           </a>
         </nav>
       </header>
@@ -67,18 +67,17 @@ export default function ProjectsPage() {
           {index === 0 && (
             <p className="mb-5 text-sm text-vidals-muted">Archived screens from my internship.</p>
           )}
-          <div className="grid gap-x-7 gap-y-10 sm:grid-cols-2">
+          <div className="grid gap-x-7 gap-y-12 sm:grid-cols-2">
             {projects
               .filter((project) => project.context === context)
               .map((project) => (
                 <article key={project.slug} className="min-w-0">
                   <Link
                     href={projectHref(project.slug)}
-                    className="group block rounded-2xl"
+                    className="group flex flex-col gap-3 rounded-2xl"
                     aria-labelledby={`project-${project.slug}`}
                   >
-                    <Cover project={project} />
-                    <div className="pt-4">
+                    <div>
                       <p className="text-sm font-medium text-vidals-accent">{project.category}</p>
                       <h3
                         className="mt-1 flex items-center gap-3 text-2xl font-semibold tracking-tight group-hover:text-vidals-accent sm:text-3xl"
@@ -93,6 +92,7 @@ export default function ProjectsPage() {
                         {project.description}
                       </p>
                     </div>
+                    <Cover project={project} />
                   </Link>
                   <div className="mt-3">
                     <ToolChips

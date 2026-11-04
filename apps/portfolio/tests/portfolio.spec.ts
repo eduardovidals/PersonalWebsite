@@ -147,12 +147,17 @@ test('the greeting, toolkit, navigation and full blog posts work without JavaScr
 
 test('the homepage featured project opens the Software Factory case study', async ({ page }) => {
   await page.goto('/');
+  const feature = page.getByRole('article', { name: 'Software Factory', exact: true });
+  await expect(feature).toContainText('Marketing site under construction');
+  await expect(feature.locator('img')).toHaveCount(0);
   await page.getByRole('link', { name: 'Why I’m building Software Factory', exact: true }).click();
   await expect(page).toHaveURL(/\/projects\/software-factory\/$/);
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Software Factory');
+  await expect(page.getByText('Marketing site under construction', { exact: true })).toBeVisible();
+  await expect(page.locator('main img')).toHaveCount(0);
 });
 
-test('every project has a working image and selects the intended phone or desktop view', async ({
+test('project images preserve their subjects and link to the appropriate full capture; Factory stays text-only', async ({
   page,
 }) => {
   for (const width of [390, 768, 1280]) {
@@ -161,6 +166,13 @@ test('every project has a working image and selects the intended phone or deskto
     const cards = page.getByRole('article');
     await expect(cards).toHaveCount(currentWork.length + projects.length);
     for (const card of await cards.all()) {
+      const title = (await card.getByRole('heading').innerText()).replace('↗', '').trim();
+      const work = currentWork.find((item) => item.title === title);
+      if (work?.visual.kind === 'planned') {
+        await expect(card.locator('img')).toHaveCount(0);
+        await expect(card).toContainText(work.visual.status);
+        continue;
+      }
       const img = card.getByRole('img').first();
       await img.scrollIntoViewIfNeeded();
       const source = await img.evaluate(async (image) => {
@@ -168,19 +180,38 @@ test('every project has a working image and selects the intended phone or deskto
         await image.decode();
         return new URL(image.currentSrc).pathname;
       });
-      const title = (await card.getByRole('heading').innerText()).replace('↗', '').trim();
-      const work = currentWork.find((item) => item.title === title);
       if (work) {
         const suffix =
-          work.visual.kind === 'illustration' ? '.svg' : width < 640 ? '-small.webp' : '-wide.webp';
+          work.visual.kind === 'illustration'
+            ? '.svg'
+            : width < 1024
+              ? '-detail.webp'
+              : '-wide.webp';
         expect(source, title).toBe('/work/current/' + work.id + suffix);
         if (work.visual.kind === 'illustration')
           await expect(card.locator('figcaption')).toContainText('illustration');
+        else {
+          const full = card.getByRole('link', { name: /^Full (phone|desktop) screenshot of/ });
+          const href = '/work/current/' + work.id + (width < 1024 ? '-small.webp' : '-wide.webp');
+          await expect(full).toHaveAttribute('href', href);
+          expect((await page.request.get(href)).headers()['content-type']).toContain('image/webp');
+        }
+        const error = await img.evaluate((el) => {
+          if (!(el instanceof HTMLImageElement))
+            throw new Error('Expected a photograph or illustration');
+          const box = el.getBoundingClientRect();
+          return Math.abs(box.height - (box.width * el.naturalHeight) / el.naturalWidth);
+        });
+        expect(error, title + ': the selected image must not be cropped or squashed').toBeLessThan(
+          1,
+        );
       } else {
         const project = projects.find((item) => item.title === title);
         expect(project, title).toBeDefined();
         expect(source, title).toBe(
-          '/work/' + ((width < 640 && project?.smallCover) || project?.cover) + '.webp',
+          '/work/' +
+            (project?.slug === 'props' ? 'props-signup' : (project?.preview ?? project?.cover)) +
+            '.webp',
         );
       }
     }

@@ -1,5 +1,5 @@
-import Image from 'next/image';
-import { imagePath, mediaDimensions } from '@/content/projects';
+import { ArchiveArtwork } from '@/components/ArchiveArtwork';
+import { imagePath } from '@/content/projects';
 import type { Project } from '@/content/projects';
 
 export function Arrow({ back = false }: { back?: boolean }) {
@@ -18,27 +18,28 @@ export function Arrow({ back = false }: { back?: boolean }) {
 }
 
 export function Cover({ project, detail = false }: { project: Project; detail?: boolean }) {
-  const [width, height] = mediaDimensions[project.cover];
+  if (!detail) return <ArchiveArtwork project={project} />;
+  const originals = [
+    [project.cover, project.smallCover ? 'Desktop screenshot' : 'Original screenshot'],
+    ...(project.smallCover ? [[project.smallCover, 'Phone screenshot']] : []),
+  ];
   return (
-    <div className="overflow-hidden rounded-2xl bg-vidals-surface">
-      <picture>
-        {project.smallCover && (
-          <source media="(max-width: 639px)" srcSet={imagePath(project.smallCover)} />
-        )}
-        <Image
-          src={imagePath(project.cover)}
-          alt={project.coverAlt}
-          width={width}
-          height={height}
-          unoptimized
-          loading={detail ? 'eager' : 'lazy'}
-          className={
-            detail
-              ? 'mx-auto block max-h-[37rem] w-full object-contain'
-              : 'aspect-[4/3] w-full object-cover sm:aspect-[16/10]'
-          }
-        />
-      </picture>
-    </div>
+    <>
+      <div className="mx-auto max-w-3xl">
+        <ArchiveArtwork project={project} eager />
+      </div>
+      <figcaption className="mx-auto mt-2 flex max-w-3xl flex-wrap items-center gap-x-3 text-sm leading-snug">
+        <span className="text-vidals-muted">View full size:</span>
+        {originals.map(([file, label]) => (
+          <a
+            key={file}
+            href={imagePath(file)}
+            className="inline-flex min-h-11 items-center text-vidals-accent underline underline-offset-4 hover:decoration-2"
+          >
+            {label}
+          </a>
+        ))}
+      </figcaption>
+    </>
   );
 }

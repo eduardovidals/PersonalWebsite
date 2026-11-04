@@ -10,6 +10,8 @@ export interface Project {
   stack: readonly ToolName[];
   cover: string;
   smallCover?: string;
+  // A gallery-scale composition. Keep the uncropped captures above for inspection.
+  preview?: string;
   coverAlt: string;
   logo?: string;
 }
@@ -50,6 +52,7 @@ export const projects: readonly Project[] = [
     stack: ['React', 'TypeScript', 'HTML', 'CSS'],
     cover: 'current/sorting-visualizer-wide',
     smallCover: 'current/sorting-visualizer-small',
+    preview: 'previews/sorting-visualizer',
     coverAlt: 'Light-blue bars rearranging during merge sort in AlgoVisual.',
   },
   {
@@ -62,6 +65,7 @@ export const projects: readonly Project[] = [
     stack: ['React', 'TypeScript'],
     cover: 'current/pathfinding-visualizer-wide',
     smallCover: 'current/pathfinding-visualizer-small',
+    preview: 'previews/pathfinding-visualizer',
     coverAlt: 'A* search tracing a route through a generated maze in AlgoVisual.',
   },
   {
@@ -74,6 +78,8 @@ export const projects: readonly Project[] = [
     stack: ['React', 'Three.js'],
     cover: 'current/3d-sorting-visualizer-wide',
     smallCover: 'current/3d-sorting-visualizer-small',
+    // From the archived walkthrough at 00:19.72, looking along the bars.
+    preview: 'previews/3d-sorting-visualizer',
     coverAlt: 'Merge sort rearranging upright bars in a 3D scene.',
   },
   {
@@ -86,6 +92,8 @@ export const projects: readonly Project[] = [
     stack: ['React', 'Three.js', 'JavaScript'],
     cover: 'current/solar-system-wide',
     smallCover: 'current/solar-system-small',
+    // From the archived fly-through at 00:06.34, near the Sun.
+    preview: 'previews/solar-system',
     coverAlt: 'Textured Sun and planets on orbital paths against a starfield.',
   },
 ];
@@ -97,6 +105,10 @@ export function projectHref(slug: string) {
 }
 
 export const mediaDimensions: Readonly<Record<string, readonly [number, number]>> = {
+  'previews/sorting-visualizer': [1163, 727],
+  'previews/pathfinding-visualizer': [1066, 666],
+  'previews/3d-sorting-visualizer': [912, 570],
+  'previews/solar-system': [944, 590],
   'current/sorting-visualizer-wide': [1440, 900],
   'current/pathfinding-visualizer-wide': [1440, 900],
   'current/3d-sorting-visualizer-wide': [1440, 900],

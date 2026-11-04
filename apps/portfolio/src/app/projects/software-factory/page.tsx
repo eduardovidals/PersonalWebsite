@@ -2,8 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { articleProse } from '@/components/article-prose';
 import { ToolChips } from '@/components/ToolChips';
-import { WorkVisual } from '@/components/WorkVisual';
-import { softwareFactory } from '@/content/projects/current-work';
+import { factorySiteStatus, softwareFactory } from '@/content/projects/current-work';
 
 const description =
   'An independent software-construction platform built around reusable engineering knowledge, informed business decisions, and software its owners can keep changing.';
@@ -16,7 +15,7 @@ export const metadata: Metadata = {
     description,
     url: '/projects/software-factory/',
     type: 'article',
-    images: ['/social-card.png'],
+    images: [],
   },
 };
 
@@ -33,6 +32,7 @@ export default function SoftwareFactoryPage() {
         Independent project · Local MVP
       </p>
       <h1 className="text-5xl font-semibold tracking-tight sm:text-6xl">Software Factory</h1>
+      <p className="mt-4 text-sm font-medium text-vidals-muted">{factorySiteStatus}</p>
       <div className={`mt-7 ${articleProse}`}>
         <p>
           A business should be able to own good software without first becoming a software company.
@@ -69,7 +69,6 @@ export default function SoftwareFactoryPage() {
           they can’t take their software to another engineer.
         </p>
         <h2>What I’m building now</h2>
-        <WorkVisual work={softwareFactory} />
         <p>
           In the local version, I can describe a change in the console, settle what it should do,
           and follow that decision into the source. I can inspect the diff, see what the tests

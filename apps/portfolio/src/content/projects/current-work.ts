@@ -5,20 +5,29 @@ export interface WorkSnapshot {
   title: string;
   description: string;
   href?: string;
-  visual: { kind: 'capture' | 'illustration'; alt: string; caption: string };
+  visual:
+    | {
+        kind: 'capture';
+        alt: string;
+        caption: string;
+        detail: readonly [number, number];
+        wide: readonly [number, number];
+      }
+    | { kind: 'illustration'; alt: string; caption: string }
+    | { kind: 'planned'; status: string };
   stack: readonly ToolName[];
   ai?: readonly { kind: string; tools: readonly ToolName[]; note: string }[];
 }
 
 /** Public summaries only; an assistant used in development is not a shipped product feature. */
+export const factorySiteStatus = 'Marketing site under construction';
 export const softwareFactory: WorkSnapshot = {
   id: 'software-factory',
   title: 'Software Factory',
   href: '/projects/software-factory/',
   visual: {
-    kind: 'capture',
-    alt: 'The Factory Console planning workspace with owner and developer views and blank planning fields.',
-    caption: 'Factory Console · local test workspace',
+    kind: 'planned',
+    status: factorySiteStatus,
   },
   description:
     'My independent project grew out of supporting other engineers. I want a business to be able to explain what it needs, understand the tradeoffs, and own the result. A new engineer should be able to pick up the software and see why it works the way it does.',
@@ -99,6 +108,8 @@ export const currentWork: readonly WorkSnapshot[] = [
       kind: 'capture',
       alt: 'A performance chart comparing the price histories of three sample instruments.',
       caption: 'Pharo assessment · sample market data',
+      detail: [704, 535],
+      wide: [1440, 900],
     },
     description:
       'A chart can make two instruments look similar even when their histories differ. For this assessment I built the React comparisons and the C# API that calculates the statistics behind them.',
@@ -127,6 +138,8 @@ export const currentWork: readonly WorkSnapshot[] = [
       kind: 'capture',
       alt: 'The order-entry dashboard showing sample trading activity.',
       caption: 'Schonfeld assessment · local demo orders',
+      detail: [856, 451],
+      wide: [1440, 1024],
     },
     description:
       'An order form needs fast price feedback, but the server still has to decide what it can accept. I built both sides for this assessment, down to the database that keeps the order.',
@@ -148,6 +161,8 @@ export const currentWork: readonly WorkSnapshot[] = [
       kind: 'capture',
       alt: 'Pink gift artwork from the anniversary site’s opening sequence.',
       caption: 'Personal project · opening artwork',
+      detail: [786, 475],
+      wide: [860, 484],
     },
     description:
       'An anniversary gift I built for my girlfriend: a 3D opening and an animated story told through our memories. Behind it are the same feature folders, shared UI, and code checks I use for work much less romantic than this.',
@@ -169,6 +184,8 @@ export const currentWork: readonly WorkSnapshot[] = [
       kind: 'capture',
       alt: 'My blue portfolio homepage with its handwritten EV monogram and personal introduction.',
       caption: 'Personal project · this site',
+      detail: [567, 301],
+      wide: [1980, 1124],
     },
     description:
       'My writing, experiments, and work history in one place. This time I chose Next.js for static pages, but kept the same rules: shared controls, accessible interactions, and browser checks. Even the handwritten introduction works with motion turned off.',

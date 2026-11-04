@@ -4,10 +4,10 @@ import Markdown from 'react-markdown';
 import type { Components } from 'react-markdown';
 import { imagePath, mediaDimensions } from '@/content/projects';
 
-const posters: Record<string, string> = {
-  'benev-signup-flow': 'benev-home',
-  '3d-sorting-visualizer': '3d-sorting-visualizer',
-  'solar-system': 'solar-system',
+const recordings: Record<string, { poster: string; width: number; height: number }> = {
+  'benev-signup-flow': { poster: 'benev-home', width: 1100, height: 592 },
+  '3d-sorting-visualizer': { poster: 'previews/3d-sorting-visualizer', width: 1100, height: 594 },
+  'solar-system': { poster: 'previews/solar-system', width: 1100, height: 592 },
 };
 
 const components: Components = {
@@ -17,7 +17,7 @@ const components: Components = {
     );
     // Media always occupies a separate Markdown paragraph. Keep phone screens side by side.
     return isGallery ? (
-      <div className="my-8 flex flex-wrap items-start justify-center gap-3 sm:gap-5">
+      <div className="my-7 flex flex-wrap items-start justify-center gap-4 sm:my-9 sm:gap-6">
         {children}
       </div>
     ) : (
@@ -60,10 +60,8 @@ const components: Components = {
   img({ src, alt = '' }) {
     if (typeof src !== 'string' || !src.startsWith('/work/')) return null;
     const name = src.slice('/work/'.length).replace(/\.[\w]+$/, '');
-    const caption = (
-      <figcaption className="mt-3 text-sm leading-normal text-vidals-muted">{alt}</figcaption>
-    );
     if (src.endsWith('.mp4')) {
+      const recording = recordings[name];
       return (
         <figure className="w-full">
           <video
@@ -71,19 +69,28 @@ const components: Components = {
             controls
             playsInline
             preload="none"
-            poster={imagePath(posters[name])}
-            className="aspect-video w-full rounded-xl bg-vidals-surface object-contain"
+            poster={imagePath(recording.poster)}
+            width={recording.width}
+            height={recording.height}
+            style={{ aspectRatio: `${recording.width}/${recording.height}` }}
+            className="h-auto w-full rounded-xl bg-vidals-surface object-cover"
           >
             <source src={src} type="video/mp4" />
             <a href={src}>Download the recording</a>
           </video>
-          {caption}
+          <figcaption className="mt-2 text-sm text-vidals-muted">{alt}</figcaption>
         </figure>
       );
     }
     const [width, height] = mediaDimensions[name];
     return (
-      <figure className={height > width ? 'w-[min(46%,14rem)]' : 'w-full'}>
+      <figure
+        className={
+          height > width
+            ? 'relative w-[calc(50%_-_0.75rem)] max-w-56 only:w-3/4'
+            : 'relative w-full'
+        }
+      >
         <Image
           src={src}
           alt={alt}
@@ -92,7 +99,16 @@ const components: Components = {
           unoptimized
           className="h-auto w-full rounded-xl"
         />
-        {caption}
+        <figcaption className="mt-1 text-sm leading-normal text-vidals-muted">
+          <a
+            href={src}
+            aria-label={`${alt} — view full size`}
+            className="inline-flex min-h-11 flex-wrap items-center gap-x-2 py-1 after:absolute after:inset-0 after:rounded-xl hover:text-vidals-accent"
+          >
+            {alt}
+            <span className="text-vidals-accent underline underline-offset-4">Full size</span>
+          </a>
+        </figcaption>
       </figure>
     );
   },

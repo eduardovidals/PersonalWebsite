@@ -3,7 +3,7 @@ import { ContactForm } from '@/components/ContactForm';
 import { PersonalIntro } from '@/components/PersonalIntro';
 import { WorkVisual } from '@/components/WorkVisual';
 import { formatPostDate, type PostSummary } from '@/content/blog';
-import { currentWork, softwareFactory } from '@/content/projects/current-work';
+import { currentWork, factorySiteStatus, softwareFactory } from '@/content/projects/current-work';
 import { Arrow } from './components/Arrow/Arrow';
 import { CareerJourney } from './components/CareerJourney/CareerJourney';
 import { ProjectShelf } from './components/ProjectShelf/ProjectShelf';
@@ -34,11 +34,10 @@ export function HomeOverview({ notes }: Readonly<{ notes: readonly PostSummary[]
         </div>
         <article
           aria-labelledby="featured-factory"
-          className="mb-5 grid items-center gap-6 rounded-3xl bg-vidals-deep p-5 sm:p-7 md:grid-cols-[1.1fr_1fr] md:gap-9"
+          className="mb-4 rounded-3xl bg-vidals-deep p-5 sm:p-8"
         >
-          <WorkVisual work={softwareFactory} />
           <div>
-            <p className="text-sm font-medium text-vidals-accent">My independent project</p>
+            <p className="text-sm font-medium text-vidals-accent">{factorySiteStatus}</p>
             <h3 id="featured-factory" className="mt-1 text-3xl font-semibold tracking-tight">
               {softwareFactory.title}
             </h3>
@@ -55,17 +54,19 @@ export function HomeOverview({ notes }: Readonly<{ notes: readonly PostSummary[]
             </Link>
           </div>
         </article>
-        <div className="mb-4 grid gap-5 sm:grid-cols-2">
+        <div className="mb-4 grid sm:grid-cols-2 sm:gap-5">
           {currentWork
             .filter(({ id }) => id === 'anniversary' || id === 'design-system')
             .map((work) => (
               <Link
                 key={work.id}
                 href={'/projects/#' + work.id}
-                className="group grid grid-cols-[5.5rem_1fr] items-center gap-4 rounded-2xl bg-vidals-surface p-3 sm:grid-cols-[7rem_1fr]"
+                className="group flex items-center gap-4 border-b border-vidals-border/25 py-4 sm:rounded-2xl sm:border-0 sm:bg-vidals-surface sm:p-3"
                 aria-label={'Explore ' + work.title}
               >
-                <WorkVisual work={work} compact />
+                <div className="hidden w-24 shrink-0 sm:block">
+                  <WorkVisual work={work} compact />
+                </div>
                 <div>
                   <h3 className="flex items-center gap-2 text-lg font-semibold group-hover:text-vidals-accent">
                     {work.title} <Arrow />

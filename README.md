@@ -33,7 +33,7 @@ For browser checks, install Chromium with `npx playwright install chromium`, or 
 
 ## Writing and projects
 
-Project cards distinguish product captures from editorial artwork. The local Factory Console uses its existing demonstration workspace, the two assessment dashboards use sample data, and YniBirthday shows only its original no-WebGL opening component (gift or envelope). The portfolio captures show the real homepage. PInnacle, DX, and PEAQ are private employer applications: their generic illustrations do not depict internal interfaces. The four algorithm/graphics demos use browser captures of their public sites; Props and Benev retain their archived product screens. Desktop and phone images are static assets, not live embeds.
+Software Factory is a text-only entry while its marketing site is under construction. Project cards distinguish product captures from editorial artwork. On small screens, the dashboard previews show a complete chart or quote, with a link to the uncropped phone screenshot. YniBirthday shows only the gift artwork, and the portfolio capture shows the real homepage. PInnacle, DX, and PEAQ use generic illustrations, never internal screens. The four algorithm/graphics demos use images of their public sites; Props and Benev retain their archived product screens.
 
 Add a Markdown file to `apps/portfolio/src/content/blog/`. Its lowercase hyphenated filename becomes its permanent URL. The homepage, blog index, RSS feed and sitemap discover it at build time. Use the actual publication date; an archive adaptation may include an HTTPS `sourceUrl`.
 

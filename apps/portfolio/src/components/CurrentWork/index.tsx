@@ -26,8 +26,8 @@ export function CurrentWork() {
       <div
         className={
           id === 'professional-work'
-            ? 'grid items-start gap-x-7 gap-y-8 md:grid-cols-2 xl:grid-cols-3'
-            : 'grid items-start gap-x-10 gap-y-8 md:grid-cols-2'
+            ? 'grid items-start gap-x-7 gap-y-12 sm:grid-cols-2 xl:grid-cols-3'
+            : 'grid items-start gap-x-10 gap-y-12 sm:grid-cols-2'
         }
       >
         {works.map((work) => (
@@ -35,10 +35,16 @@ export function CurrentWork() {
             key={work.id}
             id={work.id}
             aria-labelledby={`work-${work.id}`}
-            className="min-w-0"
+            className={
+              work.visual.kind === 'planned'
+                ? 'min-w-0 rounded-2xl bg-vidals-deep p-5 sm:col-span-2 sm:p-7'
+                : 'min-w-0 border-t border-vidals-border/25 pt-5'
+            }
           >
-            <WorkVisual work={work} />
-            <h3 id={`work-${work.id}`} className="mt-3 text-2xl font-semibold tracking-tight">
+            {work.visual.kind === 'planned' && (
+              <p className="mb-2 text-sm font-medium text-vidals-accent">{work.visual.status}</p>
+            )}
+            <h3 id={`work-${work.id}`} className="text-2xl font-semibold tracking-tight">
               {work.href ? (
                 <Link
                   href={work.href}
@@ -51,9 +57,10 @@ export function CurrentWork() {
                 work.title
               )}
             </h3>
-            <p className="mt-2 mb-4 max-w-[54ch] text-sm leading-relaxed text-vidals-muted">
+            <p className="mt-2 mb-4 max-w-[58ch] text-base leading-relaxed text-vidals-muted">
               {work.description}
             </p>
+            <WorkVisual work={work} />
             <details>
               <summary className="w-fit cursor-pointer rounded-sm py-2 text-sm font-medium text-vidals-accent underline-offset-4 hover:underline">
                 Tools and development notes
