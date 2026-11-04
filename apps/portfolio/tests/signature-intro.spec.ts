@@ -91,7 +91,13 @@ for (const viewport of [
     expect(distance(middle.svg, held.svg)).toBeGreaterThan(12);
     expect(distance(middle.svg, end.dock)).toBeGreaterThan(12);
     expect(distance(end.svg, end.dock)).toBeLessThan(2);
-    expect(end.dock.x).toBeGreaterThan(viewport.width * 0.85);
+    const headerLeft = await page
+      .getByRole('banner')
+      .evaluate(
+        (header) =>
+          header.getBoundingClientRect().left + parseFloat(getComputedStyle(header).paddingLeft),
+      );
+    expect(Math.abs(end.dock.x - end.dock.width / 2 - headerLeft)).toBeLessThan(2);
     expect(end.dock.y).toBeLessThan(85);
     await home.locator('svg').evaluate((mark) => mark.getAnimations()[0]?.finish());
     await expect(page.locator('[data-signature-resting]')).toHaveCSS('opacity', '1');
@@ -145,7 +151,7 @@ test('a deep link does not start the flight on a scrolled visit', async ({ page 
 
 test.describe('without JavaScript', () => {
   test.use({ javaScriptEnabled: false });
-  test('content reads normally and the right-hand logo links home from other routes', async ({
+  test('content reads normally and the left-hand logo links home from other routes', async ({
     page,
   }) => {
     await page.goto('/');
