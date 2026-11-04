@@ -27,6 +27,7 @@ async function sampleInk(home: Locator, time: { ms: number } | { fraction: numbe
     const height = viewport?.height ?? window.innerHeight;
     return {
       svg: box(svg),
+      vectorWidth: svg.clientWidth,
       ink: box(path),
       inkVisible:
         svg.checkVisibility({ opacityProperty: true, visibilityProperty: true }) &&
@@ -80,6 +81,10 @@ for (const viewport of [
     expect(Math.abs(hold.ink.width - held.ink.width)).toBeLessThan(1);
     const middle = await sampleInk(home, { fraction: 0.72 });
     const end = await sampleInk(home, { fraction: 0.999 });
+    // At full size and in flight, paint the SVG at its displayed width, not at header resolution.
+    for (const frame of [held, middle, end]) {
+      expect(Math.abs(frame.vectorWidth - frame.svg.width)).toBeLessThan(1);
+    }
     expect(held.svg.width).toBeGreaterThan(end.svg.width * 2);
     expect(middle.svg.width).toBeLessThan(held.svg.width - 3);
     expect(middle.svg.width).toBeGreaterThan(end.svg.width + 3);

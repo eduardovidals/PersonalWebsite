@@ -24,11 +24,17 @@ function takeoff(stage: HTMLElement, slot: HTMLElement, fromScreen: boolean) {
   if (scale < 1.4) return;
   const x = scene.left + (scene.width - width) / 2 - dock.left;
   const y = scene.top + (scene.height - dock.height * scale) / 2 - dock.top;
-  const transform = `translate3d(${x}px,${y}px,0) scale(${scale})`;
+  // Resize the vector viewport itself. Scaling the composited header icon enlarges its pixels.
+  const start = {
+    left: `${x}px`,
+    top: `${y}px`,
+    width: `${width}px`,
+    height: `${dock.height * scale}px`,
+  };
   return [
-    { transform, offset: 0 },
-    { transform, offset: 0.46, easing: 'cubic-bezier(.43,.03,.14,1)' },
-    { transform: 'none', offset: 1 },
+    { ...start, offset: 0 },
+    { ...start, offset: 0.46, easing: 'cubic-bezier(.43,.03,.14,1)' },
+    { left: '0px', top: '0px', width: '100%', height: '100%', offset: 1 },
   ];
 }
 

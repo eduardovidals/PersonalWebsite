@@ -44,15 +44,15 @@ export function SiteHeader() {
           aria-label="Eduardo Vidals — home"
           className="inline-flex min-h-11 min-w-14 items-center justify-center justify-self-end rounded-xl text-vidals-accent hover:text-vidals-text sm:min-w-16"
         >
-          <span className="pointer-events-none block w-13 sm:w-16">
+          <span className="pointer-events-none relative block aspect-[37/25] w-13 sm:w-16">
             <svg
               id={signatureMarkId}
               aria-hidden="true"
               focusable="false"
               viewBox="4 10 37 25"
-              width="62"
-              height="42"
-              className="block h-auto w-full origin-top-left overflow-visible"
+              width="37"
+              height="25"
+              className="absolute top-0 left-0 block h-full w-full overflow-visible"
             >
               <path
                 d={signaturePath}
