@@ -7,7 +7,7 @@ const jobs = [
     start: ['2021-10', 'Oct 2021'],
     end: ['2022-05', 'May 2022'],
     story:
-      'I built React Native screens and the REST endpoint behind a leaderboard. It was my first experience owning both sides of a feature.',
+      'I built mobile screens for Props in React Native and wrote the API for its leaderboard.',
   },
   {
     company: 'PGIM',
@@ -15,7 +15,7 @@ const jobs = [
     start: ['2022-06', 'Jun 2022'],
     end: ['2023-07', 'Jul 2023'],
     story:
-      'I published Angular components and services for other teams. For the first time, the person I was building for was another developer.',
+      'I built Angular components and services that other PGIM teams could reuse in their apps.',
   },
   {
     company: 'PGIM',
@@ -23,7 +23,7 @@ const jobs = [
     start: ['2023-07', 'Jul 2023'],
     end: ['2026-03', 'Mar 2026'],
     story:
-      'I led the move to React for PInnacle, our departmental application platform. It served 20 apps. I also led delivery of 15+ applications using React, .NET, and SQL.',
+      'I led the move from Angular to React on PInnacle, the platform behind 20 of our internal apps. I also led development on 15+ apps built with React, .NET, and SQL.',
   },
   {
     company: 'Prudential Financial',
@@ -31,7 +31,7 @@ const jobs = [
     start: ['2026-03', 'Mar 2026'],
     end: null,
     story:
-      'I work on DX, our accessible React and TypeScript design system. I put those conventions to work refactoring PEAQ, an internal broker application.',
+      'I build accessible React and TypeScript components for DX, our design system. I also refactored PEAQ, an app our brokers use for structured settlements and Income Advantage.',
   },
 ] as const;
 
@@ -48,8 +48,8 @@ export function CareerJourney() {
             How I got here
           </h2>
           <p className="mt-5 leading-relaxed text-vidals-muted">
-            At NJCU I taught our club’s first frontend bootcamp. I still love the moment an example
-            clicks and someone can go build without me.
+            I ran the software development club at NJCU and taught our first frontend bootcamp while
+            I was interning at PGIM.
           </p>
           <Link
             href="/about/"

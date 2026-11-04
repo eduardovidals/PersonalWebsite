@@ -57,7 +57,7 @@ export const currentWork: readonly WorkSnapshot[] = [
       caption: 'PGIM · illustration of a shared platform',
     },
     description:
-      'PGIM’s departmental application platform. I led the move from Angular to React and helped teams ship .NET and SQL apps from a shared foundation. One command set up a project; Storybook and onboarding guides helped the next engineer take it from there.',
+      'I led the move from Angular to React on PInnacle, PGIM’s platform for internal apps. Teams could start a full-stack project with one command. I wrote onboarding guides and Storybook examples to show how the components worked.',
     stack: [
       'React',
       'TypeScript',
@@ -79,7 +79,7 @@ export const currentWork: readonly WorkSnapshot[] = [
       caption: 'Prudential · design-system illustration',
     },
     description:
-      'My design-system work at Prudential. I help make accessible React and TypeScript components predictable both for someone using a keyboard and for the engineer putting the screen together.',
+      'I build React and TypeScript components for Prudential’s design system. A lot of the work is in details like where keyboard focus goes when someone closes a dialog.',
     stack: ['React', 'TypeScript', 'GitHub Actions'],
     ai: [
       {
@@ -93,7 +93,7 @@ export const currentWork: readonly WorkSnapshot[] = [
     id: 'peaq',
     title: 'PEAQ',
     description:
-      'An internal Prudential broker application for structured settlements and Income Advantage. I refactored how its screens were organized and how they loaded data, so the next change wouldn’t require learning a new pattern on every screen.',
+      'Prudential brokers use PEAQ for structured settlements and Income Advantage. I reorganized the screens and made the way they load data more consistent.',
     stack: ['React', 'TypeScript'],
     visual: {
       kind: 'illustration',
