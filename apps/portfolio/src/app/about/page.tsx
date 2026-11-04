@@ -54,17 +54,14 @@ export default function AboutPage() {
         <h2>DX and PEAQ at Prudential</h2>
         <p>
           On DX, I work on accessible React and TypeScript components and write examples that show
-          engineers how to use them. I also refactored PEAQ, an existing internal app that brokers
-          use for structured settlements and Income Advantage.
+          engineers how to use them. I also write skills and plugins for Claude Code to help it
+          follow our conventions when it makes changes to the library.
         </p>
         <p>
-          Working on PEAQ meant editing AI-assisted code. Its screens loaded data in different ways,
-          so knowing how one screen worked didn’t help much with the next. I refactored how the
-          screens were organized and how they loaded data so they’d be easier to change.
-        </p>
-        <p>
-          I also write skills and plugins for Claude Code to help it follow our conventions when it
-          makes changes to the library.
+          My latest project at Prudential was PEAQ, the app brokers use for structured settlements
+          and Income Advantage. Its AI-assisted screens loaded data in different ways, so knowing
+          how one worked didn’t help much with the next. I refactored how the screens were organized
+          and how they loaded data so they’d be easier to change.
         </p>
         <h2>What I build outside work</h2>
         <p>

@@ -35,6 +35,12 @@ export default function ProjectsPage() {
           className="mt-4 flex flex-wrap gap-x-5 text-sm font-semibold text-vidals-accent"
         >
           <a
+            href="#early-work"
+            className="inline-flex min-h-11 items-center underline underline-offset-4"
+          >
+            Early work
+          </a>
+          <a
             href="#current-work"
             className="inline-flex min-h-11 items-center underline underline-offset-4"
           >
@@ -44,17 +50,10 @@ export default function ProjectsPage() {
             href="#professional-work"
             className="inline-flex min-h-11 items-center underline underline-offset-4"
           >
-            At work
-          </a>
-          <a
-            href="#early-work"
-            className="inline-flex min-h-11 items-center underline underline-offset-4"
-          >
-            Archive
+            PGIM &amp; Prudential
           </a>
         </nav>
       </header>
-      <CurrentWork />
       {contexts.map((context, index) => (
         <section
           key={context}
@@ -105,6 +104,7 @@ export default function ProjectsPage() {
           </div>
         </section>
       ))}
+      <CurrentWork />
       <Link
         href="/"
         className="mt-9 inline-flex items-center gap-2 text-sm text-vidals-accent underline-offset-4 hover:underline"

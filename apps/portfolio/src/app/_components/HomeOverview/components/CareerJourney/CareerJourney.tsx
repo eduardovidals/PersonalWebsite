@@ -32,7 +32,7 @@ const jobs = [
     start: ['2026-03', 'Mar 2026'],
     end: null,
     story:
-      'I build accessible React and TypeScript components for DX, our design system. I also refactored PEAQ, an app our brokers use for structured settlements and Income Advantage.',
+      'I build accessible React and TypeScript components for DX, our design system. My latest project was refactoring PEAQ, the app our brokers use for structured settlements and Income Advantage.',
   },
 ] as const;
 
