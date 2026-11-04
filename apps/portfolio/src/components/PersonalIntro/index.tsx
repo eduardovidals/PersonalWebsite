@@ -25,9 +25,7 @@ export function PersonalIntro() {
           I’m a full-stack engineer at Prudential. I work on DX, our design system.
         </p>
         <p className="mt-2 max-w-[48ch] text-pretty text-base leading-relaxed text-vidals-muted sm:text-lg">
-          I love that a keyboard fix in one component can make several apps easier to use. That idea
-          led me to start Software Factory: I want small businesses to benefit from what engineers
-          have already learned, without having to start from scratch.
+          I started Software Factory to help small businesses build and own the software they need.
         </p>
         <div className="mt-7 flex flex-wrap items-center gap-3">
           <Link

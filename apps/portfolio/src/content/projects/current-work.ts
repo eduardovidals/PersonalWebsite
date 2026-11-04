@@ -79,7 +79,7 @@ export const currentWork: readonly WorkSnapshot[] = [
       caption: 'Prudential · design-system illustration',
     },
     description:
-      'I build React and TypeScript components for Prudential’s design system. A lot of the work is in details like where keyboard focus goes when someone closes a dialog.',
+      'I build accessible React components for Prudential’s design system and write the examples teams use to get started.',
     stack: ['React', 'TypeScript', 'GitHub Actions'],
     ai: [
       {

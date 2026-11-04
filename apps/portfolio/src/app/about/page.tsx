@@ -37,9 +37,7 @@ export default function AboutPage() {
         <h2>Building PInnacle at PGIM</h2>
         <p>
           As an intern, I wrote Angular components and services for PGIM’s internal apps. Later I
-          led our department’s move to React. One thing I liked about working on a shared library
-          was that we could fix keyboard navigation in a dialog once instead of asking each team to
-          fix its own. That’s what got me interested in design systems.
+          led our department’s move to React. That’s where I got into design systems.
         </p>
         <p>
           PInnacle’s library grew to 50+ components across 20 internal apps. Teams could start a
