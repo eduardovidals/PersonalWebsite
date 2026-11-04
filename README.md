@@ -1,44 +1,55 @@
-# Eduardo Vidals — portfolio & field notes
+# Eduardo Vidals — personal website
 
-Source for [www.eduardovidals.com](https://www.eduardovidals.com). The home page includes an interactive breadth-first search; the project archive preserves the six original case-study URLs. Field notes have permanent URLs and an RSS feed.
+[www.eduardovidals.com](https://www.eduardovidals.com) is my portfolio and blog. The greeting types through the same three roles as the original site. It can be paused, finishes on its own and presents a complete sentence with reduced motion or without JavaScript. The work archive keeps the original six project URLs.
 
-## Run and check
+## Run locally
 
-Use the Node version in `.nvmrc`. From the repository root:
+Use Node from `.nvmrc` and npm 12.2.1. Install once from the workspace root:
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Open the local URL printed by Next.js. To verify production output, install Chromium for Playwright once (`npx playwright install chromium`), then run:
+ESLint stays on 9 while the import, React, and JSX accessibility plugins in Next’s lint preset require it. TypeScript stays on 6.0 while the preset’s TypeScript parser requires `<6.1`. Recheck those peer ranges before upgrading either major; do not force the install or disable lint rules.
 
-```sh
-npm run check
-npm run preview
-```
+## Workspace
 
-If Google Chrome is already installed, `PLAYWRIGHT_CHANNEL=chrome npm run check` uses it instead. The preview serves the static export on `http://127.0.0.1:4173`. Tests own ports 4173 and 4183; stop any manual preview before running them. They inspect exported HTML, old project URLs, keyboard and mobile behavior, accessibility and RSS. A separate local dev fixture exercises configured contact delivery with intercepted requests, never real email.
+| Owner                                                              | Responsibility                                                                            |
+| ------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
+| `apps/portfolio`                                                   | Next.js App Router, static pages, Markdown content, media, keyboard and browser scenarios |
+| `packages/vidals-react-components`                                 | React Aria buttons and labeled text fields; public typed exports, tests and Storybook     |
+| `packages/vidals-tailwind-theme`                                   | Tailwind v4 shared theme, Vidals colors and React Aria interaction variants               |
+| `packages/vidals-eslint-config`, `packages/vidals-prettier-config` | Shared lint rules and formatting defaults                                                 |
 
-## Write a post
+Nx builds the component package before its consumers. Next owns URLs and static rendering; there’s no second client router or client cache for local Markdown. The contact form uses React Hook Form and Zod with the same accessible fields used in Storybook. Navigation uses real links, so reading and navigation don’t depend on hydration.
 
-Add a Markdown file to `src/content/blog/`. Its filename (lowercase words separated by hyphens) is its permanent URL. The homepage, blog index, feed and sitemap discover it at build time. Use the actual publication date; archive adaptations may include an HTTPS `sourceUrl`.
+- `npm run storybook`: develop the reusable controls independently.
+- `npm run storybook:build`: build their static catalog.
+- `npm run check`: lint (including formatting), typecheck, component tests, story interaction/accessibility tests, production export and portfolio browser tests.
+- `npm run build && npm run preview`: serve the static portfolio at `http://127.0.0.1:4173`.
+
+For browser checks, install Chromium with `npx playwright install chromium`, or use installed Chrome with `PLAYWRIGHT_CHANNEL=chrome npm run check`. Tests use loopback ports 4173 and 4183. Close any manual preview on those ports first. Contact tests intercept delivery; they never send email.
+
+## Writing and projects
+
+Add a Markdown file to `apps/portfolio/src/content/blog/`. Its lowercase hyphenated filename becomes its permanent URL. The homepage, blog index, RSS feed and sitemap discover it at build time. Use the actual publication date; an archive adaptation may include an HTTPS `sourceUrl`.
 
 ```markdown
 ---
 title: 'A title for the post'
-summary: 'What this note helps the reader understand.'
+summary: 'What the reader will learn.'
 date: '2026-11-04'
 category: 'Engineering'
 ---
 
-The body starts here. The page already renders the title; use second-level headings for sections.
+Start the post here. The page already supplies its title.
 ```
 
-To update a case study, edit its Markdown in `src/content/projects/`; its title, summary, stack and cover live in that directory’s `index.ts`. Locally hosted screenshots and recordings live in `public/work/`. Preserve the published slugs, original attribution and useful code examples.
+Case study Markdown and its typed catalog live in `apps/portfolio/src/content/projects/`. Local screenshots and videos live in `apps/portfolio/public/work/`. Preserve article slugs and attribution when editing.
 
 ## Netlify and contact
 
-Keep the existing Netlify project, domain and Git connection. `netlify.toml` builds with `npm run build` and publishes `out/`. This is a static export: no request-time Next server, database, remote fonts or SPA catch-all rewrite. The production domain’s existing redirect ends at `www.eduardovidals.com`; canonical URLs, sitemap and RSS use that host. Netlify preview builds discourage indexing.
+The existing Netlify site builds from the repository root with `npm run build` and publishes `apps/portfolio/out/`. There is no production Next server or catch-all rewrite. Production canonical URLs use `www.eduardovidals.com`; previews discourage indexing.
 
-The contact form accepts the existing **public browser settings** `REACT_APP_SERVICE_ID`, `REACT_APP_TEMPLATE_ID` and `REACT_APP_PUBLIC_KEY` from Netlify at build time. No secret mail credential is needed. If any setting is absent, the site offers a direct email link. A rejected submission retains the visitor’s draft. Rebuild after changing configuration.
+The contact form reuses the existing public EmailJS build settings: `REACT_APP_SERVICE_ID`, `REACT_APP_TEMPLATE_ID` and `REACT_APP_PUBLIC_KEY`. A direct email link remains available without these settings or JavaScript. No mail-service secret belongs in this site.

@@ -1,0 +1,17 @@
+@import 'tailwindcss' source(none);
+@import '@vidals/tailwind-theme';
+@source '../src';
+
+/* The preview and inline documentation canvases match the consuming app. */
+body.sb-show-main,
+.docs-story,
+.catalog-surface {
+  color-scheme: dark;
+  color: var(--color-vidals-text);
+  background-color: var(--color-vidals-background);
+  font-family: var(--font-sans);
+}
+
+.catalog-surface {
+  padding: 1rem;
+}

@@ -1,7 +1,8 @@
 [build]
 command = "npm run build"
-publish = "out"
+publish = "apps/portfolio/out"
 
 [build.environment]
 NETLIFY_NEXT_PLUGIN_SKIP = "true"
-NODE_VERSION = "24.14.1"
+NODE_VERSION = "26.13.0"
+NPM_VERSION = "12.2.1"

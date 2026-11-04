@@ -1,3 +1,0 @@
-/** Article typography for Markdown-generated elements; all color roles come from the site theme. */
-export const articleProse =
-  'text-lg leading-[1.8] wrap-anywhere text-ink [&>*+*]:mt-6 [&_h2]:mt-12 [&_h2]:font-serif [&_h2]:text-3xl [&_h2]:leading-tight [&_h3]:font-serif [&_h3]:text-2xl [&_a]:text-accent [&_a]:underline [&_a]:underline-offset-4 [&_pre]:overflow-x-auto [&_pre]:border-s-4 [&_pre]:border-accent [&_pre]:bg-night [&_pre]:p-5 [&_pre]:font-mono [&_pre]:text-sm [&_pre]:text-paper [&_ol]:list-decimal [&_ol]:ps-6 [&_ul]:list-disc [&_ul]:ps-6 [&_blockquote]:border-s-2 [&_blockquote]:border-accent [&_blockquote]:ps-4 [&_blockquote]:italic';
