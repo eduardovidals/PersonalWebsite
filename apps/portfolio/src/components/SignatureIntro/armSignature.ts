@@ -7,7 +7,6 @@ export function armSignature(home: string) {
   try {
     if (
       location.pathname === home &&
-      !location.hash &&
       document.visibilityState !== 'hidden' &&
       typeof Element.prototype.animate === 'function' &&
       !matchMedia('(prefers-reduced-motion: reduce)').matches

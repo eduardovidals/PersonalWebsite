@@ -6,18 +6,22 @@ const distance = (a: { x: number; y: number }, b: { x: number; y: number }) =>
   Math.hypot(a.x - b.x, a.y - b.y);
 
 async function sampleInk(home: Locator, time: { ms: number } | { fraction: number }) {
-  return home.evaluate((link, time) => {
-    const svg = link.querySelector('svg');
+  return home.evaluate(async (link, time) => {
+    const flyer = link.querySelector('#ev-home-signature');
+    const svg = flyer?.querySelector('svg');
     const path = svg?.querySelector('path');
     const stage = document.querySelector('[data-signature-stage]');
-    const flight = svg?.getAnimations()[0];
-    if (!svg || !path || !stage || !flight?.effect) throw new Error('No live signature flight');
+    const flight = flyer?.getAnimations()[0];
+    if (!flyer || !svg || !path || !stage || !flight?.effect)
+      throw new Error('No live signature flight');
     const duration = Number(flight.effect.getTiming().duration);
     const ms = 'ms' in time ? time.ms : duration * time.fraction;
-    for (const animation of svg.getAnimations({ subtree: true })) {
+    for (const animation of flyer.getAnimations({ subtree: true })) {
       animation.pause();
       animation.currentTime = ms;
     }
+    // The flight places the ink once per frame from its clock.
+    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
     const box = (node: Element) => {
       const r = node.getBoundingClientRect();
       return { x: r.left + r.width / 2, y: r.top + r.height / 2, width: r.width, height: r.height };
@@ -64,8 +68,9 @@ for (const viewport of [
       () => !!document.querySelector('#ev-home-signature')?.getAnimations().length,
     );
 
-    const hold = await sampleInk(home, { ms: 600 });
-    const held = await sampleInk(home, { ms: 1050 });
+    // The ink is written by 20% of the flight and holds until 46%.
+    const hold = await sampleInk(home, { fraction: 0.3 });
+    const held = await sampleInk(home, { fraction: 0.44 });
     for (const sample of [hold, held]) {
       expect(sample.inkVisible, 'the handwritten stroke is visible and fully drawn').toBe(true);
       const mark = viewport.mobile ? sample.ink : sample.svg;
@@ -81,9 +86,10 @@ for (const viewport of [
     expect(Math.abs(hold.ink.width - held.ink.width)).toBeLessThan(1);
     const middle = await sampleInk(home, { fraction: 0.72 });
     const end = await sampleInk(home, { fraction: 0.999 });
-    // At full size and in flight, paint the SVG at its displayed width, not at header resolution.
-    for (const frame of [held, middle, end]) {
-      expect(Math.abs(frame.vectorWidth - frame.svg.width)).toBeLessThan(1);
+    // The vector is drawn at its takeoff size and only ever shrunk, never enlarged from the header.
+    expect(Math.abs(held.vectorWidth - held.svg.width)).toBeLessThan(1);
+    for (const frame of [middle, end]) {
+      expect(frame.vectorWidth).toBeGreaterThanOrEqual(frame.svg.width - 1);
     }
     expect(held.svg.width).toBeGreaterThan(end.svg.width * 2);
     expect(middle.svg.width).toBeLessThan(held.svg.width - 3);
@@ -98,13 +104,85 @@ for (const viewport of [
     });
     expect(Math.abs(end.dock.x - end.dock.width / 2 - headerLeft)).toBeLessThan(2);
     expect(end.dock.y).toBeLessThan(85);
-    await home.locator('svg').evaluate((mark) => mark.getAnimations()[0]?.finish());
+    await page.locator('#ev-home-signature').evaluate((mark) => mark.getAnimations()[0]?.finish());
     await expect(page.locator('[data-signature-resting]')).toHaveCSS('opacity', '1');
     await expect
-      .poll(() => home.locator('svg').evaluate((ink) => ink.getAnimations().length))
+      .poll(() =>
+        page
+          .locator('#ev-home-signature')
+          .evaluate((mark) => mark.getAnimations({ subtree: true }).length),
+      )
       .toBe(0);
   });
 }
+
+test('the browser animates the flight with transforms alone, so scrolling stays smooth', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/', { waitUntil: 'commit' });
+  await page.waitForFunction(
+    () => !!document.querySelector('#ev-home-signature')?.getAnimations().length,
+  );
+  const flight = await page.locator('#ev-home-signature').evaluate((mark) => {
+    const effect = mark.getAnimations()[0]?.effect;
+    const keyframes = effect instanceof KeyframeEffect ? effect.getKeyframes() : [];
+    const reserved = new Set(['offset', 'computedOffset', 'easing', 'composite']);
+    return {
+      animated: [...new Set(keyframes.flatMap((frame) => Object.keys(frame)))].filter(
+        (key) => !reserved.has(key),
+      ),
+      // The ink sits at its slot's corner; the last keyframe has no offset, so it lands there.
+      anchor: [mark.style.left, mark.style.top],
+      landing: String(keyframes.at(-1)?.transform),
+    };
+  });
+  expect(flight.animated).toEqual(['transform']);
+  expect(flight.anchor).toEqual(['0px', '0px']);
+  expect(flight.landing).toMatch(/^translate\(0px(, 0px)?\) scale\(/);
+});
+
+test('right-to-left pages center the ink and dock it at the inline start', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/ar/', { waitUntil: 'commit' });
+  await page.waitForFunction(
+    () => !!document.querySelector('#ev-home-signature')?.getAnimations().length,
+  );
+  const home = page.getByRole('banner').getByRole('link').first();
+  const held = await sampleInk(home, { fraction: 0.4 });
+  expect(distance(held.ink, held.viewport)).toBeLessThan(2);
+  const end = await sampleInk(home, { fraction: 0.999 });
+  expect(distance(end.svg, end.dock)).toBeLessThan(2);
+  expect(end.dock.x).toBeGreaterThan(195);
+});
+
+test('a toolbar sliding away mid-scroll leaves the flight untouched', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 760 });
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/', { waitUntil: 'commit' });
+  await page.waitForFunction(
+    () => !!document.querySelector('#ev-home-signature')?.getAnimations().length,
+  );
+  await page.evaluate(() => {
+    const flight = document.querySelector('#ev-home-signature')?.getAnimations()[0];
+    Reflect.set(window, 'flightBefore', flight);
+  });
+  // Only the height changes, as when a phone's bottom toolbar hides.
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.waitForTimeout(150);
+  const same = await page.evaluate(
+    () =>
+      document.querySelector('#ev-home-signature')?.getAnimations()[0] ===
+      Reflect.get(window, 'flightBefore'),
+  );
+  expect(same).toBe(true);
+  // The page itself waits hidden, so only its own background shows, even behind a toolbar.
+  for (const part of ['main', 'body > footer'])
+    await expect(page.locator(part)).toHaveCSS('opacity', '0');
+  await expect(page.getByRole('banner')).toHaveCSS('opacity', '1');
+});
 
 test('rotating a phone during the hold keeps the ink centered in the new viewport', async ({
   page,
@@ -116,7 +194,7 @@ test('rotating a phone during the hold keeps the ink centered in the new viewpor
     () => !!document.querySelector('#ev-home-signature')?.getAnimations().length,
   );
   const home = page.getByRole('banner').getByRole('link', { name: homeName });
-  await sampleInk(home, { ms: 600 });
+  await sampleInk(home, { fraction: 0.3 });
   await page.setViewportSize({ width: 844, height: 390 });
   await page.waitForFunction(() => {
     const r = document.querySelector('#ev-home-signature path')?.getBoundingClientRect();
@@ -126,8 +204,11 @@ test('rotating a phone during the hold keeps the ink centered in the new viewpor
       Math.abs(r.top + r.height / 2 - window.innerHeight / 2) < 2
     );
   });
-  const held = await sampleInk(home, { ms: 800 });
+  const held = await sampleInk(home, { fraction: 0.44 });
   expect(distance(held.ink, held.viewport)).toBeLessThan(2);
+  // However the screen changed, the ink still lands exactly in its slot.
+  const end = await sampleInk(home, { fraction: 1 });
+  expect(distance(end.svg, end.dock)).toBeLessThan(2);
 });
 
 test('preferring reduced motion keeps the link docked and the resting hero readable', async ({
@@ -137,14 +218,43 @@ test('preferring reduced motion keeps the link docked and the resting hero reada
   await page.goto('/');
   await expect(page.locator('[data-signature-resting]')).toHaveCSS('opacity', '1');
   const home = page.getByRole('banner').getByRole('link', { name: homeName });
-  await expect(home.locator('svg')).toHaveCSS('transform', 'none');
+  await expect(page.locator('#ev-home-signature')).toHaveCSS('transform', 'none');
   await home.focus();
   await expect(home).toBeFocused();
 });
 
-test('a deep link does not start the flight on a scrolled visit', async ({ page }) => {
-  await page.goto('/#about');
-  await expect(page.locator('[data-signature-resting]')).toHaveCSS('opacity', '1');
+test('a link to a section still plays the intro, then leaves the visitor on that section', async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/#about', { waitUntil: 'commit' });
+  await page.waitForFunction(
+    () => !!document.querySelector('#ev-home-signature')?.getAnimations().length,
+  );
+  await expect(page.locator('html')).toHaveAttribute('data-signing', /flying|landing/);
+  await expect(page.locator('html')).not.toHaveAttribute('data-signing', { timeout: 5000 });
+  await expect(page.locator('#about')).toBeInViewport();
+  await expect(page.locator('#ev-home-signature')).toHaveCSS('opacity', '1');
+});
+
+test('scrolling during the intro lets it finish', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/', { waitUntil: 'commit' });
+  await page.waitForFunction(
+    () => !!document.querySelector('#ev-home-signature')?.getAnimations().length,
+  );
+  await page.evaluate(() => window.scrollTo({ top: 600, behavior: 'instant' }));
+  await page.waitForTimeout(200);
+  await expect(page.locator('html')).toHaveAttribute('data-signing', 'flying');
+  // Everything but the header waits hidden wherever the page has scrolled, so only the page's own
+  // background shows behind the ink.
+  for (const part of ['main', 'body > footer'])
+    await expect(page.locator(part)).toHaveCSS('opacity', '0');
+  expect(
+    await page.locator('#ev-home-signature').evaluate((mark) => mark.getAnimations().length),
+  ).toBeGreaterThan(0);
+  await expect(page.locator('html')).not.toHaveAttribute('data-signing', { timeout: 5000 });
   await expect(page.locator('#ev-home-signature')).toHaveCSS('transform', 'none');
 });
 
@@ -159,17 +269,57 @@ test('slow scripts still play the intro, and the hero waits hidden instead of fl
   });
   await page.goto('/', { waitUntil: 'commit' });
   await expect(page.locator('html')).toHaveAttribute('data-signing', 'armed');
-  await expect(page.locator('section#home')).toHaveCSS('opacity', '0');
+  await expect(page.locator('main')).toHaveCSS('opacity', '0');
   await expect(page.locator('#ev-home-signature')).toHaveCSS('opacity', '0');
   await page.waitForFunction(
     () => !!document.querySelector('#ev-home-signature')?.getAnimations().length,
   );
   await expect(page.locator('html')).toHaveAttribute('data-signing', 'flying');
   const home = page.getByRole('banner').getByRole('link', { name: homeName });
-  const held = await sampleInk(home, { ms: 1050 });
+  const held = await sampleInk(home, { fraction: 0.4 });
   expect(held.inkVisible).toBe(true);
   expect(distance(held.ink, held.viewport)).toBeLessThan(2);
-  await home.locator('svg').evaluate((mark) => mark.getAnimations()[0]?.finish());
+  await page.locator('#ev-home-signature').evaluate((mark) => mark.getAnimations()[0]?.finish());
+  await expect(page.locator('html')).not.toHaveAttribute('data-signing');
+  await expect(page.locator('[data-signature-resting]')).toHaveCSS('opacity', '1');
+});
+
+test('tapping the page lets the intro finish without pressing hidden controls', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/', { waitUntil: 'commit' });
+  await page.waitForFunction(
+    () => !!document.querySelector('#ev-home-signature')?.getAnimations().length,
+  );
+  const cta = page.locator('section#home').getByRole('link').first();
+  const box = await cta.boundingBox();
+  if (!box) throw new Error('The hero has no link to tap');
+  await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+  await page.mouse.click(195, 700);
+  await expect(page.locator('html')).toHaveAttribute('data-signing', 'flying');
+  expect(
+    await page.locator('#ev-home-signature').evaluate((mark) => mark.getAnimations().length),
+  ).toBeGreaterThan(0);
+  await expect(page).toHaveURL(/:4173\/$/);
+  // Controls that are hidden on their own, like back-to-top at the top of the page, stay hidden
+  // while everything else fades in.
+  const backToTop = page.locator('body > [inert][aria-hidden="true"]');
+  expect(await backToTop.evaluate((node) => node.getAnimations().length)).toBe(0);
+  await expect(backToTop).toHaveCSS('opacity', '0');
+  // The flight then ends on its own and the hero takes taps again.
+  await expect(page.locator('html')).not.toHaveAttribute('data-signing', { timeout: 5000 });
+  await expect(page.locator('[data-signature-resting]')).toHaveCSS('pointer-events', 'auto');
+});
+
+test('keyboard focus settles the intro at once', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/', { waitUntil: 'commit' });
+  await page.waitForFunction(
+    () => !!document.querySelector('#ev-home-signature')?.getAnimations().length,
+  );
+  await page.keyboard.press('Tab');
   await expect(page.locator('html')).not.toHaveAttribute('data-signing');
   await expect(page.locator('[data-signature-resting]')).toHaveCSS('opacity', '1');
 });
