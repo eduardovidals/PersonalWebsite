@@ -13,6 +13,8 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   use: {
     baseURL: 'http://127.0.0.1:4173',
+    // English, whatever the machine's language, so the homepage never opens a translation.
+    locale: 'en-US',
     trace: 'retain-on-failure',
   },
   // Every scenario runs in Chromium (Chrome, Edge) and WebKit (Safari). PLAYWRIGHT_BROWSERS

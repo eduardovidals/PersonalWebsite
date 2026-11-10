@@ -77,3 +77,34 @@ test('choosing a language in the menu keeps it for the next homepage visit', asy
     'English',
   );
 });
+
+test.describe('a Vietnamese system', () => {
+  test.use({ locale: 'vi-VN' });
+
+  test('opens the homepage in Vietnamese even when the browser lists only English', async ({
+    page,
+  }) => {
+    // Chrome keeps its language list from install time, while Intl follows the system language.
+    await page.addInitScript(() =>
+      Object.defineProperty(navigator, 'languages', { get: () => ['en-US', 'en'] }),
+    );
+    await page.goto('/?ref=card');
+    await expect(page).toHaveURL(/\/vi\/\?ref=card$/);
+    await expect(page.locator('html')).toHaveAttribute('lang', 'vi');
+  });
+
+  test('keeps a language chosen in the menu', async ({ page, context }) => {
+    await context.addCookies([{ name: 'language', value: 'en', url: 'http://127.0.0.1:4173' }]);
+    await page.goto('/');
+    await page.waitForLoadState('networkidle');
+    await expect(page).toHaveURL(/:4173\/$/);
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+  });
+
+  test('leaves shared links to other pages in their language', async ({ page }) => {
+    await page.goto('/about/');
+    await page.waitForLoadState('networkidle');
+    await expect(page).toHaveURL(/:4173\/about\/$/);
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+  });
+});
