@@ -148,6 +148,51 @@ test('a deep link does not start the flight on a scrolled visit', async ({ page 
   await expect(page.locator('#ev-home-signature')).toHaveCSS('transform', 'none');
 });
 
+test('slow scripts still play the intro, and the hero waits hidden instead of flashing', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.route('**/_next/static/chunks/**', async (route) => {
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    await route.continue();
+  });
+  await page.goto('/', { waitUntil: 'commit' });
+  await expect(page.locator('html')).toHaveAttribute('data-signing', 'armed');
+  await expect(page.locator('section#home')).toHaveCSS('opacity', '0');
+  await expect(page.locator('#ev-home-signature')).toHaveCSS('opacity', '0');
+  await page.waitForFunction(
+    () => !!document.querySelector('#ev-home-signature')?.getAnimations().length,
+  );
+  await expect(page.locator('html')).toHaveAttribute('data-signing', 'flying');
+  const home = page.getByRole('banner').getByRole('link', { name: homeName });
+  const held = await sampleInk(home, { ms: 1050 });
+  expect(held.inkVisible).toBe(true);
+  expect(distance(held.ink, held.viewport)).toBeLessThan(2);
+  await home.locator('svg').evaluate((mark) => mark.getAnimations()[0]?.finish());
+  await expect(page.locator('html')).not.toHaveAttribute('data-signing');
+  await expect(page.locator('[data-signature-resting]')).toHaveCSS('opacity', '1');
+});
+
+test('if scripts never load, the hero fades in on its own', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.route('**/_next/static/chunks/**', (route) => route.abort());
+  await page.goto('/', { waitUntil: 'commit' });
+  await expect(page.locator('html')).toHaveAttribute('data-signing', 'armed');
+  await expect(page.locator('[data-signature-resting]')).toHaveCSS('opacity', '0');
+  await expect(page.locator('[data-signature-resting]')).toHaveCSS('opacity', '1', {
+    timeout: 8000,
+  });
+  await expect(page.locator('#ev-home-signature')).toHaveCSS('opacity', '1');
+});
+
+test('other pages never hold anything back for the intro', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/about/');
+  await expect(page.locator('html')).not.toHaveAttribute('data-signing');
+  await expect(page.locator('#ev-home-signature')).toHaveCSS('opacity', '1');
+});
+
 test.describe('without JavaScript', () => {
   test.use({ javaScriptEnabled: false });
   test('content reads normally and the left-hand logo links home from other routes', async ({
