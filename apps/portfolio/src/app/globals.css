@@ -12,6 +12,38 @@
   }
 }
 
+/* The homepage intro's first frame. SignatureArm sets `data-signing="armed"` before the first paint
+ * and beginSignatureFlight replaces it with the flight's own keyframes, however late scripts load.
+ * Phones fly the ink from the middle of the screen over the whole hero; wider screens over the
+ * copy only (keep the 64rem breakpoint in step with flight.ts). If scripts never run, the page
+ * root fades everything in after four seconds; animating it there keeps the hero's own animation
+ * list for the flight. */
+@property --signing-reveal {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 1;
+}
+@keyframes signing-fallback {
+  from {
+    --signing-reveal: 0;
+  }
+  to {
+    --signing-reveal: 1;
+  }
+}
+html[data-signing='armed'] {
+  animation: signing-fallback 300ms 4s both;
+}
+html[data-signing='armed'] #ev-home-signature,
+html[data-signing='armed'] [data-signature-resting] {
+  opacity: var(--signing-reveal);
+}
+@media (width < 64rem) {
+  html[data-signing='armed'] section:has([data-signature-stage]) {
+    opacity: var(--signing-reveal);
+  }
+}
+
 @utility shell {
   width: 100%;
   max-width: 82rem;

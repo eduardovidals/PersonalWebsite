@@ -1,6 +1,9 @@
 import { signatureMarkId } from './signature';
 
-let signedThisDocument = false;
+/** Lets the first-frame styles go; the flight's own keyframes, if any, take over. */
+function disarm() {
+  document.documentElement.removeAttribute('data-signing');
+}
 
 /** Both rectangles are in layout-viewport CSS pixels, even when the visible viewport shrinks. */
 function takeoff(stage: HTMLElement, slot: HTMLElement, fromScreen: boolean) {
@@ -44,27 +47,27 @@ export function beginSignatureFlight(stage: HTMLElement, copy: HTMLElement) {
   const slot = mark?.parentElement;
   const ink = mark?.querySelector('path');
   const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
-  // A delayed bundle must not hide copy that the visitor has already started reading.
-  const painted = performance.getEntriesByName('first-contentful-paint', 'paint')[0];
-  const reading = painted && performance.now() - painted.startTime > 350;
+  const root = document.documentElement;
+  // Only a fresh homepage load is armed (by SignatureArm, before its first paint), so however late
+  // this script arrives, the hero has stayed hidden and the intro still plays from the start.
+  if (!root.hasAttribute('data-signing')) return;
   if (
-    signedThisDocument ||
     !mark ||
     !slot ||
     !ink ||
     typeof mark.animate !== 'function' ||
-    reading ||
     preference.matches ||
     window.scrollY > 4 ||
     location.hash ||
     document.visibilityState === 'hidden'
   )
-    return;
+    return disarm();
 
+  // Keep in step with the 64rem breakpoint of the first-frame styles in globals.css.
   const compact = window.matchMedia('(width < 64rem)');
   const fromScreen = compact.matches;
   const frames = takeoff(stage, slot, fromScreen);
-  if (!frames) return;
+  if (!frames) return disarm();
   const duration = 2450;
 
   const travel = mark.animate(frames, { duration, fill: 'both' });
@@ -83,6 +86,8 @@ export function beginSignatureFlight(stage: HTMLElement, copy: HTMLElement) {
     ],
     { duration, fill: 'both' },
   );
+  // The animations' first frames now hide what the armed styles hid.
+  root.setAttribute('data-signing', 'flying');
 
   const controller = new AbortController();
   const release = () => {
@@ -92,7 +97,7 @@ export function beginSignatureFlight(stage: HTMLElement, copy: HTMLElement) {
     reveal.cancel();
   };
   const settle = () => {
-    signedThisDocument = true;
+    disarm();
     release();
   };
   const options = { signal: controller.signal };
