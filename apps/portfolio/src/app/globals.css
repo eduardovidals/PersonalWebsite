@@ -14,8 +14,8 @@
 
 /* The homepage intro's first frame. SignatureArm sets `data-signing="armed"` before the first paint
  * and beginSignatureFlight replaces it with the flight's own keyframes, however late scripts load.
- * Phones fly the ink from the middle of the screen over the whole hero; wider screens over the
- * copy only (keep the 64rem breakpoint in step with flight.ts). If scripts never run, the page
+ * Phones fly the ink from the middle of the screen with everything but the header hidden; wider
+ * screens hide the hero copy only (keep the 64rem breakpoint in step with flight.ts). If scripts never run, the page
  * root fades everything in after four seconds; animating it there keeps the hero's own animation
  * list for the flight. */
 @property --signing-reveal {
@@ -39,18 +39,15 @@ html[data-signing='armed'] [data-signature-resting] {
   opacity: var(--signing-reveal);
 }
 @media (width < 64rem) {
-  html[data-signing='armed'] section:has([data-signature-stage]) {
+  html[data-signing='armed'] body > :not(:has(#ev-home-signature)) {
     opacity: var(--signing-reveal);
   }
 }
-/* A tap during the flight lets it finish instead of pressing a control that is not visible yet. */
+/* A tap during the flight lets it finish instead of pressing a control that is not visible yet;
+ * scrolling still passes to the page. */
+html[data-signing='flying'][data-signing-scope='screen'] body > :not(:has(#ev-home-signature)),
 html[data-signing='flying'] [data-signature-resting] {
   pointer-events: none;
-}
-@media (width < 64rem) {
-  html[data-signing='flying'] section:has([data-signature-stage]) {
-    pointer-events: none;
-  }
 }
 
 @utility shell {

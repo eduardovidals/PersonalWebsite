@@ -37,26 +37,29 @@ export async function SiteHeader(props: Props) {
           className={homeLinkStyles}
         >
           <span className="pointer-events-none relative block aspect-[37/25] w-13 sm:w-16">
-            <svg
-              id={signatureMarkId}
-              aria-hidden="true"
-              focusable="false"
-              viewBox="4 10 37 25"
-              width="37"
-              height="25"
-              className="absolute start-0 top-0 block h-full w-full overflow-visible"
-            >
-              <path
-                d={signaturePath}
-                pathLength="1"
-                strokeDasharray="1"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.7"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            {/* The homepage intro flies this HTML box. Safari places transforms on an outer
+                <svg> from its viewBox origin, so the ink would land off its slot. */}
+            <span id={signatureMarkId} className="absolute start-0 top-0 block h-full w-full">
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="4 10 37 25"
+                width="37"
+                height="25"
+                className="block h-full w-full overflow-visible"
+              >
+                <path
+                  d={signaturePath}
+                  pathLength="1"
+                  strokeDasharray="1"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.7"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </span>
           </span>
         </VidalsLink>
         <PrimaryNav label={nav.label} links={links} />
