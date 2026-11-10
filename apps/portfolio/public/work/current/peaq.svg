@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480">
+  <defs><linearGradient id="paper" x2="1" y2="1"><stop stop-color="#26284e"/><stop offset="1" stop-color="#45385e"/></linearGradient><linearGradient id="thread"><stop stop-color="#ab97d9"/><stop offset="1" stop-color="#e9c6b0"/></linearGradient></defs>
+  <path fill="url(#paper)" d="M0 0h800v480H0z"/>
+  <g fill="none" stroke-linecap="round">
+    <path d="M-35 74h133c112 0 164 74 264 74h488M-35 150h137c119 0 156 58 260 58h488M-35 327h138c123 0 156-59 259-59h488M-35 402h132c110 0 165-74 265-74h488" stroke="#191c35" stroke-width="31" transform="translate(0 8)"/>
+    <path d="M-35 74h133c112 0 164 74 264 74h488" stroke="#aabbe6" stroke-width="28"/>
+    <path d="M-35 150h137c119 0 156 58 260 58h488" stroke="url(#thread)" stroke-width="28"/>
+    <path d="M-35 327h138c123 0 156-59 259-59h488" stroke="#8cb7c6" stroke-width="28"/>
+    <path d="M-35 402h132c110 0 165-74 265-74h488" stroke="#edbd9d" stroke-width="28"/>
+    <rect x="484" y="82" width="132" height="309" rx="66" stroke="#1d203c" stroke-width="18"/>
+    <path d="M484 148v-1a66 66 0 01132 0v61m0 60v57a66 66 0 01-132 0v-57" stroke="#efe6d8" stroke-width="14"/>
+  </g>
+</svg>

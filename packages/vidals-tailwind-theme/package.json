@@ -1,0 +1,22 @@
+{
+  "name": "@vidals/tailwind-theme",
+  "version": "1.0.0",
+  "private": true,
+  "exports": {
+    ".": "./theme.css",
+    "./theme.css": "./theme.css"
+  },
+  "sideEffects": [
+    "*.css"
+  ],
+  "dependencies": {
+    "@fontsource-variable/instrument-sans": "5.3.0",
+    "@fontsource-variable/jetbrains-mono": "5.3.0",
+    "@fontsource-variable/manrope": "5.3.0",
+    "@fontsource-variable/noto-kufi-arabic": "5.3.0",
+    "@fontsource-variable/noto-sans-arabic": "5.3.0",
+    "@fontsource/be-vietnam-pro": "5.3.0",
+    "tailwindcss": "4.3.5",
+    "tailwindcss-react-aria-components": "2.2.0"
+  }
+}

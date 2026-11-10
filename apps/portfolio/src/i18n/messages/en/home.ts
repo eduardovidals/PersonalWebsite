@@ -1,0 +1,121 @@
+export const home = {
+  intro: {
+    roleAnimation: 'Role animation',
+    roles: ['Software Engineer', 'Developer', 'Programmer'],
+    pauseTyping: 'Pause typing',
+    resumeTyping: 'Resume typing',
+    greeting: 'Hey, I’m',
+    name: 'Eduardo.',
+    headline:
+      'Senior Software Engineer at Prudential, building design systems and products that scale',
+    subline: 'I also founded Velton, which builds custom software that small businesses own',
+    myWork: 'My work',
+    emailMe: 'Email me',
+    theseDays: 'These Days',
+    atPrudential: 'At Prudential',
+    designSystems: 'Design Systems',
+    myCompany: 'My Company',
+    company: 'Velton Technologies',
+    offTheClock: 'Off the Clock',
+    hobby: 'Eating KBBQ',
+  },
+  sectionNav: {
+    label: 'On This Page',
+    work: 'Work',
+    career: 'Career',
+    toolkit: 'Toolkit',
+    contact: 'Contact',
+  },
+  selectedWork: {
+    title: 'Selected Work',
+    featuredDescription: 'My company, building custom software that small businesses fully own',
+    featuredLink: 'Why I founded Velton',
+    designSystem: 'The shared buttons, forms, and menus Prudential’s apps use',
+    anniversary: 'A 3D gift I made for our one-year anniversary',
+    pathDemo: 'Try the pathfinding demo',
+  },
+  pathPlate: {
+    algorithm: 'Breadth-First Search',
+    legend: 'Blue squares for places searched, dots for a shortest route from A to B',
+    title: 'Finding a path from A to B',
+    finish: 'Finish trace',
+    replay: 'Replay trace',
+    searching: 'Searching the grid.',
+  },
+  career: {
+    eyebrow: 'My Career',
+    title: 'How I Got Here',
+    body: 'I ran the software development club at NJCU and taught our first frontend bootcamp while I was interning at PGIM',
+    readStory: 'Read my full story',
+    timeline: 'Career timeline',
+    present: 'Present',
+    jobs: [
+      {
+        company: 'Smarttwigs',
+        role: 'Software Engineer Intern',
+        story:
+          'I built web and mobile features in React and React Native, integrated Stripe subscription payments, and refactored our backend services to follow REST conventions',
+      },
+      {
+        company: 'PGIM',
+        role: 'Software Engineer Intern',
+        story:
+          'I published reusable Angular packages, added Cypress testing, and built the React proof of concept that started our move from Angular to React',
+      },
+      {
+        company: 'PGIM',
+        role: 'Software Engineer',
+        story:
+          'I led the move from Angular to React on PInnacle, the platform behind 20 internal apps, and led development on 15+ apps built with React, .NET, and SQL',
+      },
+      {
+        company: 'Prudential Financial',
+        role: 'Senior Software Engineer',
+        story:
+          'I build accessible React and TypeScript components for Prudential’s Design System, and products that scale',
+      },
+    ],
+  },
+  toolkit: {
+    title: 'Toolkit',
+    intro:
+      'I’ve shipped React, .NET, and SQL apps at PGIM, and for my own backend work I like NestJS on Fastify with PostgreSQL and Kysely',
+    everyday: 'Everyday tools',
+    aiHeading: 'AI & Coding Agents',
+    aiList: 'AI tools',
+    more: 'More tools',
+    fewer: 'Fewer tools',
+    groups: {
+      webMobile: 'Web & Mobile',
+      dataState: 'Routing, Data & State',
+      designSystems: 'Design Systems',
+      chartsMotion: 'Charts, 3D & Motion',
+      apisStorage: 'APIs & Storage',
+      testing: 'Testing & Accessibility',
+      delivery: 'Developer Tools & Delivery',
+      infrastructure: 'Runners & Infrastructure',
+      aws: 'AWS Adapters',
+      identityPayments: 'Identity & Payments',
+      languages: 'Other Languages',
+    },
+  },
+  contact: {
+    title: 'Let’s Talk',
+    body: 'Email me about a role, a project, or a coffee chat',
+    emailDirectly: 'Email Me Directly',
+    form: {
+      legend: 'Send Eduardo a message',
+      name: 'Your name',
+      email: 'Email address',
+      message: 'Message',
+      send: 'Send message',
+      sending: 'Sending…',
+      sent: 'Message sent. Thanks for writing!',
+      failed:
+        'Delivery could not be confirmed. Your draft is still here; you can also email directly.',
+      nameRequired: 'Enter your name.',
+      emailInvalid: 'Enter a valid email address.',
+      messageRequired: 'Write a message first.',
+    },
+  },
+} as const;

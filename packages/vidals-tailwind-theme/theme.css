@@ -1,0 +1,175 @@
+@import '@fontsource-variable/instrument-sans';
+@import '@fontsource-variable/manrope';
+@import '@fontsource-variable/jetbrains-mono';
+@import '@fontsource-variable/noto-sans-arabic';
+@import '@fontsource-variable/noto-kufi-arabic';
+@import '@fontsource/be-vietnam-pro/400.css';
+@import '@fontsource/be-vietnam-pro/500.css';
+@import '@fontsource/be-vietnam-pro/600.css';
+@import '@fontsource/be-vietnam-pro/700.css';
+@plugin "tailwindcss-react-aria-components";
+/* Styles for readers without JavaScript, such as opening disclosures that cannot toggle yet. */
+@custom-variant noscript (@media (scripting: none));
+@theme {
+  --color-vidals-background: #101721;
+  --color-vidals-paper: #1b2737;
+  --color-vidals-deep: #121e2d;
+  --color-vidals-text: #f6faff;
+  --color-vidals-surface: #1b2737;
+  --color-vidals-border: #7289a3;
+  --color-vidals-muted: #bac9da;
+  --color-vidals-accent: #82baff;
+  --color-vidals-print: #82baff;
+  --color-vidals-highlight: #b1dfff;
+  --color-vidals-poster: #263b55;
+}
+
+/* Type system: Instrument Sans for reading, Manrope for headings, JetBrains Mono for
+ * small labels. Arabic falls through to Noto Sans Arabic (body) and Noto Kufi Arabic (headings);
+ * Instrument Sans has no Vietnamese letters, so Vietnamese body text uses Be Vietnam Pro. */
+@theme {
+  --font-sans:
+    'Instrument Sans Variable', 'Noto Sans Arabic Variable', ui-sans-serif, system-ui,
+    -apple-system, 'Segoe UI', sans-serif;
+  --font-display:
+    'Manrope Variable', 'Noto Kufi Arabic Variable', 'Instrument Sans Variable', ui-sans-serif,
+    system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+
+@layer base {
+  :root:lang(vi) {
+    --font-sans: 'Be Vietnam Pro', ui-sans-serif, system-ui, sans-serif;
+  }
+  :root:lang(ar) {
+    --font-sans:
+      'Noto Sans Arabic Variable', 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif;
+    --font-display:
+      'Noto Kufi Arabic Variable', 'Manrope Variable', 'Noto Sans Arabic Variable', ui-sans-serif,
+      system-ui, sans-serif;
+    /* Monospace fonts break Arabic letter joining, so Arabic in small labels uses Noto Sans Arabic. */
+    --font-mono:
+      'JetBrains Mono Variable', 'Noto Sans Arabic Variable', ui-monospace, SFMono-Regular, monospace;
+  }
+  [lang|='vi']:not(:root) {
+    font-family: 'Be Vietnam Pro', ui-sans-serif, system-ui, sans-serif;
+  }
+  [lang|='ar']:not(:root) {
+    font-family: 'Noto Sans Arabic Variable', 'Instrument Sans Variable', ui-sans-serif, sans-serif;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-vidals-accent);
+    outline-offset: 4px;
+  }
+  ::selection {
+    background: var(--color-vidals-accent);
+    color: var(--color-vidals-deep);
+  }
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+  /* A disclosure cannot toggle before JavaScript runs, so its panel stays open. Preflight hides
+   * [hidden] with !important in this layer, so this more specific rule must live here too. */
+  @media (scripting: none) {
+    [data-noscript-open][hidden] {
+      display: block !important;
+      height: auto !important;
+      content-visibility: visible !important;
+    }
+  }
+}
+
+/* Press feedback: ink spreads from the press point; reduced motion gets a brief flash instead. */
+.press-ripple {
+  position: absolute;
+  border-radius: 9999px;
+  background: currentColor;
+  opacity: 0.22;
+  pointer-events: none;
+  transform: scale(0);
+  animation: press-ripple 520ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+@keyframes press-ripple {
+  to {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .press-ripple {
+    transform: scale(1);
+    animation: press-flash 240ms ease-out forwards;
+  }
+  @keyframes press-flash {
+    from {
+      opacity: 0.18;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+}
+
+/* A short accent underline at rest that grows to the full word on hover or keyboard focus. */
+.link-grow {
+  padding-bottom: 0.2em;
+  background-image: linear-gradient(var(--color-vidals-accent), var(--color-vidals-accent));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 1.25em 2px;
+  transition: background-size 320ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+:where(a, button):hover .link-grow,
+:where(a, button):focus-visible .link-grow,
+a.link-grow:hover,
+a.link-grow:focus-visible {
+  background-size: 100% 2px;
+}
+:root[dir='rtl'] .link-grow {
+  background-position: 100% 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .link-grow {
+    transition: none;
+  }
+}
+
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    translate: 0 -0.75rem;
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+@keyframes menu-fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes menu-out {
+  to {
+    opacity: 0;
+    translate: 0 -0.5rem;
+  }
+}
+/* Menu rows arrive one after another, just behind the panel. */
+@keyframes menu-item-in {
+  from {
+    opacity: 0;
+    translate: 0 0.5rem;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .menu-item {
+    animation: menu-item-in 380ms cubic-bezier(0.23, 1, 0.32, 1) both;
+    animation-delay: calc(var(--menu-item, 0) * 45ms + 80ms);
+  }
+}
