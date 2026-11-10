@@ -113,8 +113,13 @@ export function beginSignatureFlight(stage: HTMLElement, copy: HTMLElement) {
   window.addEventListener('resize', retarget, options);
   window.visualViewport?.addEventListener('resize', retarget, options);
   window.visualViewport?.addEventListener('scroll', retarget, options);
-  document.addEventListener('focusin', settle, options);
-  document.addEventListener('pointerdown', settle, { ...options, passive: true });
+  // Taps and clicks let the intro finish; the hidden hero ignores them (globals.css), and the focus
+  // a click gives `<main>` is not focus-visible. Keyboard focus settles at once, so it never lands
+  // on copy that cannot be seen yet.
+  const focusSettles = (event: FocusEvent) => {
+    if (event.target instanceof Element && event.target.matches(':focus-visible')) settle();
+  };
+  document.addEventListener('focusin', focusSettles, options);
   document.addEventListener('visibilitychange', settle, options);
   window.addEventListener('pagehide', settle, options);
   return release;

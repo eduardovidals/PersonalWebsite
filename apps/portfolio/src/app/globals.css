@@ -43,6 +43,15 @@ html[data-signing='armed'] [data-signature-resting] {
     opacity: var(--signing-reveal);
   }
 }
+/* A tap during the flight lets it finish instead of pressing a control that is not visible yet. */
+html[data-signing='flying'] [data-signature-resting] {
+  pointer-events: none;
+}
+@media (width < 64rem) {
+  html[data-signing='flying'] section:has([data-signature-stage]) {
+    pointer-events: none;
+  }
+}
 
 @utility shell {
   width: 100%;

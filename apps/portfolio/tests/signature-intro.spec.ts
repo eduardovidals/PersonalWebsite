@@ -174,6 +174,41 @@ test('slow scripts still play the intro, and the hero waits hidden instead of fl
   await expect(page.locator('[data-signature-resting]')).toHaveCSS('opacity', '1');
 });
 
+test('tapping the page lets the intro finish without pressing hidden controls', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/', { waitUntil: 'commit' });
+  await page.waitForFunction(
+    () => !!document.querySelector('#ev-home-signature')?.getAnimations().length,
+  );
+  const cta = page.locator('section#home').getByRole('link').first();
+  const box = await cta.boundingBox();
+  if (!box) throw new Error('The hero has no link to tap');
+  await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+  await page.mouse.click(195, 700);
+  await expect(page.locator('html')).toHaveAttribute('data-signing', 'flying');
+  expect(
+    await page.locator('#ev-home-signature').evaluate((mark) => mark.getAnimations().length),
+  ).toBeGreaterThan(0);
+  await expect(page).toHaveURL(/:4173\/$/);
+  // The flight then ends on its own and the hero takes taps again.
+  await expect(page.locator('html')).not.toHaveAttribute('data-signing', { timeout: 5000 });
+  await expect(page.locator('[data-signature-resting]')).toHaveCSS('pointer-events', 'auto');
+});
+
+test('keyboard focus settles the intro at once', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/', { waitUntil: 'commit' });
+  await page.waitForFunction(
+    () => !!document.querySelector('#ev-home-signature')?.getAnimations().length,
+  );
+  await page.keyboard.press('Tab');
+  await expect(page.locator('html')).not.toHaveAttribute('data-signing');
+  await expect(page.locator('[data-signature-resting]')).toHaveCSS('opacity', '1');
+});
+
 test('if scripts never load, the hero fades in on its own', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.route('**/_next/static/chunks/**', (route) => route.abort());
