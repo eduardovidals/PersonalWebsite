@@ -8,6 +8,9 @@ const engines = (process.env.PLAYWRIGHT_BROWSERS ?? 'chromium,webkit')
 export default defineConfig({
   testDir: './tests',
   forbidOnly: true,
+  // Shared CI runners are slower than a laptop. The homepage intro skips itself when scripts load
+  // late, so a slow first load can miss it; a retry shows up as flaky in the report, not hidden.
+  retries: process.env.CI ? 2 : 0,
   use: {
     baseURL: 'http://127.0.0.1:4173',
     trace: 'retain-on-failure',

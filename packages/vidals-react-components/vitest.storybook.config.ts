@@ -13,6 +13,9 @@ export default defineConfig({
   test: {
     name: 'vidals-component-stories',
     api: { host: '127.0.0.1' },
+    setupFiles: ['./.storybook/vitest.setup.ts'],
+    // A shared CI runner can stall one animation frame long enough to fail a story; retry there.
+    retry: process.env.CI ? 2 : 0,
     browser: {
       enabled: true,
       headless: true,
