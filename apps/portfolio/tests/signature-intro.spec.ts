@@ -142,9 +142,34 @@ test('preferring reduced motion keeps the link docked and the resting hero reada
   await expect(home).toBeFocused();
 });
 
-test('a deep link does not start the flight on a scrolled visit', async ({ page }) => {
-  await page.goto('/#about');
-  await expect(page.locator('[data-signature-resting]')).toHaveCSS('opacity', '1');
+test('a link to a section still plays the intro, then leaves the visitor on that section', async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/#about', { waitUntil: 'commit' });
+  await page.waitForFunction(
+    () => !!document.querySelector('#ev-home-signature')?.getAnimations().length,
+  );
+  await expect(page.locator('html')).toHaveAttribute('data-signing', /flying|landing/);
+  await expect(page.locator('html')).not.toHaveAttribute('data-signing', { timeout: 5000 });
+  await expect(page.locator('#about')).toBeInViewport();
+  await expect(page.locator('#ev-home-signature')).toHaveCSS('opacity', '1');
+});
+
+test('scrolling during the intro lets it finish', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/', { waitUntil: 'commit' });
+  await page.waitForFunction(
+    () => !!document.querySelector('#ev-home-signature')?.getAnimations().length,
+  );
+  await page.evaluate(() => window.scrollTo({ top: 600, behavior: 'instant' }));
+  await page.waitForTimeout(200);
+  await expect(page.locator('html')).toHaveAttribute('data-signing', /flying|landing/);
+  expect(
+    await page.locator('#ev-home-signature').evaluate((mark) => mark.getAnimations().length),
+  ).toBeGreaterThan(0);
+  await expect(page.locator('html')).not.toHaveAttribute('data-signing', { timeout: 5000 });
   await expect(page.locator('#ev-home-signature')).toHaveCSS('transform', 'none');
 });
 

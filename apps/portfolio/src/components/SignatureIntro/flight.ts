@@ -41,7 +41,17 @@ function takeoff(stage: HTMLElement, slot: HTMLElement, fromScreen: boolean) {
   ];
 }
 
-/** Animate the header's actual ink, not a second logo. The linked hit target never moves. */
+/** Whether any of the element is inside the window. */
+function inView(element: HTMLElement) {
+  const box = element.getBoundingClientRect();
+  return box.bottom > 0 && box.top < window.innerHeight;
+}
+
+/**
+ * Animate the header's actual ink, not a second logo. The linked hit target never moves. Once it
+ * starts, the intro plays to the end through taps, clicks, scrolling and resizing; only keyboard
+ * focus, a switch to reduced motion, or leaving the page settles it early.
+ */
 export function beginSignatureFlight(stage: HTMLElement, copy: HTMLElement) {
   const mark = document.getElementById(signatureMarkId);
   const slot = mark?.parentElement;
@@ -57,15 +67,14 @@ export function beginSignatureFlight(stage: HTMLElement, copy: HTMLElement) {
     !ink ||
     typeof mark.animate !== 'function' ||
     preference.matches ||
-    window.scrollY > 4 ||
-    location.hash ||
     document.visibilityState === 'hidden'
   )
     return disarm();
 
-  // Keep in step with the 64rem breakpoint of the first-frame styles in globals.css.
-  const compact = window.matchMedia('(width < 64rem)');
-  const fromScreen = compact.matches;
+  // Phones fly from the middle of the screen. Wider screens fly from the hero, or from the middle
+  // of the screen when the visit starts away from it (a section link, or a restored scroll).
+  // Keep the 64rem breakpoint in step with the first-frame styles in globals.css.
+  const fromScreen = window.matchMedia('(width < 64rem)').matches || !inView(stage);
   const frames = takeoff(stage, slot, fromScreen);
   if (!frames) return disarm();
   const duration = 2450;
@@ -86,12 +95,18 @@ export function beginSignatureFlight(stage: HTMLElement, copy: HTMLElement) {
     ],
     { duration, fill: 'both' },
   );
-  // The animations' first frames now hide what the armed styles hid.
+  // The animations' first frames now hide what the armed styles hid. Taps pass through the hidden
+  // hero until its copy is fully visible again, at 82% of the flight.
   root.setAttribute('data-signing', 'flying');
+  const landing = window.setTimeout(
+    () => root.setAttribute('data-signing', 'landing'),
+    duration * 0.82,
+  );
 
   const controller = new AbortController();
   const release = () => {
     controller.abort();
+    window.clearTimeout(landing);
     travel.cancel();
     write.cancel();
     reveal.cancel();
@@ -101,21 +116,18 @@ export function beginSignatureFlight(stage: HTMLElement, copy: HTMLElement) {
     release();
   };
   const options = { signal: controller.signal };
+  // Resizing or rotating keeps the ink on course; if the new layout has no takeoff, it flies on.
   const retarget = () => {
     const next = takeoff(stage, slot, fromScreen);
-    if (compact.matches === fromScreen && next && travel.effect instanceof KeyframeEffect)
-      travel.effect.setKeyframes(next);
-    else settle();
+    if (next && travel.effect instanceof KeyframeEffect) travel.effect.setKeyframes(next);
   };
   travel.addEventListener('finish', settle, options);
   preference.addEventListener('change', settle, options);
-  window.addEventListener('scroll', settle, { ...options, passive: true });
   window.addEventListener('resize', retarget, options);
   window.visualViewport?.addEventListener('resize', retarget, options);
   window.visualViewport?.addEventListener('scroll', retarget, options);
-  // Taps and clicks let the intro finish; the hidden hero ignores them (globals.css), and the focus
-  // a click gives `<main>` is not focus-visible. Keyboard focus settles at once, so it never lands
-  // on copy that cannot be seen yet.
+  // The focus a click gives `<main>` is not focus-visible. Keyboard focus settles at once, so it
+  // never lands on copy that cannot be seen yet.
   const focusSettles = (event: FocusEvent) => {
     if (event.target instanceof Element && event.target.matches(':focus-visible')) settle();
   };
