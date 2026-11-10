@@ -81,9 +81,10 @@ for (const viewport of [
     expect(Math.abs(hold.ink.width - held.ink.width)).toBeLessThan(1);
     const middle = await sampleInk(home, { fraction: 0.72 });
     const end = await sampleInk(home, { fraction: 0.999 });
-    // At full size and in flight, paint the SVG at its displayed width, not at header resolution.
-    for (const frame of [held, middle, end]) {
-      expect(Math.abs(frame.vectorWidth - frame.svg.width)).toBeLessThan(1);
+    // The vector is drawn at its takeoff size and only ever shrunk, never enlarged from the header.
+    expect(Math.abs(held.vectorWidth - held.svg.width)).toBeLessThan(1);
+    for (const frame of [middle, end]) {
+      expect(frame.vectorWidth).toBeGreaterThanOrEqual(frame.svg.width - 1);
     }
     expect(held.svg.width).toBeGreaterThan(end.svg.width * 2);
     expect(middle.svg.width).toBeLessThan(held.svg.width - 3);
@@ -105,6 +106,41 @@ for (const viewport of [
       .toBe(0);
   });
 }
+
+test('the flight moves the ink with transforms alone, so scrolling stays smooth', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/', { waitUntil: 'commit' });
+  await page.waitForFunction(
+    () => !!document.querySelector('#ev-home-signature')?.getAnimations().length,
+  );
+  const animated = await page.locator('#ev-home-signature').evaluate((mark) => {
+    const keyframes = mark.getAnimations()[0]?.effect;
+    if (!(keyframes instanceof KeyframeEffect)) return [];
+    const reserved = new Set(['offset', 'computedOffset', 'easing', 'composite']);
+    return [...new Set(keyframes.getKeyframes().flatMap((frame) => Object.keys(frame)))].filter(
+      (key) => !reserved.has(key),
+    );
+  });
+  expect(animated).toEqual(['transform']);
+});
+
+test('right-to-left pages center the ink and dock it at the inline start', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/ar/', { waitUntil: 'commit' });
+  await page.waitForFunction(
+    () => !!document.querySelector('#ev-home-signature')?.getAnimations().length,
+  );
+  const home = page.getByRole('banner').getByRole('link').first();
+  const held = await sampleInk(home, { ms: 1050 });
+  expect(distance(held.ink, held.viewport)).toBeLessThan(2);
+  const end = await sampleInk(home, { fraction: 0.999 });
+  expect(distance(end.svg, end.dock)).toBeLessThan(2);
+  expect(end.dock.x).toBeGreaterThan(195);
+});
 
 test('rotating a phone during the hold keeps the ink centered in the new viewport', async ({
   page,

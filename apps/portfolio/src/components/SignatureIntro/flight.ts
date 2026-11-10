@@ -5,8 +5,18 @@ function disarm() {
   document.documentElement.removeAttribute('data-signing');
 }
 
+/** Where the ink takes off, relative to its docked slot, in layout-viewport CSS pixels. */
+interface Takeoff {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  /** How many times larger than the docked ink. */
+  scale: number;
+}
+
 /** Both rectangles are in layout-viewport CSS pixels, even when the visible viewport shrinks. */
-function takeoff(stage: HTMLElement, slot: HTMLElement, fromScreen: boolean) {
+function takeoff(stage: HTMLElement, slot: HTMLElement, fromScreen: boolean): Takeoff | undefined {
   const viewport = window.visualViewport;
   const scene = fromScreen
     ? {
@@ -25,20 +35,45 @@ function takeoff(stage: HTMLElement, slot: HTMLElement, fromScreen: boolean) {
     : Math.min(scene.width * 0.83, (scene.height * 0.94 * dock.width) / dock.height, 330);
   const scale = width / dock.width;
   if (scale < 1.4) return;
+  const height = dock.height * scale;
   const x = scene.left + (scene.width - width) / 2 - dock.left;
-  const y = scene.top + (scene.height - dock.height * scale) / 2 - dock.top;
-  // Resize the vector viewport itself. Scaling the composited header icon enlarges its pixels.
-  const start = {
-    left: `${x}px`,
-    top: `${y}px`,
-    width: `${width}px`,
-    height: `${dock.height * scale}px`,
-  };
+  const y = scene.top + (scene.height - height) / 2 - dock.top;
+  return { x, y, width, height, scale };
+}
+
+/**
+ * Lays the ink out once at its takeoff size and place. The flight then moves it with transforms
+ * alone, which the compositor runs smoothly even while the page scrolls, and only ever shrinks it
+ * from the size it was drawn at, so the vector stays sharp. `right: auto` keeps right-to-left
+ * pages from pinning it to the slot's inline start.
+ */
+function place(mark: SVGSVGElement, start: Takeoff) {
+  Object.assign(mark.style, {
+    left: `${start.x}px`,
+    top: `${start.y}px`,
+    right: 'auto',
+    width: `${start.width}px`,
+    height: `${start.height}px`,
+    transformOrigin: '0 0',
+  });
+}
+
+/** Holds at takeoff, then shrinks the ink onto its docked slot. */
+function homeward(start: Takeoff): Keyframe[] {
   return [
-    { ...start, offset: 0 },
-    { ...start, offset: 0.46, easing: 'cubic-bezier(.43,.03,.14,1)' },
-    { left: '0px', top: '0px', width: '100%', height: '100%', offset: 1 },
+    { transform: 'none', offset: 0 },
+    { transform: 'none', offset: 0.46, easing: 'cubic-bezier(.43,.03,.14,1)' },
+    {
+      transform: `translate(${-start.x}px, ${-start.y}px) scale(${1 / start.scale})`,
+      offset: 1,
+    },
   ];
+}
+
+/** Returns the ink to its docked layout. */
+function unplace(mark: SVGSVGElement) {
+  for (const property of ['left', 'top', 'right', 'width', 'height', 'transform-origin'])
+    mark.style.removeProperty(property);
 }
 
 /** Whether any of the element is inside the window. */
@@ -53,7 +88,8 @@ function inView(element: HTMLElement) {
  * focus, a switch to reduced motion, or leaving the page settles it early.
  */
 export function beginSignatureFlight(stage: HTMLElement, copy: HTMLElement) {
-  const mark = document.getElementById(signatureMarkId);
+  const element = document.getElementById(signatureMarkId);
+  const mark = element instanceof SVGSVGElement ? element : null;
   const slot = mark?.parentElement;
   const ink = mark?.querySelector('path');
   const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -75,11 +111,12 @@ export function beginSignatureFlight(stage: HTMLElement, copy: HTMLElement) {
   // of the screen when the visit starts away from it (a section link, or a restored scroll).
   // Keep the 64rem breakpoint in step with the first-frame styles in globals.css.
   const fromScreen = window.matchMedia('(width < 64rem)').matches || !inView(stage);
-  const frames = takeoff(stage, slot, fromScreen);
-  if (!frames) return disarm();
+  const start = takeoff(stage, slot, fromScreen);
+  if (!start) return disarm();
   const duration = 2450;
 
-  const travel = mark.animate(frames, { duration, fill: 'both' });
+  place(mark, start);
+  const travel = mark.animate(homeward(start), { duration, fill: 'both' });
   const write = ink.animate([{ strokeDashoffset: '.98' }, { strokeDashoffset: '0' }], {
     duration: 500,
     easing: 'cubic-bezier(.22,.7,.24,1)',
@@ -104,22 +141,31 @@ export function beginSignatureFlight(stage: HTMLElement, copy: HTMLElement) {
   );
 
   const controller = new AbortController();
+  let frame = 0;
   const release = () => {
     controller.abort();
     window.clearTimeout(landing);
+    cancelAnimationFrame(frame);
     travel.cancel();
     write.cancel();
     reveal.cancel();
+    unplace(mark);
   };
   const settle = () => {
     disarm();
     release();
   };
   const options = { signal: controller.signal };
-  // Resizing or rotating keeps the ink on course; if the new layout has no takeoff, it flies on.
+  // Resizing or rotating keeps the ink on course, at most once a frame, since phones resize the
+  // visual viewport as their toolbars slide during a scroll. With no takeoff, it flies on.
   const retarget = () => {
-    const next = takeoff(stage, slot, fromScreen);
-    if (next && travel.effect instanceof KeyframeEffect) travel.effect.setKeyframes(next);
+    frame ||= requestAnimationFrame(() => {
+      frame = 0;
+      const next = takeoff(stage, slot, fromScreen);
+      if (!next || !(travel.effect instanceof KeyframeEffect)) return;
+      place(mark, next);
+      travel.effect.setKeyframes(homeward(next));
+    });
   };
   travel.addEventListener('finish', settle, options);
   preference.addEventListener('change', settle, options);
