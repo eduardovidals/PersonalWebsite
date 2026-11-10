@@ -1,28 +1,36 @@
-import Link from 'next/link';
+import { VidalsLink } from '@vidals/react-components';
 import { profiles } from '@/config/site';
+import { getTranslator } from '@/i18n/translator';
+import { footerStyles, profileLinkStyles } from './styles';
+import type { SiteFooterProps as Props } from './types';
 
-export function SiteFooter() {
+/**
+ * The closing line on every page: name, title and profile links.
+ * @example
+ * ```tsx
+ * <SiteFooter locale="en" />
+ * ```
+ */
+export async function SiteFooter(props: Props) {
+  const { locale } = props;
+  const { messages } = await getTranslator(locale);
+  const { footer } = messages.common;
+
   return (
-    <footer className="shell flex flex-wrap items-center justify-between gap-x-8 gap-y-2 py-8 text-sm">
-      <p className="font-medium text-vidals-muted">
-        Eduardo Vidals <span aria-hidden="true"> · </span> Software engineer
+    <footer className={footerStyles}>
+      <p className="flex flex-wrap gap-x-3 font-medium text-vidals-muted">
+        <span className="text-vidals-text">{footer.name}</span>
+        <span>{footer.title}</span>
       </p>
-      <nav aria-label="Footer" className="flex flex-wrap items-center gap-x-5 text-vidals-muted">
+      <nav
+        aria-label={footer.label}
+        className="flex flex-wrap items-center gap-x-5 text-vidals-muted"
+      >
         {Object.entries(profiles).map(([name, url]) => (
-          <a
-            key={name}
-            href={url}
-            className="inline-flex min-h-11 items-center hover:text-vidals-accent"
-          >
+          <VidalsLink key={name} variant="plain" href={url} className={profileLinkStyles}>
             {name}
-          </a>
+          </VidalsLink>
         ))}
-        <a href="/feed.xml" className="inline-flex min-h-11 items-center hover:text-vidals-accent">
-          RSS
-        </a>
-        <Link href="/#home" className="inline-flex min-h-11 items-center hover:text-vidals-accent">
-          Top ↑
-        </Link>
       </nav>
     </footer>
   );

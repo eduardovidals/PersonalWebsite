@@ -14,11 +14,18 @@ import {
   errorStyles,
   fieldStyles,
   labelStyles,
+  multilineStyles,
 } from './styles.js';
-import type { VidalsTextFieldProps } from './types.js';
+import type { VidalsTextFieldProps as Props } from './types.js';
 
-/** A labeled field with native validation, form submission and read-only semantics. */
-export function VidalsTextField(props: VidalsTextFieldProps) {
+/**
+ * A labeled field with native validation, form submission and read-only semantics.
+ * @example
+ * ```tsx
+ * <VidalsTextField label="Email address" type="email" isRequired />
+ * ```
+ */
+export function VidalsTextField(props: Props) {
   const {
     label,
     description,
@@ -31,7 +38,8 @@ export function VidalsTextField(props: VidalsTextFieldProps) {
     controlRef,
     ...fieldProps
   } = props;
-  const classes = twMerge(controlStyles, multiline && 'resize-y', controlClassName);
+  const classes = twMerge(controlStyles, multiline && multilineStyles, controlClassName);
+
   return (
     <TextField
       {...fieldProps}

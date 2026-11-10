@@ -8,5 +8,5 @@
     "types": []
   },
   "include": ["src"],
-  "exclude": ["**/*.test.tsx", "**/*.stories.tsx"]
+  "exclude": ["**/*.test.ts", "**/*.test.tsx", "**/*.stories.tsx"]
 }

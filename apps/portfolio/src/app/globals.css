@@ -2,6 +2,7 @@
 @import '@vidals/tailwind-theme/theme.css';
 @source '../app';
 @source '../components';
+@source '../features';
 @source '../content/tools';
 @source '../../../../packages/vidals-react-components/src';
 
@@ -18,27 +19,34 @@
   padding-inline: clamp(1.15rem, 4vw, 3rem);
 }
 @layer base {
-  html {
-    scroll-padding-block-start: 2rem;
-    color-scheme: dark;
+  :root {
+    --site-header-height: 4.5rem;
   }
+  @media (width >= 40rem) {
+    :root {
+      --site-header-height: 5.5rem;
+    }
+  }
+  html {
+    scroll-padding-block-start: calc(var(--site-header-height) + 1rem);
+    color-scheme: dark;
+    /* Overscroll on phones shows the page color instead of a flash of white. */
+    background: var(--color-vidals-background);
+  }
+  /* In-page links glide to their section and stop below the sticky header; reduced motion jumps. */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+  /* The section tabs are 3rem tall plus a 1px border above and below; sections land exactly under
+   * them, with nothing of the previous section showing. */
   html:has(.home-section-nav) {
-    scroll-padding-block-start: 3.75rem;
+    scroll-padding-block-start: calc(var(--site-header-height) + 3rem + 2px);
   }
   body {
     background: var(--color-vidals-background);
     color: var(--color-vidals-text);
     font-family: var(--font-sans);
-  }
-  :focus-visible {
-    outline: 3px solid var(--color-vidals-accent);
-    outline-offset: 4px;
-  }
-  ::selection {
-    background: var(--color-vidals-accent);
-    color: var(--color-vidals-deep);
-  }
-  button:not(:disabled) {
-    cursor: pointer;
   }
 }

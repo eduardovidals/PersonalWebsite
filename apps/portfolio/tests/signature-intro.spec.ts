@@ -1,6 +1,6 @@
 import { expect, test, type Locator } from '@playwright/test';
 
-const homeName = 'Eduardo Vidals — home';
+const homeName = 'Eduardo Vidals, home';
 
 const distance = (a: { x: number; y: number }, b: { x: number; y: number }) =>
   Math.hypot(a.x - b.x, a.y - b.y);
@@ -91,12 +91,11 @@ for (const viewport of [
     expect(distance(middle.svg, held.svg)).toBeGreaterThan(12);
     expect(distance(middle.svg, end.dock)).toBeGreaterThan(12);
     expect(distance(end.svg, end.dock)).toBeLessThan(2);
-    const headerLeft = await page
-      .getByRole('banner')
-      .evaluate(
-        (header) =>
-          header.getBoundingClientRect().left + parseFloat(getComputedStyle(header).paddingLeft),
-      );
+    const headerLeft = await page.getByRole('banner').evaluate((header) => {
+      // The sticky header spans the page; its inner container holds the page gutter.
+      const shell = header.firstElementChild ?? header;
+      return shell.getBoundingClientRect().left + parseFloat(getComputedStyle(shell).paddingLeft);
+    });
     expect(Math.abs(end.dock.x - end.dock.width / 2 - headerLeft)).toBeLessThan(2);
     expect(end.dock.y).toBeLessThan(85);
     await home.locator('svg').evaluate((mark) => mark.getAnimations()[0]?.finish());
@@ -160,7 +159,7 @@ test.describe('without JavaScript', () => {
     await expect(resting).toHaveCSS('opacity', '1');
     await expect(resting).toContainText(/\S/);
     const nav = page.getByRole('navigation', { name: 'Primary' });
-    await nav.getByRole('link', { name: 'Blog' }).click();
+    await nav.getByRole('link', { name: 'About' }).click();
     const home = page.getByRole('banner').getByRole('link', { name: homeName });
     await expect(home.locator('svg')).toBeVisible();
     await home.press('Enter');

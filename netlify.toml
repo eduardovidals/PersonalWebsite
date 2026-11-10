@@ -1,6 +1,7 @@
 [build]
 command = "npm run build"
 publish = "apps/portfolio/out"
+edge_functions = "apps/portfolio/netlify/edge-functions"
 
 [build.environment]
 NETLIFY_NEXT_PLUGIN_SKIP = "true"
@@ -8,6 +9,36 @@ NODE_VERSION = "26.13.0"
 NPM_VERSION = "12.2.1"
 
 [[redirects]]
+from = "/blog/"
+to = "/projects/"
+status = 301
+
+[[redirects]]
 from = "/blog/what-a-dialog-can-teach/"
-to = "/blog/why-im-building-software-factory/"
+to = "/projects/software-factory/"
+status = 301
+
+[[redirects]]
+from = "/blog/why-im-building-software-factory/"
+to = "/projects/software-factory/"
+status = 301
+
+[[redirects]]
+from = "/blog/my-path-to-founding-velton/"
+to = "/projects/software-factory/"
+status = 301
+
+[[redirects]]
+from = "/blog/the-search-is-not-the-path/"
+to = "/projects/pathfinding-visualizer/"
+status = 301
+
+[[redirects]]
+from = "/blog/what-a-sorted-array-hides/"
+to = "/projects/sorting-visualizer/"
+status = 301
+
+[[redirects]]
+from = "/feed.xml"
+to = "/"
 status = 301

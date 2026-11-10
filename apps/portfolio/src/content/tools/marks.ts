@@ -1,9 +1,10 @@
 /**
  * Exact public labels and local /tool-marks.svg fragment IDs. The text is the accessible
- * name; the symbol and its tint are decoration. Brand paths retain their archive slugs.
- * Related products use their family's mark where appropriate (React Native, ASP.NET
- * Core, Artifactory, ChatGPT sign-in, Claude Code). The rest use portfolio-drawn
- * pictograms where the archive has no matching mark; these are not official logos.
+ * name; the symbol and its tint are decoration. Every product with a published logo shows
+ * it; related products use their family's mark (React Native, ASP.NET Core, TanStack Router
+ * and Devtools, Artifactory, the AWS services and SDK, ChatGPT sign-in, Codex, Claude Code).
+ * Ideas without a logo (REST APIs, SQL, Kerberos) and the few tools with no published mark
+ * use portfolio-drawn pictograms; these are not official logos.
  */
 export const toolMarks = {
   TypeScript: ['typescript', 'text-blue-400'],
@@ -13,14 +14,14 @@ export const toolMarks = {
   Vite: ['vite', 'text-amber-300'],
   'React Native': ['react', 'text-cyan-300'],
   Angular: ['angular', 'text-red-400'],
-  'TanStack Router': ['route', 'text-emerald-300'],
+  'TanStack Router': ['tanstack', 'text-amber-100'],
   'TanStack Query': ['reactquery', 'text-rose-400'],
   Redux: ['redux', 'text-violet-300'],
   Axios: ['axios', 'text-violet-300'],
   'React Hook Form': ['reacthookform', 'text-pink-300'],
   Zod: ['zod', 'text-sky-300'],
-  'TanStack Router & Query Devtools': ['inspect-route', 'text-lime-300'],
-  'React Aria Components': ['accessibility', 'text-vidals-highlight'],
+  'TanStack Router & Query Devtools': ['tanstack', 'text-amber-100'],
+  'React Aria Components': ['reactaria', 'text-violet-400'],
   'Tailwind CSS': ['tailwindcss', 'text-sky-300'],
   Storybook: ['storybook', 'text-pink-400'],
   i18next: ['i18next', 'text-teal-300'],
@@ -32,9 +33,9 @@ export const toolMarks = {
   'Three.js': ['threedotjs', 'text-vidals-text'],
   'React Three Fiber': ['fiber-scene', 'text-cyan-300'],
   Drei: ['scene-helpers', 'text-violet-300'],
-  Motion: ['motion-trail', 'text-yellow-300'],
+  Motion: ['motion', 'text-yellow-300'],
   'Web Animations API': ['keyframes', 'text-blue-300'],
-  'C#': ['c-sharp', 'text-purple-300'],
+  'C#': ['csharp', 'text-purple-300'],
   'ASP.NET Core': ['dotnet', 'text-violet-300'],
   'Node.js': ['nodedotjs', 'text-green-300'],
   NestJS: ['nestjs', 'text-rose-400'],
@@ -44,18 +45,18 @@ export const toolMarks = {
   'REST APIs': ['http-endpoints', 'text-sky-300'],
   SQL: ['database', 'text-sky-300'],
   PostgreSQL: ['postgresql', 'text-blue-300'],
-  Kysely: ['query-builder', 'text-teal-300'],
+  Kysely: ['kysely', 'text-vidals-text'],
   SQLite: ['sqlite', 'text-cyan-300'],
   Prisma: ['prisma', 'text-teal-200'],
   Vitest: ['vitest', 'text-lime-300'],
   'Testing Library': ['testinglibrary', 'text-rose-300'],
   'Mock Service Worker (MSW)': ['mockserviceworker', 'text-orange-300'],
-  Playwright: ['browser-check', 'text-green-300'],
+  Playwright: ['playwright', 'text-green-300'],
   'axe-core': ['accessibility-check', 'text-sky-300'],
   Cypress: ['cypress', 'text-emerald-300'],
   Jest: ['jest', 'text-red-300'],
   Supertest: ['http-check', 'text-emerald-300'],
-  xUnit: ['test-grid', 'text-violet-300'],
+  xUnit: ['xunit', 'text-violet-300'],
   Nx: ['nx', 'text-sky-200'],
   pnpm: ['pnpm', 'text-amber-300'],
   'npm workspaces': ['npm', 'text-red-400'],
@@ -74,20 +75,20 @@ export const toolMarks = {
   Linux: ['linux', 'text-amber-200'],
   Docker: ['docker', 'text-sky-400'],
   OpenTofu: ['opentofu', 'text-yellow-300'],
-  'AWS SDK for JavaScript': ['cloud-code', 'text-amber-300'],
-  AWS: ['cloud-infrastructure', 'text-amber-300'],
-  Fargate: ['container-task', 'text-orange-300'],
-  CodeBuild: ['build-runner', 'text-lime-300'],
-  'Step Functions': ['workflow', 'text-pink-300'],
+  'AWS SDK for JavaScript': ['amazonwebservices', 'text-amber-300'],
+  AWS: ['amazonwebservices', 'text-amber-300'],
+  Fargate: ['amazonwebservices', 'text-amber-300'],
+  CodeBuild: ['amazonwebservices', 'text-amber-300'],
+  'Step Functions': ['amazonwebservices', 'text-amber-300'],
   'WorkOS AuthKit': ['identity-card', 'text-violet-300'],
-  OAuth: ['key', 'text-orange-200'],
+  OAuth: ['oauth', 'text-orange-200'],
   Kerberos: ['session-ticket', 'text-blue-300'],
   Stripe: ['stripe', 'text-indigo-300'],
   'Sign in with ChatGPT': ['openai', 'text-teal-200'],
-  Codex: ['code-terminal', 'text-sky-300'],
+  Codex: ['openai', 'text-teal-200'],
   'Claude Code': ['claude', 'text-orange-300'],
   Python: ['python', 'text-yellow-300'],
-  Java: ['coffee', 'text-orange-300'],
+  Java: ['java', 'text-orange-300'],
   'C++': ['cplusplus', 'text-blue-300'],
 } as const;
 

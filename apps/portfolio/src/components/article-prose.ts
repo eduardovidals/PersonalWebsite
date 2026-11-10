@@ -1,3 +1,3 @@
-/** Shared reading typography for project stories, the career narrative, and field notes. */
+/** Shared reading typography for project stories and the career narrative. */
 export const articleProse =
   'text-[1.0625rem] leading-[1.75] wrap-anywhere text-vidals-text sm:text-lg [&>*+*]:mt-5 [&_h2]:mt-10 [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:leading-tight [&_h2]:tracking-tight [&_h3]:text-xl [&_h3]:font-semibold [&_a]:text-vidals-accent [&_a]:underline [&_a]:underline-offset-4 [&_pre]:overflow-x-auto [&_pre]:rounded-xl [&_pre]:bg-vidals-surface [&_pre]:p-5 [&_pre]:font-mono [&_pre]:text-sm [&_ol]:list-decimal [&_ol]:ps-6 [&_ul]:list-disc [&_ul]:ps-6 [&_blockquote]:rounded-xl [&_blockquote]:bg-vidals-surface [&_blockquote]:p-5';

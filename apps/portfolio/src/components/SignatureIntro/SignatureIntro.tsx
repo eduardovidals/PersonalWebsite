@@ -1,10 +1,21 @@
 'use client';
 
-import { useLayoutEffect, useRef, type ReactNode } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { beginSignatureFlight } from './flight';
+import type { SignatureIntroProps as Props } from './types';
 
-/** Children are the resting hero composition and remain usable without JavaScript or motion. */
-export function SignatureIntro({ children }: Readonly<{ children: ReactNode }>) {
+/**
+ * Flies the handwritten EV from the center of the screen into the header's home link on a fresh
+ * visit. Children are the resting hero composition and remain usable without JavaScript or motion.
+ * @example
+ * ```tsx
+ * <SignatureIntro>
+ *   <p>These Days</p>
+ * </SignatureIntro>
+ * ```
+ */
+export function SignatureIntro(props: Props) {
+  const { children } = props;
   const stage = useRef<HTMLDivElement>(null);
   const copy = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => {

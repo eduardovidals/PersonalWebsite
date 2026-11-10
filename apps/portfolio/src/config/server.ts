@@ -1,5 +1,5 @@
 import 'server-only';
-import type { DeliverySettings } from '@/components/ContactForm/types';
+import type { DeliverySettings } from './types';
 
 /** Netlify previews are public to reviewers but should not be indexed. */
 export const isDeployPreview = Boolean(process.env.CONTEXT && process.env.CONTEXT !== 'production');

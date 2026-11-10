@@ -7,6 +7,8 @@ const config: NextConfig = {
   output: 'export',
   trailingSlash: true,
   images: { unoptimized: true },
+  // Each language has its own root layout (for `<html lang dir>`), so the 404 page is global.
+  experimental: { globalNotFound: true },
 };
 
 export default config;

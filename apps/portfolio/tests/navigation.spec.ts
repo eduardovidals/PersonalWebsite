@@ -7,15 +7,9 @@ for (const width of [320, 390, 1280]) {
     await page.setViewportSize({ width, height: 800 });
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/');
-    const nav = page.getByRole('navigation', { name: 'On this page' });
+    const nav = page.getByRole('navigation', { name: 'On This Page' });
     const active = nav.locator('[aria-current="location"]');
-    await expect(nav.getByRole('link')).toHaveText([
-      'Work',
-      'Career',
-      'Toolkit',
-      'Blog',
-      'Contact',
-    ]);
+    await expect(nav.getByRole('link')).toHaveText(['Work', 'Career', 'Toolkit', 'Contact']);
     await expect(active).toHaveCount(0);
     await nav.getByRole('link', { name: 'Work', exact: true }).click();
     await expect(active).toHaveText('Work');
@@ -24,7 +18,6 @@ for (const width of [320, 390, 1280]) {
     for (const [id, label] of [
       ['about', 'Career'],
       ['skills', 'Toolkit'],
-      ['blog', 'Blog'],
       ['contact', 'Contact'],
       ['about', 'Career'],
     ]) {
@@ -58,6 +51,30 @@ test('site links distinguish the current page from its parent section', async ({
   await expect(nav.getByRole('link', { name: 'Work' })).toHaveAttribute('aria-current', 'page');
   await page.goto('/projects/software-factory/');
   await expect(nav.getByRole('link', { name: 'Work' })).toHaveAttribute('aria-current', 'location');
-  await nav.getByRole('link', { name: 'Blog' }).click();
-  await expect(nav.locator('[aria-current]')).toHaveText('Blog');
+  await nav.getByRole('link', { name: 'About' }).click();
+  await expect(nav.locator('[aria-current]')).toHaveText('About');
+});
+
+test('the logo returns to the top of the landing page from anywhere', async ({ page }) => {
+  const logo = page.getByRole('banner').getByRole('link', { name: 'Eduardo Vidals, home' });
+  await page.goto('/#contact');
+  // Let the deep link finish gliding to Contact, as it would before a reader clicks anything.
+  await expect
+    .poll(() =>
+      page.evaluate(
+        () =>
+          new Promise<boolean>((settled) => {
+            const start = window.scrollY;
+            setTimeout(() => settled(start > 0 && window.scrollY === start), 250);
+          }),
+      ),
+    )
+    .toBe(true);
+  await logo.click();
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
+  await expect(page).toHaveURL(/\/$/);
+  await page.goto('/about/');
+  await logo.click();
+  await expect(page).toHaveURL(/127\.0\.0\.1:4173\/$/);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveAccessibleName(/Hey, I’m/);
 });
